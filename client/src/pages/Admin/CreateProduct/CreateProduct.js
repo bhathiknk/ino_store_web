@@ -13,7 +13,7 @@ const CreateProduct = () => {
         </div>
         <div className="flex items-center">
           <button className="text-gray-700 border border-gray-300 rounded px-4 py-2 mr-4">Cancel</button>
-          <button className="bg-blue-500 text-white rounded px-4 py-2">Next</button>
+          <Link to="/price-information" className="bg-blue-500 text-white rounded px-4 py-2">Next</Link>
         </div>
       </div>
 
@@ -26,7 +26,7 @@ const CreateProduct = () => {
                   <Link to="#" className="text-blue-500 font-bold">Basic Information</Link>
                 </li>
                 <li className="mb-4">
-                  <Link to="#">Sale Information</Link>
+                  <Link to="#">Price Information</Link>
                 </li>
                 <li className="mb-4">
                   <Link to="#">Shipping</Link>
