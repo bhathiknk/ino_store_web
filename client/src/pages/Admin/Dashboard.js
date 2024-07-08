@@ -1,5 +1,6 @@
-// src/mainpage.js
 import React from 'react';
+import Navbar from './Navbar';
+import { Link } from 'react-router-dom';
 
 const products = [
   { id: 1, code: 'SWE-1', name: 'Green Sweater', price: 100, stock: 200, lowStock: false },
@@ -15,34 +16,21 @@ const products = [
 const Dashboard = () => {
   return (
     <div className="p-4">
-      <header className="mb-4">
-        <h1 className="text-2xl font-bold">Inventory</h1>
-        <nav className="flex space-x-4 mt-2">
-          <button className="text-blue-500">Dashboard</button>
-          <button className="text-blue-500">Products</button>
-          <button className="text-blue-500">Sales</button>
-          <button className="text-blue-500">Purchase</button>
-          <button className="text-blue-500">Inventory Plan</button>
-        </nav>
-      </header>
+      <Navbar />
 
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mt-6 mb-4">
         <div className="text-lg">Products</div>
-        <button className="bg-blue-500 text-white py-2 px-4 rounded">+ Create New Product</button>
+        <Link to="/create-product" className="bg-blue-500 text-white py-2 px-4 rounded">
+          + Create New Product
+        </Link>
       </div>
 
       <div className="bg-white shadow-md rounded-lg p-6">
-        <div className="flex justify-between items-center mb-4">
-          <div className="text-gray-700">Warehouse A</div>
-          <div className="text-gray-700">50 products | 1000 items</div>
-          <div className="text-gray-700">786 South Main Street, Jacksonville, FL 32202</div>
-        </div>
-
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {products.map(product => (
-            <div key={product.id} className="border p-4 rounded-lg">
+            <div key={product.id} className="border p-4 rounded-lg flex flex-col items-center">
               <div className="mb-2 flex justify-center">
-                <img src={`/images/${product.code}.jpg`} alt={product.name} className="h-40" />
+                <img src={`${process.env.PUBLIC_URL}/Assets/${product.code}.jpg`} alt={product.name} className="h-40 w-40 object-cover" />
               </div>
               <div className="text-center mb-2">
                 <div className="font-bold">{product.name}</div>
