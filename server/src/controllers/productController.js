@@ -25,3 +25,15 @@ exports.addProduct = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+// Get products by admin ID
+exports.getProductsByAdmin = async (req, res) => {
+    const adminId = req.admin._id; // Assuming you have middleware that sets req.admin from JWT
+
+    try {
+        const products = await Product.find({ admin: adminId });
+        res.status(200).json(products);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
