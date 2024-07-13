@@ -3,6 +3,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
+const adminDetailsRoutes = require('./routes/adminDetailsRoutes');
 const errorHandler = require('./utils/errorHandler');
 const path = require('path');
 
@@ -28,6 +29,7 @@ app.use(cors({
 // Define routes
 app.use('/api/admin', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/admin', adminDetailsRoutes);
 
 // Error handling middleware
 app.use(errorHandler);
