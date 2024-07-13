@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
@@ -16,6 +17,13 @@ app.use(express.json());
 
 // Serve static files for image uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Use CORS middleware
+app.use(cors({
+    origin: 'http://localhost:3001', // Replace with your frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 
 // Define routes
 app.use('/api/admin', authRoutes);
