@@ -1,5 +1,5 @@
 import React from 'react';
-import bannerlogo from '../../Images/ClientBanner/bannerimg2.png';
+
 
 export default function Banner() {
   return (
@@ -11,7 +11,7 @@ export default function Banner() {
            <p className="text-2xl md:text-5xl text-yellow-400 font-bold">UP TO 50% OFF AND MORE BENIFITS</p>
         </div>
         <div className="w-1/3 relative aspect-video">
-            <image src={bannerlogo} alt="Banner Image" className="object-contain"/>
+          <img src="/Assets/bannerimg.png" alt="banner_image" className="object-contain"/>
         </div>
       </div>
     </div>
