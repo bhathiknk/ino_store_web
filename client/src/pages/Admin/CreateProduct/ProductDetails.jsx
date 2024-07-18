@@ -92,16 +92,27 @@ const ProductDetails = () => {
                 <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
                 <p className="text-gray-700 mb-4">Description: {product.description}</p>
                 <p className="text-gray-700 mb-4">Category: {product.categoryDescription}</p>
-                <p className="text-green-500 mb-4">LKR: {product.basePrice}</p>
-                {product.isDiscount && (
-                    <p className="text-red-500 mb-4">Discounted Price: LKR {product.discountPrice}</p>
+                {product.isDiscount ? (
+                    <p className="mb-4">
+                        <span className="text-red-500 line-through">LKR {product.basePrice}</span>
+                        {' '}
+                        <span className="text-green-500 font-bold">Discounted Price: LKR {product.discountPrice}</span>
+                    </p>
+                ) : (
+                    <p className="text-green-500 mb-4">LKR: {product.basePrice}</p>
                 )}
                 <p className="text-gray-700 mb-4">
                     {product.isFreeShipping ? 'Free Shipping' : `Shipping Cost: LKR ${product.shippingCost}`}
                 </p>
             </div>
+
         </div>
     );
 };
 
 export default ProductDetails;
+
+
+
+
+

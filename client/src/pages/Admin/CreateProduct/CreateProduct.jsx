@@ -4,8 +4,6 @@ import { FaArrowLeft, FaBars, FaTimes, FaTrashAlt } from 'react-icons/fa';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 
 const CreateProduct = () => {
   const navigate = useNavigate();
@@ -106,10 +104,14 @@ const CreateProduct = () => {
       productData.append('categoryDescription', formData.categoryDescription);
       productData.append('description', formData.description);
       productData.append('basePrice', formData.basePrice);
-      productData.append('discountPrice', formData.discountPrice);
-      productData.append('isDiscount', formData.isDiscount);
-      productData.append('isFreeShipping', formData.isFreeShipping);
-      productData.append('shippingCost', formData.shippingCost);
+      if (isDiscount) {
+        productData.append('discountPrice', formData.discountPrice);
+      }
+      productData.append('isDiscount', isDiscount);
+      productData.append('isFreeShipping', formData.isFreeShipping); // Add this line
+      if (!formData.isFreeShipping) {
+        productData.append('shippingCost', formData.shippingCost);
+      }
 
       // Retrieve the JWT token from local storage
       const token = localStorage.getItem('token');
@@ -132,15 +134,22 @@ const CreateProduct = () => {
         });
       }
     } catch (error) {
-      toast.error('Product added failed', {
+      toast.error('Product addition failed', {
         onClose: () => {
           handleClearInputs();
           setPopupVisible(false);
-          navigate('/dashboard'); // Redirect to dashboard after success
+          navigate('/dashboard'); // Redirect to dashboard after failure
         }
       });
     }
   };
+
+  const handleFreeShippingChange = () => {
+    setIsFreeShipping(!isFreeShipping);
+    setFormData({ ...formData, isFreeShipping: !isFreeShipping });
+  };
+
+
 
   useEffect(() => {
     const observerCallback = (entries) => {
@@ -225,36 +234,30 @@ const CreateProduct = () => {
             <div id="basic" ref={basicRef} className="bg-white p-6 rounded-lg shadow-md mb-6">
               <h2 className="text-lg font-semibold mb-4">Basic Information</h2>
               <div className="mb-4">
-                <label htmlFor="title" className="block font-semibold mb-2">Product Title</label>
-                <input type="text" id="title" name="title" value={formData.title} onChange={handleInputChange}
-                       className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"/>
+                <label className="block mb-2">Product Title</label>
+                <input type="text" name="title" value={formData.title} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-md" />
               </div>
               <div className="mb-4">
-                <label htmlFor="categoryDescription" className="block font-semibold mb-2">Category Description</label>
-                <input type="text" id="categoryDescription" name="categoryDescription"
-                       value={formData.categoryDescription} onClick={() => setPopupVisible(true)} readOnly
-                       className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"/>
+                <label className="block mb-2">Product Category</label>
+                <input type="text" name="categoryDescription" value={formData.categoryDescription} onClick={() => setPopupVisible(true)} readOnly className="w-full p-2 border border-gray-300 rounded-md cursor-pointer" />
               </div>
               <div className="mb-4">
-                <label htmlFor="description" className="block font-semibold mb-2">Description</label>
-                <textarea id="description" name="description" value={formData.description} onChange={handleInputChange}
-                          className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"></textarea>
+                <label className="block mb-2">Product Description</label>
+                <textarea name="description" value={formData.description} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-md"></textarea>
               </div>
               <div className="mb-4">
-                <label className="block font-semibold mb-2">Images</label>
-                <input type="file" multiple onChange={handleImageUpload}
-                       className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"/>
+                <label className="block mb-2">Product Images</label>
+                <input type="file" accept="image/*" multiple onChange={handleImageUpload} className="w-full" />
                 <div className="mt-2 flex flex-wrap">
                   {images.map((image, index) => (
-                      <div key={index} className="relative mr-2 mb-2">
-                        <img src={URL.createObjectURL(image)} alt={`Upload ${index}`}
-                             className="h-20 w-20 object-cover rounded-lg"/>
-                        <button onClick={() => handleRemoveImage(index)}
-                                className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1">
-                          <FaTrashAlt/>
+                      <div key={index} className="relative m-2">
+                        <img src={URL.createObjectURL(image)} alt="" className="w-20 h-20 object-cover rounded-md" />
+                        <button type="button" onClick={() => handleRemoveImage(index)} className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full">
+                          <FaTrashAlt />
                         </button>
                       </div>
                   ))}
+
                 </div>
               </div>
             </div>
@@ -262,55 +265,83 @@ const CreateProduct = () => {
             <div id="price" ref={priceRef} className="bg-white p-6 rounded-lg shadow-md mb-6">
               <h2 className="text-lg font-semibold mb-4">Price Details</h2>
               <div className="mb-4">
-                <label htmlFor="basePrice" className="block font-semibold mb-2">Base Price</label>
-                <input type="text" id="basePrice" name="basePrice" value={formData.basePrice}
-                       onChange={handleInputChange} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500" />
+                <label className="block mb-2">Base Price</label>
+                <input type="number" name="basePrice" value={formData.basePrice} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-md" />
               </div>
-              <div className="mb-4 flex items-center">
-                <input type="checkbox" id="isDiscount" name="isDiscount" checked={isDiscount} onChange={(e) => setIsDiscount(e.target.checked)} className="mr-2" />
-                <label htmlFor="isDiscount" className="font-semibold">Apply Discount</label>
+              <div className="mb-4">
+                <label className="block mb-2">Discounted Price</label>
+                <input type="number" name="discountPrice" value={formData.discountPrice} onChange={handleInputChange} disabled={!isDiscount} className="w-full p-2 border border-gray-300 rounded-md" />
               </div>
-              {isDiscount && (
-                  <div className="mb-4">
-                    <label htmlFor="discountPrice" className="block font-semibold mb-2">Discount Price</label>
-                    <input type="text" id="discountPrice" name="discountPrice" value={formData.discountPrice} onChange={handleInputChange} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500" />
-                  </div>
-              )}
+              <div className="flex items-center mb-4">
+                <input type="checkbox" name="isDiscount" checked={isDiscount} onChange={() => setIsDiscount(!isDiscount)} className="mr-2" />
+                <label>Apply Discount</label>
+              </div>
             </div>
 
-            <div id="shipping" ref={shippingRef} className="bg-white p-6 rounded-lg shadow-md">
+            <div id="shipping" ref={shippingRef} className="bg-white p-6 rounded-lg shadow-md mb-6">
               <h2 className="text-lg font-semibold mb-4">Shipping Information</h2>
-              <div className="mb-4 flex items-center">
-                <input type="checkbox" id="isFreeShipping" name="isFreeShipping" checked={isFreeShipping} onChange={(e) => setIsFreeShipping(e.target.checked)} className="mr-2" />
-                <label htmlFor="isFreeShipping" className="font-semibold">Free Shipping</label>
+              <div className="mb-4">
+                <label className="block mb-2">Shipping Cost</label>
+                <input type="number" name="shippingCost" value={formData.shippingCost} onChange={handleInputChange} disabled={isFreeShipping} className="w-full p-2 border border-gray-300 rounded-md" />
               </div>
-              {!isFreeShipping && (
-                  <div className="mb-4">
-                    <label htmlFor="shippingCost" className="block font-semibold mb-2">Shipping Cost</label>
-                    <input type="text" id="shippingCost" name="shippingCost" value={formData.shippingCost} onChange={handleInputChange} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500" />
-                  </div>
-              )}
+              <div className="flex items-center mb-4">
+                <input type="checkbox" name="isFreeShipping" checked={formData.isFreeShipping} onChange={handleFreeShippingChange} className="mr-2" />
+                <label>Free Shipping</label>
+              </div>
             </div>
 
-            <div className="flex justify-end mt-6">
-              <button onClick={handleNextClick } className="bg-blue-500 text-white px-4 py-2 rounded-lg">Next</button>
-            </div>
+            <button className="px-4 py-2 bg-blue-500 text-white rounded-md focus:outline-none" onClick={handleNextClick}>Next</button>
           </div>
         </div>
 
-        {/* Success Toast Notification */}
-        <ToastContainer />
+        {/* Category Selection Popup */}
+        {popupVisible && (
+            <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
+              <div className="bg-white p-6 rounded-lg shadow-md w-11/12 max-w-3xl">
+                <h2 className="text-lg font-semibold mb-4">Select Product Category</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  {categories.map((category) => (
+                      <div key={category.name} className="p-4 border border-gray-300 rounded-md cursor-pointer" onClick={() => handleCategoryClick(category)}>
+                        <h3 className="font-semibold">{category.name}</h3>
+                        <p>{category.description}</p>
+                      </div>
+                  ))}
+                </div>
+                <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md focus:outline-none" onClick={handleClosePopup}>Close</button>
+              </div>
+            </div>
+        )}
 
-        {confirmationPopupVisible    && (
+        {/* Individual Description Selection Popup */}
+        {individualPopupVisible && (
+            <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
+              <div className="bg-white p-6 rounded-lg shadow-md w-11/12 max-w-3xl">
+                <h2 className="text-lg font-semibold mb-4">Select Category Description</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  {individualDescriptions.map((description) => (
+                      <div key={description} className="p-4 border border-gray-300 rounded-md cursor-pointer" onClick={() => handleDescriptionClick(description)}>
+                        <p>{description}</p>
+                      </div>
+                  ))}
+                </div>
+                <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md focus:outline-none" onClick={() => setIndividualPopupVisible(false)}>Close</button>
+              </div>
+            </div>
+        )}
+
+        {/* Confirmation Popup */}
+        {confirmationPopupVisible && (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-              <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
+              <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg max-h-[100vh] overflow-y-auto">
                 <h2 className="text-lg font-semibold mb-4">Save Product</h2>
                 <p>Do you want to save the product with the following details?</p>
                 <div className="mt-4">
                   <h3 className="font-semibold">Basic Information</h3>
                   <p><strong>Title:</strong> {formData.title}</p>
                   <p><strong>Category:</strong> {formData.categoryDescription}</p>
-                  <p><strong>Description:</strong> {formData.description}</p>
+                  <div className="overflow-y-auto max-h-32"> {/* Add scrolling to description if needed */}
+                    <p><strong>Description:</strong> {formData.description}</p>
+                  </div>
                 </div>
                 <div className="mt-4">
                   <h3 className="font-semibold">Price Details</h3>
@@ -320,61 +351,43 @@ const CreateProduct = () => {
                 <div className="mt-4">
                   <h3 className="font-semibold">Shipping Information</h3>
                   <p><strong>Free Shipping:</strong> {formData.isFreeShipping ? 'Yes' : 'No'}</p>
-                  {!isFreeShipping && <p><strong>Shipping Cost:</strong> {formData.shippingCost}</p>}
+                  {!formData.isFreeShipping && <p><strong>Shipping Cost:</strong> {formData.shippingCost}</p>}
                 </div>
                 <div className="mt-4">
                   <h3 className="font-semibold">Images</h3>
                   <div className="flex flex-wrap">
                     {images.map((image, index) => (
-                        <img key={index} src={URL.createObjectURL(image)} alt={`Upload ${index}`} className="h-20 w-20 object-cover rounded-lg mr-2 mb-2" />
+                        <img
+                            key={index}
+                            src={URL.createObjectURL(image)}
+                            alt={`Upload ${index}`}
+                            className="h-20 w-20 object-cover rounded-lg mr-2 mb-2"
+                        />
                     ))}
                   </div>
                 </div>
                 <div className="flex justify-end mt-4">
-                  <button onClick={handleSaveProduct} className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2">Save</button>
-                  <button onClick={handleClosePopup} className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg">Cancel</button>
+                  <button onClick={handleSaveProduct} className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2">
+                    Save
+                  </button>
+                  <button onClick={handleClosePopup} className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg">
+                    Cancel
+                  </button>
                 </div>
               </div>
             </div>
         )}
 
-        {/* Category Popup */}
-        {popupVisible && (
-            <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white p-6 rounded-lg shadow-lg w-full lg:w-1/2">
-                <h2 className="text-lg font-semibold mb-4">Select a Category</h2>
-                <ul className="divide-y divide-gray-300">
-                  {categories.map((category) => (
-                      <li key={category._id} className="py-2 cursor-pointer hover:bg-gray-100" onClick={() => handleCategoryClick(category)}>
-                        <p className="text-blue-500 font-semibold">{category.name}</p>
-                      </li>
-                  ))}
-                </ul>
-                <button onClick={handleClosePopup} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg focus:outline-none">Close</button>
-              </div>
-            </div>
-        )}
 
-        {/* Individual Description Popup */}
-        {individualPopupVisible  && (
-            <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white p-6 rounded-lg shadow-lg w-full lg:w-1/2">
-                <h2 className="text-lg font-semibold mb-4">Select a Description</h2>
-                <ul className="divide-y divide-gray-300">
-                  {individualDescriptions.map((description, index) => (
-                      <li key={index} className="py-2 cursor-pointer hover:bg-gray-100" onClick={() => handleDescriptionClick(description)}>
-                        <p className="text-blue-500 font-semibold">{description}</p>
-                      </li>
-                  ))}
-                </ul>
-                <button onClick={() => setIndividualPopupVisible(false)} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg focus:outline-none">Close</button>
-              </div>
-            </div>
-        )}
-
-
+        {/* Toast Notification */}
+        <ToastContainer/>
       </div>
   );
 };
 
 export default CreateProduct;
+
+
+
+
+
