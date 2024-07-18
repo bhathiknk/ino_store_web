@@ -46,6 +46,7 @@ const Dashboard = () => {
 
     return (
         <div className="min-h-screen p-4 bg-gray-100">
+
             <Navbar />
 
             <div className="flex justify-between items-center mt-6 mb-4">
@@ -61,7 +62,7 @@ const Dashboard = () => {
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         {products.map((product) => (
-                            <div key={product._id} className="bg-gray-100 border p-1 rounded-lg flex flex-col items-center">
+                            <Link to={`/product/${product._id}`} key={product._id} className="bg-gray-100 border p-1 rounded-lg flex flex-col items-center">
                                 <div className="mb-3 relative group">
                                     <div className="w-full relative">
                                         {product.images && product.images.length > 0 && (
@@ -96,9 +97,9 @@ const Dashboard = () => {
                                 </div>
                                 <div className="text-center mb-2">
                                     <div className="font-bold">{product.name}</div>
-                                    <div className="text-green-500">LKR{product.price}</div>
+                                    <div className="text-green-500">LKR{product.basePrice}</div>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 )}

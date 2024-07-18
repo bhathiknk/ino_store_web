@@ -5,12 +5,12 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    categoryDescription: {
+        type: String,
+        required: true,
+    },
     description: {
         type: String,
-    },
-    price: {
-        type: Number,
-        required: true,
     },
     images: [
         {
@@ -22,6 +22,24 @@ const productSchema = new mongoose.Schema({
         ref: 'Admin',
         required: true,
     },
+    isDiscount: {
+        type: Boolean,
+        default: false,
+    },
+    basePrice: {
+        type: Number,
+        required: true,
+    },
+    discountPrice: {
+        type: Number,
+    },
+    isFreeShipping: {
+        type: Boolean,
+        default: false,
+    },
+    shippingCost: {
+        type: Number,
+    }
 }, {
     timestamps: true,
 });
