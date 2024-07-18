@@ -97,7 +97,16 @@ const Dashboard = () => {
                                 </div>
                                 <div className="text-center mb-2">
                                     <div className="font-bold">{product.name}</div>
-                                    <div className="text-green-500">LKR{product.basePrice}</div>
+                                    {product.isDiscount ? (
+                                        <p className="mb-4">
+                                            <span className="text-red-500 line-through">LKR {product.basePrice}</span>
+                                            {' '}
+                                            <div></div>
+                                            <span className="text-green-500 font-bold">Discounted Price: LKR {product.discountPrice}</span>
+                                        </p>
+                                    ) : (
+                                        <p className="text-green-500 mb-4">LKR: {product.basePrice}</p>
+                                    )}
                                 </div>
                             </Link>
                         ))}
