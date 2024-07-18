@@ -62,53 +62,46 @@ const Dashboard = () => {
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         {products.map((product) => (
-                            <Link to={`/product/${product._id}`} key={product._id} className="bg-gray-100 border p-1 rounded-lg flex flex-col items-center">
-                                <div className="mb-3 relative group">
-                                    <div className="w-full relative">
-                                        {product.images && product.images.length > 0 && (
-                                            <div className="relative w-full">
-                                                <img
-                                                    src={`http://localhost:5000${product.images[currentImageIndices[product._id]]}`}
-                                                    alt={product.name}
-                                                    className="h-40 w-full object-cover rounded-lg shadow-md cursor-pointer"
-                                                />
-                                            </div>
-                                        )}
-                                        {product.images.length > 1 && (
-                                            <div className="mt-2 flex items-center justify-center">
-                                                <button
-                                                    className="bg-black bg-opacity-40 text-black px-2 py-1 rounded-l-md mr-2"
-                                                    onClick={() => prevImage(product._id)}
-                                                >
-                                                    &lt;
-                                                </button>
-                                                <div className="text-black px-2 py-1">
-                                                    {currentImageIndices[product._id] + 1} / {product.images.length}
-                                                </div>
-                                                <button
-                                                    className="bg-black bg-opacity-40 text-black px-2 py-1 rounded-r-md ml-2"
-                                                    onClick={() => nextImage(product._id)}
-                                                >
-                                                    &gt;
-                                                </button>
-                                            </div>
-                                        )}
+                            <div key={product._id} className="bg-gray-100 border p-1 rounded-lg flex flex-col items-center">
+                                <Link to={`/product/${product._id}`} className="w-full h-40 relative group">
+                                    <img
+                                        src={`http://localhost:5000${product.images[currentImageIndices[product._id]]}`}
+                                        alt={product.name}
+                                        className="h-40 w-full object-cover rounded-lg shadow-md cursor-pointer"
+                                    />
+                                </Link>
+                                {product.images.length > 1 && (
+                                    <div className="mt-2 flex items-center justify-center">
+                                        <button
+                                            className="bg-black bg-opacity-20 text-white px-2 py-1 rounded-l-md mr-2"
+                                            onClick={(e) => { e.preventDefault(); prevImage(product._id); }}
+                                        >
+                                            &lt;
+                                        </button>
+                                        <div className="text-black px-2 py-1 ">
+                                            {currentImageIndices[product._id] + 1} / {product.images.length}
+                                        </div>
+                                        <button
+                                            className="bg-black bg-opacity-20 text-white px-2 py-1 rounded-r-md ml-2"
+                                            onClick={(e) => { e.preventDefault(); nextImage(product._id); }}
+                                        >
+                                            &gt;
+                                        </button>
                                     </div>
-                                </div>
-                                <div className="text-center mb-2">
+                                )}
+                                <div className="text-center mt-2 mb-2">
                                     <div className="font-bold">{product.name}</div>
                                     {product.isDiscount ? (
                                         <p className="mb-4">
                                             <span className="text-red-500 line-through">LKR {product.basePrice}</span>
                                             {' '}
-                                            <div></div>
                                             <span className="text-green-500 font-bold">Discounted Price: LKR {product.discountPrice}</span>
                                         </p>
                                     ) : (
                                         <p className="text-green-500 mb-4">LKR: {product.basePrice}</p>
                                     )}
                                 </div>
-                            </Link>
+                            </div>
                         ))}
                     </div>
                 )}
