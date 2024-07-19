@@ -28,6 +28,8 @@ const ProductDetails = () => {
         return <div>Loading...</div>;
     }
 
+    const stockStatus = product.quantity > 0 ? 'In Stock' : 'Out of Stock';
+
     const settingsMain = {
         dots: false,
         infinite: true,
@@ -46,7 +48,6 @@ const ProductDetails = () => {
         vertical: false,
         centerMode: true,
         ref: (slider) => setNav2(slider),
-
     };
 
     return (
@@ -79,7 +80,7 @@ const ProductDetails = () => {
                                             src={`http://localhost:5000${image}`}
                                             alt={product.name}
                                             className="object-cover w-full h-24 rounded-lg"
-                                            style={{width: '6rem', height: '6rem'}} // Ensuring square size
+                                            style={{ width: '6rem', height: '6rem' }} // Ensuring square size
                                         />
                                     </div>
                                 ))}
@@ -104,15 +105,13 @@ const ProductDetails = () => {
                 <p className="text-gray-700 mb-4">
                     {product.isFreeShipping ? 'Free Shipping' : `Shipping Cost: LKR ${product.shippingCost}`}
                 </p>
+                <p className="text-gray-700 mb-4">Quantity: {product.quantity}</p>
+                <p className={`mb-4 ${stockStatus === 'In Stock' ? 'text-green-500' : 'text-red-500'}`}>
+                    {stockStatus}
+                </p>
             </div>
-
         </div>
     );
 };
 
 export default ProductDetails;
-
-
-
-
-

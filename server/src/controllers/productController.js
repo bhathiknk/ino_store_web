@@ -3,7 +3,7 @@ const path = require('path');
 
 // Add product with images
 exports.addProduct = async (req, res) => {
-    const { title, categoryDescription, description, basePrice, discountPrice, isDiscount, isFreeShipping, shippingCost } = req.body;
+    const { title, categoryDescription, description, basePrice, discountPrice, isDiscount, isFreeShipping, shippingCost, quantity } = req.body;
     const adminId = req.admin._id;
 
     try {
@@ -21,7 +21,9 @@ exports.addProduct = async (req, res) => {
             basePrice,
             discountPrice,
             isFreeShipping: isFreeShipping === 'true', // Convert to boolean
-            shippingCost: isFreeShipping === 'true' ? 0 : shippingCost // Adjust shipping cost based on isFreeShipping
+            shippingCost: isFreeShipping === 'true' ? 0 : shippingCost, // Adjust shipping cost based on isFreeShipping
+            quantity,
+            inStock: quantity > 0 // Set inStock based on quantity
         });
 
         const savedProduct = await product.save();

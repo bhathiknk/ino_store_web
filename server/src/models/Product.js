@@ -39,6 +39,15 @@ const productSchema = new mongoose.Schema({
     },
     shippingCost: {
         type: Number,
+    },
+    quantity: {
+        type: Number,
+        required: true,
+        min: 0,
+    },
+    inStock: {
+        type: Boolean,
+        default: true,
     }
 }, {
     timestamps: true,
