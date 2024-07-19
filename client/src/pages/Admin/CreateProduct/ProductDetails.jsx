@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const ProductDetails = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [nav1, setNav1] = useState(null);
     const [nav2, setNav2] = useState(null);
@@ -27,6 +28,10 @@ const ProductDetails = () => {
     if (!product) {
         return <div>Loading...</div>;
     }
+
+    const handleUpdateClick = () => {
+        navigate(`/update-product/${id}`);
+    };
 
     const stockStatus = product.quantity > 0 ? 'In Stock' : 'Out of Stock';
 
@@ -55,7 +60,7 @@ const ProductDetails = () => {
             <div className="flex flex-col w-full md:w-1/2 md:mr-4">
                 <div className="w-full mb-2">
                     {product.images && product.images.length > 0 && (
-                        <div className="w-full h-96 bg-white border border-gray-300 rounded-lg ">
+                        <div className="w-full h-96 bg-white border border-gray-300 rounded-lg">
                             <Slider {...settingsMain}>
                                 {product.images.map((image, index) => (
                                     <div key={index} className="h-96">
@@ -70,9 +75,9 @@ const ProductDetails = () => {
                         </div>
                     )}
                 </div>
-                <div className="w-full flex justify-center">
+                <div className="w-full flex flex-col items-center">
                     {product.images && product.images.length > 0 && (
-                        <div className="w-2/3 bg-black rounded-lg ">
+                        <div className="w-2/3 bg-black rounded-lg mb-4">
                             <Slider {...settingsThumbs}>
                                 {product.images.map((image, index) => (
                                     <div key={index} className="p-1">
@@ -87,6 +92,14 @@ const ProductDetails = () => {
                             </Slider>
                         </div>
                     )}
+                    <div className="flex justify-around w-full mt-4">
+                        <button onClick={handleUpdateClick} className="bg-blue-500 text-white py-2 px-4 rounded">
+                            Update Product
+                        </button>
+                        <button className="bg-red-500 text-white py-2 px-4 rounded">
+                            Delete Product
+                        </button>
+                    </div>
                 </div>
             </div>
             <div className="flex-1 p-4 bg-white border border-gray-300 rounded-lg ml-4">
