@@ -46,16 +46,13 @@ const Dashboard = () => {
 
     return (
         <div className="min-h-screen p-4 bg-gray-100">
-
             <Navbar />
-
             <div className="flex justify-between items-center mt-6 mb-4">
                 <div className="text-lg">Products</div>
                 <Link to="/create-product" className="bg-blue-500 text-white py-2 px-4 rounded">
                     + Create New Product
                 </Link>
             </div>
-
             <div className="bg-white shadow-md rounded-lg p-6">
                 {products.length === 0 ? (
                     <div className="text-center text-gray-500">No products available. Please add some products.</div>
@@ -89,11 +86,11 @@ const Dashboard = () => {
                                         </button>
                                     </div>
                                 )}
-                                <div className="text-center mt-2 mb-2">
+                                <div className="text-center mt-3 mb-2">
                                     <div className="font-bold">{product.name}</div>
                                     {product.isDiscount ? (
                                         <p className="mb-4">
-                                            <span className="text-red-500 line-through">LKR {product.basePrice}</span>
+                                            <span className="text-red-500 line-through ">LKR {product.basePrice}</span>
                                             {' '}
                                             <div></div>
                                             <span className="text-green-500 font-bold">Discounted Price: LKR {product.discountPrice}</span>
@@ -101,7 +98,9 @@ const Dashboard = () => {
                                     ) : (
                                         <p className="text-green-500 mb-4">LKR: {product.basePrice}</p>
                                     )}
-
+                                    <p className={`mb-4 ${product.quantity > 0 ? 'text-green-500' : 'text-red-500'}`}>
+                                        {product.quantity > 0 ? 'In Stock' : 'Out of Stock'}
+                                    </p>
                                 </div>
                             </div>
                         ))}
