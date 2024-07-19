@@ -58,3 +58,56 @@ exports.getProductById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+// Update product with images
+exports.updateProduct = async (req, res) => {
+    const { id } = req.params;
+    const {
+        name,
+        categoryDescription,
+        description,
+        basePrice,
+        discountPrice,
+        isDiscount,
+        isFreeShipping,
+        shippingCost,
+        quantity,
+        removedImages = []
+    } = req.body;
+
+    try {
+        const product = await Product.findById(id);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        let images = product.images;
+
+        // Add newly uploaded images
+        if (req.files && req.files.length > 0) {
+            images = [...images, ...req.files.map(file => `/uploads/products/${file.filename}`)];
+        }
+
+        // Remove images marked for deletion
+        images = images.filter(image => !removedImages.includes(image));
+
+        // Ensure fields are correctly cast to their expected types
+        product.name = name || product.name;
+        product.categoryDescription = categoryDescription || product.categoryDescription;
+        product.description = description || product.description;
+        product.basePrice = Number(basePrice) || product.basePrice;
+        product.discountPrice = isDiscount === 'true' ? Number(discountPrice) : null; // Only set if discount is applied
+        product.isDiscount = isDiscount === 'true';
+        product.isFreeShipping = isFreeShipping === 'true';
+        product.shippingCost = isFreeShipping === 'true' ? 0 : Number(shippingCost) || product.shippingCost;
+        product.quantity = Number(quantity) || product.quantity;
+        product.images = images;
+        product.inStock = product.quantity > 0;
+
+        const updatedProduct = await product.save();
+
+        res.status(200).json(updatedProduct);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

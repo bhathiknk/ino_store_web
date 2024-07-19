@@ -93,9 +93,7 @@ const CreateProduct = () => {
     setImages([]);
   };
 
-  const handleClosePopup = () => {
-    setPopupVisible(false);
-  };
+
 
   const handleSaveProduct = async () => {
     try {
@@ -153,8 +151,6 @@ const CreateProduct = () => {
     setFormData({ ...formData, isFreeShipping: !isFreeShipping });
   };
 
-
-
   useEffect(() => {
     const observerCallback = (entries) => {
       entries.forEach((entry) => {
@@ -184,7 +180,6 @@ const CreateProduct = () => {
       if (stockRefCurrent) observer.unobserve(stockRefCurrent);
     };
   }, []);
-
 
   useEffect(() => {
     // Fetch categories from backend when component mounts
@@ -237,28 +232,25 @@ const CreateProduct = () => {
         {/* Content */}
         <div className="flex flex-grow mt-20">
           {/* Main Content */}
-          <div className="flex-grow p-6 lg:p-12 ">
-            <div id="basic" ref={basicRef} className="bg-white p-6 rounded-lg shadow-md mb-6">
-              <h2 className="text-lg font-semibold mb-4">Basic Information</h2>
+          <div className="flex-grow container mx-auto p-4">
+            {/* Basic Information Section */}
+            <section id="basic" ref={basicRef} className="bg-white p-4 rounded-lg shadow-md mb-4">
+              <h2 className="text-xl font-semibold mb-4">Basic Information</h2>
               <div className="mb-4">
-                <label className="block mb-2">Product Title</label>
-                <input type="text" name="title" value={formData.title} onChange={handleInputChange}
-                       className="w-full p-2 border border-gray-300 rounded-md"/>
+                <label htmlFor="title" className="block text-sm font-medium text-gray-700">Product Title</label>
+                <input type="text" id="title" name="title" value={formData.title} onChange={handleInputChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
               </div>
               <div className="mb-4">
-                <label className="block mb-2">Product Category</label>
-                <input type="text" name="categoryDescription" value={formData.categoryDescription}
-                       onClick={() => setPopupVisible(true)} readOnly
-                       className="w-full p-2 border border-gray-300 rounded-md cursor-pointer"/>
+                <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category Description</label>
+                <input type="text" id="categoryDescription" name="categoryDescription" value={formData.categoryDescription} onChange={handleInputChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" readOnly onClick={() => setPopupVisible(true)} />
               </div>
               <div className="mb-4">
-                <label className="block mb-2">Product Description</label>
-                <textarea name="description" value={formData.description} onChange={handleInputChange}
-                          className="w-full p-2 border border-gray-300 rounded-md"></textarea>
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700">Product Description</label>
+                <textarea id="description" name="description" value={formData.description} onChange={handleInputChange} rows="4" className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
               </div>
               <div className="mb-4">
-                <label className="block mb-2">Product Images</label>
-                <input type="file" accept="image/*" multiple onChange={handleImageUpload} className="w-full"/>
+                <label htmlFor="images" className="block text-sm font-medium text-gray-700">Product Images (up to 5)</label>
+                <input type="file" id="images" name="images" onChange={handleImageUpload} multiple className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
                 <div className="mt-2 flex flex-wrap">
                   {images.map((image, index) => (
                       <div key={index} className="relative m-2">
@@ -269,96 +261,112 @@ const CreateProduct = () => {
                         </button>
                       </div>
                   ))}
-
                 </div>
               </div>
-            </div>
+            </section>
 
-            <div id="price" ref={priceRef} className="bg-white p-6 rounded-lg shadow-md mb-6">
-              <h2 className="text-lg font-semibold mb-4">Price Details</h2>
+            {/* Price Details Section */}
+            <section id="price" ref={priceRef} className="bg-white p-4 rounded-lg shadow-md mb-4">
+              <h2 className="text-xl font-semibold mb-4">Price Details</h2>
               <div className="mb-4">
-                <label className="block mb-2">Base Price</label>
-                <input type="number" name="basePrice" value={formData.basePrice} onChange={handleInputChange}
-                       className="w-full p-2 border border-gray-300 rounded-md"/>
+                <label htmlFor="basePrice" className="block text-sm font-medium text-gray-700">Base Price ($)</label>
+                <input type="number" id="basePrice" name="basePrice" value={formData.basePrice} onChange={handleInputChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
               </div>
+              <div className="mb-4 flex items-center">
+                <input type="checkbox" id="isDiscount" name="isDiscount" checked={isDiscount} onChange={() => setIsDiscount(!isDiscount)} className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                <label htmlFor="isDiscount" className="ml-2 block text-sm font-medium text-gray-700">Apply Discount</label>
+              </div>
+              {isDiscount && (
+                  <div className="mb-4">
+                    <label htmlFor="discountPrice" className="block text-sm font-medium text-gray-700">Discount Price ($)</label>
+                    <input type="number" id="discountPrice" name="discountPrice" value={formData.discountPrice} onChange={handleInputChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                  </div>
+              )}
+            </section>
+
+            {/* Shipping Information Section */}
+            <section id="shipping" ref={shippingRef} className="bg-white p-4 rounded-lg shadow-md mb-4">
+              <h2 className="text-xl font-semibold mb-4">Shipping Information</h2>
+              <div className="mb-4 flex items-center">
+                <input type="checkbox" id="isFreeShipping" name="isFreeShipping" checked={isFreeShipping} onChange={handleFreeShippingChange} className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                <label htmlFor="isFreeShipping" className="ml-2 block text-sm font-medium text-gray-700">Free Shipping</label>
+              </div>
+              {!isFreeShipping && (
+                  <div className="mb-4">
+                    <label htmlFor="shippingCost" className="block text-sm font-medium text-gray-700">Shipping Cost ($)</label>
+                    <input type="number" id="shippingCost" name="shippingCost" value={formData.shippingCost} onChange={handleInputChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                  </div>
+              )}
+            </section>
+
+            {/* Stock Information Section */}
+            <section id="stock" ref={stockRef} className="bg-white p-4 rounded-lg shadow-md mb-4">
+              <h2 className="text-xl font-semibold mb-4">Stock Information</h2>
               <div className="mb-4">
-                <label className="block mb-2">Discounted Price</label>
-                <input type="number" name="discountPrice" value={formData.discountPrice} onChange={handleInputChange}
-                       disabled={!isDiscount} className="w-full p-2 border border-gray-300 rounded-md"/>
+                <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">Quantity</label>
+                <input type="number" id="quantity" name="quantity" value={formData.quantity} onChange={handleInputChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
               </div>
-              <div className="flex items-center mb-4">
-                <input type="checkbox" name="isDiscount" checked={isDiscount}
-                       onChange={() => setIsDiscount(!isDiscount)} className="mr-2"/>
-                <label>Apply Discount</label>
-              </div>
-            </div>
-
-            <div id="shipping" ref={shippingRef} className="bg-white p-6 rounded-lg shadow-md mb-6">
-              <h2 className="text-lg font-semibold mb-4">Shipping Information</h2>
-              <div className="mb-4">
-                <label className="block mb-2">Shipping Cost</label>
-                <input type="number" name="shippingCost" value={formData.shippingCost} onChange={handleInputChange}
-                       disabled={isFreeShipping} className="w-full p-2 border border-gray-300 rounded-md"/>
-              </div>
-              <div className="flex items-center mb-4">
-                <input type="checkbox" name="isFreeShipping" checked={formData.isFreeShipping}
-                       onChange={handleFreeShippingChange} className="mr-2"/>
-                <label>Free Shipping</label>
-              </div>
-            </div>
-
-            <div ref={stockRef} id="stock" className="bg-white p-4 rounded-lg shadow-md mb-4">
-              <h2 className="text-lg font-bold mb-4">Stock Information</h2>
-              <form>
-                <div className="mb-4">
-                  <label className="block text-gray-700 font-bold mb-2" htmlFor="quantity">Quantity</label>
-                  <input className="w-full p-2 border rounded-lg" id="quantity" name="quantity" type="number"
-                         value={formData.quantity} onChange={handleInputChange}/>
-                </div>
-
-              </form>
-            </div>
-
-            <button className="px-4 py-2 bg-blue-500 text-white rounded-md focus:outline-none"
-                    onClick={handleNextClick}>Next
+            </section>
+            <button
+                type="button"
+                onClick={handleNextClick}
+                className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow-md focus:outline-none hover:bg-blue-600"
+            >
+              Next
             </button>
           </div>
         </div>
 
-        {/* Category Selection Popup */}
+        {/* Popup for Category Description */}
         {popupVisible && (
-            <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
-              <div className="bg-white p-6 rounded-lg shadow-md w-11/12 max-w-3xl">
-                <h2 className="text-lg font-semibold mb-4">Select Product Category</h2>
-                <div className="grid grid-cols-2 gap-4">
-                  {categories.map((category) => (
-                      <div key={category.name} className="p-4 border border-gray-300 rounded-md cursor-pointer"
-                           onClick={() => handleCategoryClick(category)}>
-                        <h3 className="font-semibold">{category.name}</h3>
-                        <p>{category.description}</p>
-                      </div>
-                  ))}
-                </div>
-                <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md focus:outline-none"
-                        onClick={handleClosePopup}>Close
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <div className="bg-white p-4 rounded-md shadow-lg max-w-md w-full">
+                <h2 className="text-xl font-semibold mb-4">Category Descriptions</h2>
+                {categories.map((category, index) => (
+                    <div key={index} className="mb-2">
+                      <button
+                          type="button"
+                          onClick={() => handleCategoryClick(category)}
+                          className="w-full text-left py-2 px-4 border rounded-md shadow-sm hover:bg-gray-100"
+                      >
+                        {category.name}
+                      </button>
+                    </div>
+                ))}
+                <button
+                    type="button"
+                    onClick={() => setPopupVisible(false)}
+                    className="mt-4 w-full bg-red-500 text-white py-2 px-4 rounded-md shadow-md focus:outline-none hover:bg-red-600"
+                >
+                  Close
                 </button>
               </div>
             </div>
         )}
 
-        {/* Individual Description Selection Popup */}
+        {/* Popup for Individual Category Descriptions */}
         {individualPopupVisible && (
-            <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
-              <div className="bg-white p-6 rounded-lg shadow-md w-11/12 max-w-3xl">
-                <h2 className="text-lg font-semibold mb-4">Select Category Description</h2>
-                <div className="grid grid-cols-2 gap-4">
-                  {individualDescriptions.map((description) => (
-                      <div key={description} className="p-4 border border-gray-300 rounded-md cursor-pointer" onClick={() => handleDescriptionClick(description)}>
-                        <p>{description}</p>
-                      </div>
-                  ))}
-                </div>
-                <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md focus:outline-none" onClick={() => setIndividualPopupVisible(false)}>Close</button>
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <div className="bg-white p-4 rounded-md shadow-lg max-w-md w-full">
+                <h2 className="text-xl font-semibold mb-4">Select Description</h2>
+                {individualDescriptions.map((description, index) => (
+                    <div key={index} className="mb-2">
+                      <button
+                          type="button"
+                          onClick={() => handleDescriptionClick(description)}
+                          className="w-full text-left py-2 px-4 border rounded-md shadow-sm hover:bg-gray-100"
+                      >
+                        {description}
+                      </button>
+                    </div>
+                ))}
+                <button
+                    type="button"
+                    onClick={() => setIndividualPopupVisible(false)}
+                    className="mt-4 w-full bg-red-500 text-white py-2 px-4 rounded-md shadow-md focus:outline-none hover:bg-red-600"
+                >
+                  Close
+                </button>
               </div>
             </div>
         )}
@@ -366,50 +374,44 @@ const CreateProduct = () => {
         {/* Confirmation Popup */}
         {confirmationPopupVisible && (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-              <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg max-h-[100vh] overflow-y-auto">
-                <h2 className="text-lg font-semibold mb-4">Save Product</h2>
-                <p>Do you want to save the product with the following details?</p>
-                <div className="mt-4">
-                  <h3 className="font-semibold">Basic Information</h3>
-                  <p><strong>Title:</strong> {formData.title}</p>
-                  <p><strong>Category:</strong> {formData.categoryDescription}</p>
-                  <div className="overflow-y-auto max-h-32"> {/* Add scrolling to description if needed */}
-                    <p><strong>Description:</strong> {formData.description}</p>
+              <div className="bg-white p-4 rounded-md shadow-lg max-w-md w-full">
+                <h2 className="text-xl font-semibold mb-4">Confirm Save</h2>
+                <div className="mb-4">
+                  <p><strong>Product Title:</strong> {formData.title}</p>
+                  <p><strong>Category Description:</strong> {formData.categoryDescription}</p>
+                  <p><strong>Product Description:</strong> {formData.description}</p>
+                  <p><strong>Base Price:</strong> ${formData.basePrice}</p>
+                  {isDiscount && <p><strong>Discount Price:</strong> ${formData.discountPrice}</p>}
+                  <p><strong>Free Shipping:</strong> {isFreeShipping ? 'Yes' : 'No'}</p>
+                  {!isFreeShipping && <p><strong>Shipping Cost:</strong> ${formData.shippingCost}</p>}
+                  <p><strong>Quantity:</strong> {formData.quantity}</p>
+                  <div>
+                    <strong>Images:</strong>
+                    <div className="mt-2 flex flex-wrap">
+                      {images.map((image, index) => (
+                          <img
+                              key={index}
+                              src={URL.createObjectURL(image)}
+                              alt={`Product ${index + 1}`}
+                              className="w-20 h-20 object-cover rounded-md m-1"
+                          />
+                      ))}
+                    </div>
                   </div>
                 </div>
-                <div className="mt-4">
-                  <h3 className="font-semibold">Price Details</h3>
-                  <p><strong>Base Price:</strong> {formData.basePrice}</p>
-                  {isDiscount && <p><strong>Discount Price:</strong> {formData.discountPrice}</p>}
-                </div>
-                <div className="mt-4">
-                  <h3 className="font-semibold">Shipping Information</h3>
-                  <p><strong>Free Shipping:</strong> {formData.isFreeShipping ? 'Yes' : 'No'}</p>
-                  {!formData.isFreeShipping && <p><strong>Shipping Cost:</strong> {formData.shippingCost}</p>}
-                </div>
-                <div className="mt-4">
-                  <h3 className="font-semibold">Availability Information</h3>
-                  <li><strong>Quantity:</strong> {formData.quantity}</li>
-
-                </div>
-                <div className="mt-4">
-                  <h3 className="font-semibold">Images</h3>
-                  <div className="flex flex-wrap">
-                    {images.map((image, index) => (
-                        <img
-                            key={index}
-                            src={URL.createObjectURL(image)}
-                            alt={`Upload ${index}`}
-                            className="h-20 w-20 object-cover rounded-lg mr-2 mb-2"
-                        />
-                    ))}
-                  </div>
-                </div>
-                <div className="flex justify-end mt-4">
-                  <button onClick={handleSaveProduct} className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-2">
+                <div className="mt-4 flex justify-between">
+                  <button
+                      type="button"
+                      onClick={handleSaveProduct}
+                      className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-md focus:outline-none hover:bg-blue-600"
+                  >
                     Save
                   </button>
-                  <button onClick={handleClosePopup} className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg">
+                  <button
+                      type="button"
+                      onClick={() => setConfirmationPopupVisible(false)}
+                      className="bg-red-500 text-white py-2 px-4 rounded-md shadow-md focus:outline-none hover:bg-red-600"
+                  >
                     Cancel
                   </button>
                 </div>
@@ -418,15 +420,9 @@ const CreateProduct = () => {
         )}
 
 
-        {/* Toast Notification */}
-        <ToastContainer/>
+        <ToastContainer />
       </div>
   );
 };
 
 export default CreateProduct;
-
-
-
-
-
