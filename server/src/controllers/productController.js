@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const path = require('path');
+const fs = require('fs');
 
 // Add product with images
 exports.addProduct = async (req, res) => {
@@ -107,6 +108,33 @@ exports.updateProduct = async (req, res) => {
         const updatedProduct = await product.save();
 
         res.status(200).json(updatedProduct);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Delete product by ID
+exports.deleteProduct = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const product = await Product.findById(id);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        // Delete product images from the filesystem
+        product.images.forEach(image => {
+            const filePath = path.join(__dirname, '../', image);
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        });
+
+        // Delete product from the database
+        await Product.findByIdAndDelete(id);
+
+        res.status(200).json({ message: 'Product deleted successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

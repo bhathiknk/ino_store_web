@@ -33,6 +33,22 @@ const ProductDetails = () => {
         navigate(`/update-product/${id}`);
     };
 
+    const handleDeleteClick = async () => {
+        const token = localStorage.getItem('token'); // Adjust this according to how you store your token
+        try {
+            await axios.delete(`http://localhost:5000/api/products/products/delete/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            alert('Product deleted successfully');
+            navigate('/dashboard');
+        } catch (error) {
+            console.error('Error deleting product', error);
+            alert('Failed to delete product');
+        }
+    };
+
     const stockStatus = product.quantity > 0 ? 'In Stock' : 'Out of Stock';
 
     const settingsMain = {
@@ -96,7 +112,7 @@ const ProductDetails = () => {
                         <button onClick={handleUpdateClick} className="bg-blue-500 text-white py-2 px-4 rounded">
                             Update Product
                         </button>
-                        <button className="bg-red-500 text-white py-2 px-4 rounded">
+                        <button onClick={handleDeleteClick} className="bg-red-500 text-white py-2 px-4 rounded">
                             Delete Product
                         </button>
                     </div>
