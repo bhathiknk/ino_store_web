@@ -58,7 +58,9 @@ const ProductDetails = () => {
                 </div>
                 <div className={product.inStock ? 'text-green-400' : 'text-red-400'}>{product.inStock ? 'In Stock' : 'Out of Stock'}</div>
                 <HorizontalLine />
-                <div>Etc</div>
+                <div>
+                    <span className="font-semibold font-kanit" >Discount: {product.discount}</span>
+                </div>
                 <HorizontalLine />
                 <div>Quantity</div>
                 <HorizontalLine />

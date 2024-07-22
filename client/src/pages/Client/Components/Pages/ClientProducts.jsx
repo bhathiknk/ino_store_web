@@ -2,10 +2,11 @@ export const products = [
     {
       id: "1",
       name: "Humanoid Robot",
-      description: "This is a humanoid robot use for secuirty purpose bomb detections and indoor and outdoor works",
+      description: "Humanoid robots are robots designed to resemble and mimic human form and behavior. They typically have a torso, a head, two arms, and two legs, enabling them to perform tasks in environments built for humans. These robots are equipped with sensors, cameras, and microphones to perceive their surroundings, as well as actuators and motors to move and interact with objects. Humanoid robots are used in various fields, including healthcare, customer service, education, and entertainment, demonstrating capabilities like walking, talking, recognizing faces, and even expressing emotions. They hold significant potential for assisting humans in everyday tasks, enhancing productivity, and improving the quality of life.is is a humanoid robot use for secuirty purpose bomb detections and indoor and outdoor works ",
       price: 2999,
       brand: "Tesla",
       category: "Robots",
+      discount:"10%",
       inStock: true,
       images: [
         {
@@ -43,6 +44,7 @@ export const products = [
       price: 102.99,
       brand: "Kalashnikov",
       category: "Cloths",
+      discount:"50%",
       inStock: true,
       images: [
         {
@@ -75,6 +77,7 @@ export const products = [
       price: 40,
       brand: "Apple",
       category: "Phone",
+      discount:"20%",
       inStock: true,
       images: [
         {
@@ -117,6 +120,7 @@ export const products = [
       price: 70,
       brand: "DJI",
       category: "Drones",
+      discount:"18%",
       inStock: true,
       images: [
         {
@@ -147,6 +151,7 @@ export const products = [
       price: 50,
       brand: "Nerunsa",
       category: "Watch",
+      discount:"5%",
       inStock: true,
       images: [
         {
@@ -184,6 +189,7 @@ export const products = [
     price: 2999,
     brand: "Tesla",
     category: "Robots",
+    discount:"60%",
     inStock: true,
     images: [
       {
@@ -203,7 +209,7 @@ export const products = [
         userId: "3",
         productId: "3",
         rating: 4,
-        comment: "GHumanoid robots are robots designed to resemble and mimic human form and behavior. They typically have a torso, a head, two arms, and two legs, enabling them to perform tasks in environments built for humans. These robots are equipped with sensors, cameras, and microphones to perceive their surroundings, as well as actuators and motors to move and interact with objects. Humanoid robots are used in various fields, including healthcare, customer service, education, and entertainment, demonstrating capabilities like walking, talking, recognizing faces, and even expressing emotions. They hold significant potential for assisting humans in everyday tasks, enhancing productivity, and improving the quality of life.reat, but a bit expensive. sbvwbrvwb vw fwh fwfw f wufbowi fw fbwfbwhf whfjhbfbjhejejejejejejejejejejejejejejejejewfbwfw fj4bfb4",
+        comment: "Humanoid robots are robots designed to resemble and mimic human form and behavior. They typically have a torso, a head, two arms, and two legs, enabling them to perform tasks in environments built for humans. These robots are equipped with sensors, cameras, and microphones to perceive their surroundings, as well as actuators and motors to move and interact with objects. Humanoid robots are used in various fields, including healthcare, customer service, education, and entertainment, demonstrating capabilities like walking, talking, recognizing faces, and even expressing emotions. They hold significant potential for assisting humans in everyday tasks, enhancing productivity, and improving the quality of life.reat, but a bit expensive. sbvwbrvwb vw fwh fwfw f wufbowi fw fbwfbwhf whfjhbfbjhejejejejejejejejejejejejejejejejewfbwfw fj4bfb4",
         createdDate: "2024-07-14T10:00:00.000Z",
         user: {
           id: "3",
@@ -222,6 +228,7 @@ export const products = [
     price: 2999,
     brand: "Tesla",
     category: "Robots",
+    discount:"10%",
     inStock: true,
     images: [
       {
@@ -260,6 +267,7 @@ export const products = [
     price: 2999,
     brand: "Tesla",
     category: "Robots",
+    discount:"10%",
     inStock: true,
     images: [
       {
