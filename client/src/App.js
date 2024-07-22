@@ -4,6 +4,10 @@ import CreateProduct from './pages/Admin/CreateProduct/CreateProduct';
 import Signup from './pages/Admin/AdminLoging/Signup';
 import Signin from './pages/Admin/AdminLoging/Signin';
 import Layout from './pages/Client/Components/Pages/Layout';
+import Cart from './pages/Client/Components/Pages/Cart/Cart';
+import ProductDetails from './pages/Client/Components/Pages/ProductDetails/ProductDetails';
+
+
 
 
 function App() {
@@ -15,6 +19,11 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/create-product" element={<CreateProduct />} />
                 <Route path="/client" element={<Layout />} />
+                <Route path="/cart" element={<Cart />} />
+                
+                <Route path="/product/:id" element={<ProductDetails />} />
+               
+              
                 
             </Routes>
         </Router>

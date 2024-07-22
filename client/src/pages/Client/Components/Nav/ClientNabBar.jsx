@@ -11,7 +11,7 @@ export default function ClientNabBar() {
             <Link href="/"> E-Com-Innovation-Web-Logo</Link>
             <div className="hidden md:block">search</div>
             <div className="flex items-center gap-8 md-gap-12">
-              <div>Cart</div>
+              <div> <a href="/cart"> Cart</a></div>
               <div>UserMenue</div>
             </div>
           </div>

@@ -1,0 +1,73 @@
+import React from "react";
+import { useParams } from "react-router-dom";
+import { products } from "../ClientProducts";
+import { Rating } from "@mui/material";
+import ClientNabBar from "../../Nav/ClientNabBar";
+import ClientFooter from "../../Footer/ClientFooter";
+
+const ProductDetails = () => {
+  // Calculate average rating from reviews
+  const calculateAverageRating = (reviews) => {
+    if (reviews.length === 0) return 0;
+    const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
+    return totalRating / reviews.length;
+  };
+
+  const HorizontalLine = () => {
+    return <hr className="w-[30%] my-2"></hr>;
+  };
+
+  const { id } = useParams(); // Extract ID from URL
+  const product = products.find((p) => p.id === id);
+
+  if (!product) {
+    return <div>Product not found</div>;
+  }
+
+  // Compute average rating
+  const averageRating = calculateAverageRating(product.reviews);
+
+  return (
+    <div>
+      <div className="flex flex-col min-h-screen">
+        <ClientNabBar />
+        <main className="flex-grow py-6 md:py-8 lg:py-12">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div>Images</div>
+              <div className="flex flex-col gap-1 text-slate-500 text-sm">
+                <h2 className="text-3xl font-medium text-slate-700">
+                  {product.name}
+                </h2>
+                <div className="flex items-center gap-2">
+                  <Rating value={averageRating} readOnly />
+                  <div>{product.reviews.length} reviews</div>
+                </div>
+                <HorizontalLine />
+                <div className="text-justify">{product.description}</div>
+                <HorizontalLine />
+                <div>
+                  <span className="font-semibold">
+                    CATEGORY: {product.category}
+                  </span>
+                </div>
+                <div>
+                  <span className="font-semibold ">
+                    BRAND: {product.brand}
+                  </span>
+                </div>
+                <div className={product.inStock ? 'text-green-400' : 'text-red-400'}>{product.inStock ? 'In Stock' : 'Out of Stock'}</div>
+                <HorizontalLine />
+                <HorizontalLine />
+                <HorizontalLine />
+              </div>
+            </div>
+          </div>
+        </main>
+        <ClientFooter />
+      </div>
+    </div>
+  );
+};
+
+export default ProductDetails;
