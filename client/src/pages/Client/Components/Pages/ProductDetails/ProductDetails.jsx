@@ -47,19 +47,22 @@ const ProductDetails = () => {
                 <div className="text-justify">{product.description}</div>
                 <HorizontalLine />
                 <div>
-                  <span className="font-semibold">
+                  <span className="font-semibold font-nunito ">
                     CATEGORY: {product.category}
                   </span>
                 </div>
                 <div>
-                  <span className="font-semibold ">
+                  <span className="font-semibold font-nunito ">
                     BRAND: {product.brand}
                   </span>
                 </div>
                 <div className={product.inStock ? 'text-green-400' : 'text-red-400'}>{product.inStock ? 'In Stock' : 'Out of Stock'}</div>
                 <HorizontalLine />
+                <div>Etc</div>
                 <HorizontalLine />
+                <div>Quantity</div>
                 <HorizontalLine />
+                <div>Add to Cart</div>
               </div>
             </div>
           </div>
