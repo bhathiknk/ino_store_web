@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { products } from '../ClientProducts';
 import { Rating } from '@mui/material';
@@ -6,10 +6,14 @@ import ClientNabBar from '../../Nav/ClientNabBar';
 import ClientFooter from '../../Footer/ClientFooter';
 import AddToCartButton from './AddToCartButton';
 import SetQuantity from './SetQuantity';
+import ProductImage from './ProductImage';
 
 const ProductDetails = () => {
   // Manage quantity state
   const [quantity, setQuantity] = useState(1);
+
+  // Manage selected image state
+  const [selectedImage, setSelectedImage] = useState('');
 
   // Calculate average rating from reviews
   const calculateAverageRating = (reviews) => {
@@ -24,6 +28,12 @@ const ProductDetails = () => {
 
   const { id } = useParams(); // Extract ID from URL
   const product = products.find((p) => p.id === id);
+
+  useEffect(() => {
+    if (product && product.images.length > 0) {
+      setSelectedImage(product.images[0].image);
+    }
+  }, [product]);
 
   if (!product) {
     return <div>Product not found</div>;
@@ -40,6 +50,10 @@ const ProductDetails = () => {
     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
 
+  const handleImageSelect = (image) => {
+    setSelectedImage(image);
+  };
+
   return (
     <div>
       <div className="flex flex-col min-h-screen">
@@ -47,7 +61,12 @@ const ProductDetails = () => {
         <main className="flex-grow py-6 md:py-8 lg:py-12">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div>Images</div>
+              {/* Image show */}
+              <ProductImage
+                product={product}
+                selectedImage={selectedImage}
+                handleImageSelect={handleImageSelect}
+              />
               <div className="flex flex-col gap-1 text-slate-500 text-sm">
                 <h2 className="text-3xl font-medium text-slate-700">
                   {product.name}

@@ -18,8 +18,29 @@ export const products = [
         {
           color: "Gray",
           colorCode: "#808080",
-          image: "/Assets/robot.png",
+          image: "/Assets/BTS.jpg",
         },
+        {
+          color: "Gray",
+          colorCode: "#808080",
+          image: "/Assets/BTS.jpg",
+        },
+        {
+          color: "Gray",
+          colorCode: "#808080",
+          image: "/Assets/BTS.jpg",
+        },
+        {
+          color: "Gray",
+          colorCode: "#808080",
+          image: "/Assets/BTS.jpg",
+        },
+        {
+          color: "Gray",
+          colorCode: "#808080",
+          image: "/Assets/BTS.jpg",
+        },
+        
       ],
       reviews: [
         {
@@ -53,6 +74,11 @@ export const products = [
           color: "Black",
           colorCode: "#000000",
           image: "/Assets/nvsunglass.png",
+        },
+        {
+          color: "Black",
+          colorCode: "#000000",
+          image: "/Assets/SWE-1.jpg",
         },
       ],
       reviews: [
