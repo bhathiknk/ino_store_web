@@ -5,6 +5,7 @@ const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const adminDetailsRoutes = require('./routes/adminDetailsRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const userAuthRoutes = require('./routes/userAuthRoutes');
 const errorHandler = require('./utils/errorHandler');
 const path = require('path');
 
@@ -22,7 +23,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Use CORS middleware
 app.use(cors({
-    origin: 'http://localhost:3002', // Replace with your frontend URL
+    origin: 'http://localhost:3000', // Replace with your frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
@@ -32,6 +33,7 @@ app.use('/api/admin', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/admin', adminDetailsRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/users', userAuthRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

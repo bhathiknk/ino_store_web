@@ -76,10 +76,10 @@ const ProductDetails = () => {
             <div className="flex flex-col w-full md:w-1/2 md:mr-4">
                 <div className="w-full mb-2">
                     {product.images && product.images.length > 0 && (
-                        <div className="w-full h-96 bg-white border border-gray-300 rounded-lg">
+                        <div className="w-full h-72 md:h-96 bg-white border border-gray-300 rounded-lg">
                             <Slider {...settingsMain}>
                                 {product.images.map((image, index) => (
-                                    <div key={index} className="h-96">
+                                    <div key={index} className="h-72 md:h-96">
                                         <img
                                             src={`http://localhost:5000${image}`}
                                             alt={product.name}
@@ -93,15 +93,15 @@ const ProductDetails = () => {
                 </div>
                 <div className="w-full flex flex-col items-center">
                     {product.images && product.images.length > 0 && (
-                        <div className="w-2/3 bg-black rounded-lg mb-4">
+                        <div className="w-full md:w-2/3 bg-black rounded-lg mb-4">
                             <Slider {...settingsThumbs}>
                                 {product.images.map((image, index) => (
                                     <div key={index} className="p-1">
                                         <img
                                             src={`http://localhost:5000${image}`}
                                             alt={product.name}
-                                            className="object-cover w-full h-24 rounded-lg"
-                                            style={{ width: '6rem', height: '6rem' }} // Ensuring square size
+                                            className="object-cover w-full h-16 md:h-24 rounded-lg"
+                                            style={{ width: '4rem', height: '4rem' }} // Ensuring square size
                                         />
                                     </div>
                                 ))}
@@ -118,8 +118,8 @@ const ProductDetails = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex-1 p-4 bg-white border border-gray-300 rounded-lg ml-4">
-                <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
+            <div className="flex-1 p-4 bg-white border border-gray-300 rounded-lg mt-4 md:mt-0 md:ml-4 overflow-y-auto">
+                <h1 className="text-xl md:text-2xl font-bold mb-4">{product.name}</h1>
                 <p className="text-gray-700 mb-4">Description: {product.description}</p>
                 <p className="text-gray-700 mb-4">Category: {product.categoryDescription}</p>
                 {product.isDiscount ? (

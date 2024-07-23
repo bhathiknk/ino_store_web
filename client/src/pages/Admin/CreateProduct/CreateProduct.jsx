@@ -230,7 +230,7 @@ const CreateProduct = () => {
         )}
 
         {/* Content */}
-        <div className="flex flex-grow mt-20">
+        <div className="flex flex-grow mt-24">
           {/* Main Content */}
           <div className="flex-grow container mx-auto p-4">
             {/* Basic Information Section */}

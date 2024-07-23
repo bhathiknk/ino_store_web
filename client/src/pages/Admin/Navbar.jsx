@@ -48,10 +48,7 @@ const Navbar = () => {
               <i className="fas fa-shopping-cart"></i> Sales
             </a>
             <a href="#purchase" className="flex items-center text-gray-700 hover:text-blue-500">
-              <i className="fas fa-receipt"></i> Purchase
-            </a>
-            <a href="#inventory-plan" className="flex items-center text-gray-700 hover:text-blue-500">
-              <i className="fas fa-clipboard-check"></i> Inventory Plan
+              <i className="fas fa-receipt"></i> Orders
             </a>
           </nav>
           <div className="flex items-center space-x-4">
