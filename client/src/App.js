@@ -20,7 +20,6 @@ function App() {
                 <Route path="/create-product" element={<CreateProduct />} />
                 <Route path="/client" element={<Layout />} />
                 <Route path="/cart" element={<Cart />} />
-                
                 <Route path="/product/:id" element={<ProductDetails />} />
                
               

@@ -7,6 +7,7 @@ export const products = [
       brand: "Tesla",
       category: "Robots",
       discount:"10%",
+      quantity:"10",
       inStock: true,
       images: [
         {
@@ -45,6 +46,7 @@ export const products = [
       brand: "Kalashnikov",
       category: "Cloths",
       discount:"50%",
+      quantity:"20",
       inStock: true,
       images: [
         {
@@ -78,6 +80,7 @@ export const products = [
       brand: "Apple",
       category: "Phone",
       discount:"20%",
+      quantity:"10",
       inStock: true,
       images: [
         {
@@ -121,6 +124,7 @@ export const products = [
       brand: "DJI",
       category: "Drones",
       discount:"18%",
+      quantity:"10",
       inStock: true,
       images: [
         {
@@ -152,6 +156,7 @@ export const products = [
       brand: "Nerunsa",
       category: "Watch",
       discount:"5%",
+      quantity:"10",
       inStock: true,
       images: [
         {
@@ -190,6 +195,7 @@ export const products = [
     brand: "Tesla",
     category: "Robots",
     discount:"60%",
+    quantity:"10",
     inStock: true,
     images: [
       {
@@ -229,6 +235,7 @@ export const products = [
     brand: "Tesla",
     category: "Robots",
     discount:"10%",
+    quantity:"10",
     inStock: true,
     images: [
       {
@@ -268,6 +275,7 @@ export const products = [
     brand: "Tesla",
     category: "Robots",
     discount:"10%",
+    quantity:"10",
     inStock: true,
     images: [
       {
