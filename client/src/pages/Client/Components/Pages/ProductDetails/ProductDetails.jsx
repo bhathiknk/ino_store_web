@@ -104,7 +104,7 @@ const ProductDetails = () => {
                 />
                 <HorizontalLine />
                 <div className="max-w-[300px]">
-                  <AddToCartButton label="Add to cart" />
+                  <AddToCartButton label="Add to cart"/>
                 </div>
               </div>
             </div>
