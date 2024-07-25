@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from './Assets/user-icon.jpg';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [adminName, setAdminName] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchAdminName = async () => {
@@ -37,6 +38,8 @@ const Navbar = () => {
     setIsOpen(false); // Close the mobile menu after navigating
   };
 
+  const isActive = (path) => location.pathname === path ? 'text-blue-500' : 'text-gray-700';
+
   return (
       <header className="bg-white shadow-md">
         <div className="container mx-auto flex justify-between items-center p-4">
@@ -45,16 +48,13 @@ const Navbar = () => {
             <span className="text-S font-bold text-gray-500">for sellers</span>
           </div>
           <nav className="hidden md:flex space-x-6">
-            <button onClick={() => handleNavigation('/admin/dashboard')} className="flex items-center text-gray-700 hover:text-blue-500">
-              <i className="fas fa-th-large"></i> Dashboard
-            </button>
-            <button onClick={() => handleNavigation('/admin/products')} className="flex items-center text-blue-500 hover:text-blue-500">
+            <button onClick={() => handleNavigation('/Admin/ProductPage')} className={`flex items-center ${isActive('/Admin/ProductPage')} hover:text-blue-500`}>
               <i className="fas fa-box"></i> Products
             </button>
-            <button onClick={() => handleNavigation('/admin/sales')} className="flex items-center text-gray-700 hover:text-blue-500">
+            <button onClick={() => handleNavigation('/admin/sales')} className={`flex items-center ${isActive('/admin/sales')} hover:text-blue-500`}>
               <i className="fas fa-shopping-cart"></i> Sales
             </button>
-            <button onClick={() => handleNavigation('/admin/orders')} className="flex items-center text-gray-700 hover:text-blue-500">
+            <button onClick={() => handleNavigation('/Admin/orders')} className={`flex items-center ${isActive('/Admin/orders')} hover:text-blue-500`}>
               <i className="fas fa-receipt"></i> Orders
             </button>
           </nav>
@@ -77,20 +77,14 @@ const Navbar = () => {
         {isOpen && (
             <nav className="md:hidden bg-white shadow-md p-4">
               <div className="flex flex-col space-y-4">
-                <button onClick={() => handleNavigation('/admin/dashboard')} className="flex items-center text-gray-700 hover:text-blue-500">
-                  <i className="fas fa-th-large"></i> Dashboard
-                </button>
-                <button onClick={() => handleNavigation('/admin/products')} className="flex items-center text-blue-500 hover:text-blue-500">
+                <button onClick={() => handleNavigation('/Admin/ProductPage')} className={`flex items-center ${isActive('/Admin/ProductPage')} hover:text-blue-500`}>
                   <i className="fas fa-box"></i> Products
                 </button>
-                <button onClick={() => handleNavigation('/admin/sales')} className="flex items-center text-gray-700 hover:text-blue-500">
+                <button onClick={() => handleNavigation('/admin/sales')} className={`flex items-center ${isActive('/admin/sales')} hover:text-blue-500`}>
                   <i className="fas fa-shopping-cart"></i> Sales
                 </button>
-                <button onClick={() => handleNavigation('/admin/orders')} className="flex items-center text-gray-700 hover:text-blue-500">
+                <button onClick={() => handleNavigation('/Admin/orders')} className={`flex items-center ${isActive('/Admin/orders')} hover:text-blue-500`}>
                   <i className="fas fa-receipt"></i> Orders
-                </button>
-                <button onClick={() => handleNavigation('/admin/inventory-plan')} className="flex items-center text-gray-700 hover:text-blue-500">
-                  <i className="fas fa-clipboard-check"></i> Inventory Plan
                 </button>
               </div>
             </nav>

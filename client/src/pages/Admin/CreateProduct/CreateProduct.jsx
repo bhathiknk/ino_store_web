@@ -214,7 +214,7 @@ const CreateProduct = () => {
             <div className="fixed top-0 left-0 right-0 bg-white shadow-md p-4 flex flex-col lg:flex-row items-start lg:items-center justify-between z-50">
               <div className="flex items-center mb-4 lg:mb-0">
                 <FaArrowLeft className="mr-2 text-gray-700" />
-                <Link to="/dashboard" className="text-gray-700">Back to product listing</Link>
+                <Link to="/Admin/ProductPage" className="text-gray-700">Back to product listing</Link>
               </div>
               <div className="lg:hidden self-end">
                 <button onClick={toggleMenu} className="text-gray-700 focus:outline-none">

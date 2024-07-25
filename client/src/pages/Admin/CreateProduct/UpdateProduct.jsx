@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import {useParams, useNavigate, Link} from 'react-router-dom';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
-import { FaTrashAlt } from 'react-icons/fa';
+import {FaArrowLeft, FaTrashAlt} from 'react-icons/fa';
 
 const UpdateProduct = () => {
     const { id } = useParams();
@@ -121,7 +121,7 @@ const UpdateProduct = () => {
                 }
             });
             toast.success('Product updated successfully!');
-            navigate('/dashboard');
+            navigate('/Admin/ProductPage');
         } catch (error) {
             console.error('Error updating product:', error);
             toast.error('Failed to update product');
@@ -156,6 +156,16 @@ const UpdateProduct = () => {
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-300">
+
+            {/* Navigation Bar */}
+            {!popupVisible && (
+                <div className="fixed top-0 left-0 right-0 bg-white shadow-md p-4 flex flex-col lg:flex-row items-start lg:items-center justify-between z-50">
+                    <div className="flex items-center mb-4 lg:mb-0">
+                        <FaArrowLeft className="mr-2 text-gray-700" />
+                        <Link to="/Admin/ProductPage" className="text-gray-700">Back to product listing</Link>
+                    </div>
+                </div>
+            )}
             <div className="flex flex-grow mt-3">
                 <div className="flex-grow p-6 lg:p-12">
                     <div id="basic" className="bg-white p-6 rounded-lg shadow-md mb-6">

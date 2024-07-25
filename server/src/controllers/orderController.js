@@ -2,7 +2,7 @@ const Order = require('../models/Order');
 const Product = require('../models/Product');
 
 exports.createOrder = async (req, res) => {
-    const { products, paymentMethod, totalAmount } = req.body;
+    const { products, paymentMethod, totalAmount, shippingDetails } = req.body;
 
     if (!req.user) {
         return res.status(401).json({ message: 'Not authorized, user not found' });
@@ -31,6 +31,8 @@ exports.createOrder = async (req, res) => {
             paymentMethod,
             isPaid: true, // Assuming payment is completed
             paidAt: Date.now(),
+            shippingDetails,
+            orderStatus: 'processing',
         });
 
         const savedOrder = await order.save();
@@ -57,4 +59,24 @@ exports.getOrdersBySeller = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+// controllers/orderController.js
+exports.updateOrderStatus = async (req, res) => {
+    const { orderId, status } = req.body;
+
+    try {
+        const order = await Order.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        order.orderStatus = status;
+        await order.save();
+
+        res.status(200).json({ message: 'Order status updated successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 

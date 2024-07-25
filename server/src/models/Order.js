@@ -37,6 +37,29 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    orderStatus: {
+        type: String,
+        required: true,
+        default: 'processing', // Set default order status to "processing"
+    },
+    shippingDetails: {
+        address: {
+            type: String,
+            required: true,
+        },
+        province: {
+            type: String,
+            required: true,
+        },
+        zipcode: {
+            type: String,
+            required: true,
+        },
+        contactNumber: {
+            type: String,
+            required: true,
+        },
+    },
 }, {
     timestamps: true,
 });

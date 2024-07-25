@@ -30,7 +30,7 @@ const ProductDetails = () => {
     }
 
     const handleUpdateClick = () => {
-        navigate(`/update-product/${id}`);
+        navigate(`/Admin/update-product/${id}`);
     };
 
     const handleDeleteClick = async () => {
@@ -42,7 +42,7 @@ const ProductDetails = () => {
                 }
             });
             alert('Product deleted successfully');
-            navigate('/dashboard');
+            navigate('/Admin/ProductPage');
         } catch (error) {
             console.error('Error deleting product', error);
             alert('Failed to delete product');

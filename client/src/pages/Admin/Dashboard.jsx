@@ -3,7 +3,7 @@ import axios from 'axios';
 import Navbar from './Navbar';
 import { Link } from 'react-router-dom';
 
-const Dashboard = () => {
+const ProductPage = () => {
     const [products, setProducts] = useState([]);
     const [currentImageIndices, setCurrentImageIndices] = useState({});
 
@@ -49,7 +49,7 @@ const Dashboard = () => {
             <Navbar />
             <div className="flex justify-between items-center mt-6 mb-4">
                 <div className="text-lg">Products</div>
-                <Link to="/create-product" className="bg-blue-500 text-white py-2 px-4 rounded">
+                <Link to="/Admin/create-product" className="bg-blue-500 text-white py-2 px-4 rounded">
                     + Create New Product
                 </Link>
             </div>
@@ -60,7 +60,7 @@ const Dashboard = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         {products.map((product) => (
                             <div key={product._id} className="bg-gray-100 border p-1 rounded-lg flex flex-col items-center">
-                                <Link to={`/product/${product._id}`} className="w-full h-40 relative group">
+                                <Link to={`/Admin/product/${product._id}`} className="w-full h-40 relative group">
                                     <img
                                         src={`http://localhost:5000${product.images[currentImageIndices[product._id]]}`}
                                         alt={product.name}
@@ -111,4 +111,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default ProductPage;
