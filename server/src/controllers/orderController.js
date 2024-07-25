@@ -42,14 +42,14 @@ exports.createOrder = async (req, res) => {
 };
 
 exports.getOrdersBySeller = async (req, res) => {
-    const sellerId = req.admin._id;
+    const adminId = req.admin._id;
 
     try {
-        const products = await Product.find({ admin: sellerId }).select('_id');
+        const products = await Product.find({ admin: adminId }).select('_id');
         const productIds = products.map(product => product._id);
 
         const orders = await Order.find({ 'products.product': { $in: productIds } })
-            .populate('products.product', 'name price')
+            .populate('products.product', 'name images') // Include image field
             .populate('buyer', 'name email');
 
         res.status(200).json(orders);
@@ -57,3 +57,4 @@ exports.getOrdersBySeller = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+

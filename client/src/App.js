@@ -4,7 +4,8 @@ import CreateProduct from './pages/Admin/CreateProduct/CreateProduct';
 import Signup from './pages/Admin/AdminLoging/Signup';
 import Signin from './pages/Admin/AdminLoging/Signin';
 import ProductDetails from "./pages/Admin/CreateProduct/ProductDetails";
-import UpdateProduct from "./pages/Admin/CreateProduct/UpdateProduct"; // Import UpdateProduct component
+import UpdateProduct from "./pages/Admin/CreateProduct/UpdateProduct";
+import ViewOrder from './pages/Admin/Orders/ViewOrder';
 
 function App() {
     return (
@@ -15,7 +16,8 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/create-product" element={<CreateProduct />} />
                 <Route path="/product/:id" element={<ProductDetails />} />
-                <Route path="/update-product/:id" element={<UpdateProduct />} /> {/* Add route for UpdateProduct */}
+                <Route path="/update-product/:id" element={<UpdateProduct />} />
+                <Route path="/admin/orders" element={<ViewOrder />} />
             </Routes>
         </Router>
     );
