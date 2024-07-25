@@ -6,6 +6,7 @@ const productRoutes = require('./routes/productRoutes');
 const adminDetailsRoutes = require('./routes/adminDetailsRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const userAuthRoutes = require('./routes/userAuthRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 const errorHandler = require('./utils/errorHandler');
 const path = require('path');
 
@@ -34,6 +35,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/admin', adminDetailsRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/users', userAuthRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Error handling middleware
 app.use(errorHandler);
