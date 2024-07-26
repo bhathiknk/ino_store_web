@@ -40,7 +40,7 @@ const orderSchema = new mongoose.Schema({
     orderStatus: {
         type: String,
         required: true,
-        default: 'processing', // Set default order status to "processing"
+        default: 'Processing', // Set default order status to "processing"
     },
     shippingDetails: {
         address: {

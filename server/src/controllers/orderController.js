@@ -32,7 +32,7 @@ exports.createOrder = async (req, res) => {
             isPaid: true, // Assuming payment is completed
             paidAt: Date.now(),
             shippingDetails,
-            orderStatus: 'processing',
+            orderStatus: 'Processing',
         });
 
         const savedOrder = await order.save();
