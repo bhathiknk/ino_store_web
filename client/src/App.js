@@ -6,6 +6,7 @@ import Signin from './pages/Admin/AdminLoging/Signin';
 import ProductDetails from "./pages/Admin/CreateProduct/ProductDetails";
 import UpdateProduct from "./pages/Admin/CreateProduct/UpdateProduct";
 import ViewOrder from './pages/Admin/Orders/ViewOrder';
+import SalesSummary from './pages/Admin/SalesSummary'
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/Admin/product/:id" element={<ProductDetails />} />
                 <Route path="/Admin/update-product/:id" element={<UpdateProduct />} />
                 <Route path="/Admin/orders" element={<ViewOrder />} />
+                <Route path="/Admin/SalesSummary" element={<SalesSummary />} />
             </Routes>
         </Router>
     );

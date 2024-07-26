@@ -51,7 +51,7 @@ const Navbar = () => {
             <button onClick={() => handleNavigation('/Admin/ProductPage')} className={`flex items-center ${isActive('/Admin/ProductPage')} hover:text-blue-500`}>
               <i className="fas fa-box"></i> Products
             </button>
-            <button onClick={() => handleNavigation('/admin/sales')} className={`flex items-center ${isActive('/admin/sales')} hover:text-blue-500`}>
+            <button onClick={() => handleNavigation('/Admin/SalesSummary')} className={`flex items-center ${isActive('/Admin/SalesSummary')} hover:text-blue-500`}>
               <i className="fas fa-shopping-cart"></i> Sales
             </button>
             <button onClick={() => handleNavigation('/Admin/orders')} className={`flex items-center ${isActive('/Admin/orders')} hover:text-blue-500`}>
@@ -80,7 +80,7 @@ const Navbar = () => {
                 <button onClick={() => handleNavigation('/Admin/ProductPage')} className={`flex items-center ${isActive('/Admin/ProductPage')} hover:text-blue-500`}>
                   <i className="fas fa-box"></i> Products
                 </button>
-                <button onClick={() => handleNavigation('/admin/sales')} className={`flex items-center ${isActive('/admin/sales')} hover:text-blue-500`}>
+                <button onClick={() => handleNavigation('/Admin/SalesSummary')} className={`flex items-center ${isActive('/Admin/SalesSummary')} hover:text-blue-500`}>
                   <i className="fas fa-shopping-cart"></i> Sales
                 </button>
                 <button onClick={() => handleNavigation('/Admin/orders')} className={`flex items-center ${isActive('/Admin/orders')} hover:text-blue-500`}>
