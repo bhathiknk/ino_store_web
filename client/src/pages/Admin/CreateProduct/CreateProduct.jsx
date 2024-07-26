@@ -131,7 +131,7 @@ const CreateProduct = () => {
           onClose: () => {
             handleClearInputs();
             setPopupVisible(false);
-            navigate('/dashboard'); // Redirect to dashboard after success
+            navigate('/Admin/ProductPage'); // Redirect to dashboard after success
           }
         });
       }

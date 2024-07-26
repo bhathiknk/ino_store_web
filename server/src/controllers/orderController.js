@@ -2,7 +2,7 @@ const Order = require('../models/Order');
 const Product = require('../models/Product');
 
 exports.createOrder = async (req, res) => {
-    const { products, paymentMethod, totalAmount, shippingDetails } = req.body;
+    const { products, paymentMethod, shippingDetails } = req.body;
 
     if (!req.user) {
         return res.status(401).json({ message: 'Not authorized, user not found' });
@@ -11,37 +11,64 @@ exports.createOrder = async (req, res) => {
     const buyerId = req.user._id;
 
     try {
-        const productDetails = await Promise.all(
+        // Step 1: Fetch product details and group by seller
+        const sellerOrders = {};
+
+        await Promise.all(
             products.map(async (item) => {
-                const product = await Product.findById(item.product);
+                const product = await Product.findById(item.product).populate('admin');
                 if (!product) {
                     throw new Error(`Product not found: ${item.product}`);
                 }
-                return {
+
+                const sellerId = product.admin._id;
+
+                // Determine the correct price to use
+                const price = product.discountPrice || product.basePrice;
+
+                if (!sellerOrders[sellerId]) {
+                    sellerOrders[sellerId] = {
+                        buyer: buyerId,
+                        products: [],
+                        totalAmount: 0,
+                        paymentMethod,
+                        isPaid: true,
+                        paidAt: Date.now(),
+                        shippingDetails,
+                        orderStatus: 'Processing',
+                    };
+                }
+
+                // Add product to the seller's order
+                sellerOrders[sellerId].products.push({
                     product: product._id,
                     quantity: item.quantity,
-                };
+                });
+
+                // Update the total amount using the determined price
+                sellerOrders[sellerId].totalAmount += item.quantity * price;
             })
         );
 
-        const order = new Order({
-            buyer: buyerId,
-            products: productDetails,
-            totalAmount,
-            paymentMethod,
-            isPaid: true, // Assuming payment is completed
-            paidAt: Date.now(),
-            shippingDetails,
-            orderStatus: 'Processing',
-        });
+        // Step 2: Create and save orders for each seller
+        const savedOrders = [];
+        for (const sellerId in sellerOrders) {
+            const order = new Order({
+                ...sellerOrders[sellerId],
+                buyer: buyerId,
+                totalAmount: sellerOrders[sellerId].totalAmount,
+            });
 
-        const savedOrder = await order.save();
+            const savedOrder = await order.save();
+            savedOrders.push(savedOrder);
+        }
 
-        res.status(201).json(savedOrder);
+        res.status(201).json(savedOrders);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 exports.getOrdersBySeller = async (req, res) => {
     const adminId = req.admin._id;

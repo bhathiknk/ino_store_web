@@ -19,7 +19,7 @@ const SalesSummary = () => {
                     },
                 };
 
-                const { data } = await axios.get('http://localhost:5000/api/sales/summary', config);
+                const { data } = await axios.get('http://localhost:5000/api/sales/sales-summary', config);
                 setSummary(data);
                 setLoading(false);
             } catch (error) {
@@ -34,8 +34,9 @@ const SalesSummary = () => {
     if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
     if (error) return <div className="text-red-500 text-center mt-4">Error: {error}</div>;
 
+    // Prepare data for the chart
     const salesGrowthLabels = Object.keys(summary.salesGrowth || {});
-    const salesGrowthData = Object.values(summary.salesGrowth || {}).map(item => item.total);
+    const salesGrowthData = salesGrowthLabels.map(label => summary.salesGrowth[label] || 0);
 
     return (
         <div className="bg-gray-100 min-h-screen p-4">
@@ -66,11 +67,31 @@ const SalesSummary = () => {
                             width={600} // Set the width
                             height={400} // Set the height
                             options={{
+                                responsive: true,
+                                maintainAspectRatio: false,
                                 scales: {
+                                    x: {
+                                        beginAtZero: true,
+                                    },
                                     y: {
                                         beginAtZero: true,
                                     },
                                 },
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'top',
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(context) {
+                                                const label = context.dataset.label || '';
+                                                const value = context.raw;
+                                                return `${label}: LKR ${value}`;
+                                            }
+                                        }
+                                    }
+                                }
                             }}
                         />
                     </div>

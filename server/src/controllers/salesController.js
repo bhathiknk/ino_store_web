@@ -1,30 +1,39 @@
+
 const Order = require('../models/Order');
+const Product = require('../models/Product');
 
-// Get Sales Summary
+// controllers/orderController.js
 exports.getSalesSummary = async (req, res) => {
+    const adminId = req.admin._id; // Current admin's ID
+
     try {
-        const orders = await Order.find({ isPaid: true });
+        // Fetch orders for the given admin
+        const orders = await Order.find({
+            'products.product': { $in: await Product.find({ admin: adminId }).select('_id').then(products => products.map(p => p._id)) }
+        });
 
-        const totalSales = orders.reduce((acc, order) => acc + order.totalAmount, 0);
+        // Calculate total sales, total orders, and average order value
+        const totalSales = orders.reduce((sum, order) => sum + order.totalAmount, 0);
         const totalOrders = orders.length;
-        const averageOrderValue = totalOrders ? (totalSales / totalOrders).toFixed(2) : 0;
+        const averageOrderValue = totalOrders > 0 ? totalSales / totalOrders : 0;
 
-        // Assuming you have order creation timestamps to track sales growth
-        const salesGrowth = orders.reduce((acc, order) => {
-            const monthYear = new Date(order.createdAt).toLocaleString('default', { month: 'short', year: 'numeric' });
-            if (!acc[monthYear]) {
-                acc[monthYear] = { count: 0, total: 0 };
-            }
-            acc[monthYear].count += 1;
-            acc[monthYear].total += order.totalAmount;
+        // Sales growth calculation (example using monthly data)
+        const salesGrowth = {}; // Format this as needed for charts
+        const monthlySales = orders.reduce((acc, order) => {
+            const month = new Date(order.createdAt).toISOString().slice(0, 7); // YYYY-MM
+            acc[month] = (acc[month] || 0) + order.totalAmount;
             return acc;
         }, {});
+
+        for (const [month, amount] of Object.entries(monthlySales)) {
+            salesGrowth[month] = amount;
+        }
 
         res.status(200).json({
             totalSales,
             totalOrders,
             averageOrderValue,
-            salesGrowth,
+            salesGrowth
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
