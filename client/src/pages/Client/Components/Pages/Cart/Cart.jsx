@@ -1,18 +1,18 @@
 import React from 'react'
-import ClientNabBar from '../../Nav/ClientNabBar'
-import ClientFooter from '../../Footer/ClientFooter'
+
+import Cartdata from './Cartdata'
 
 
 export default function Cart() {
     
   return (
     <div className="flex flex-col min-h-screen">
-    <ClientNabBar />
+    
     <main className="flex-grow ">
-     This is Cart Page
+      <Cartdata />
     </main>
     
-    <ClientFooter />
+    
   </div>
   )
 }

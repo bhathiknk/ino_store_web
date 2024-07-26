@@ -7,25 +7,31 @@ import Layout from './pages/Client/Components/Pages/Layout';
 import Cart from './pages/Client/Components/Pages/Cart/Cart';
 import ProductDetails from './pages/Client/Components/Pages/ProductDetails/ProductDetails';
 
-
+import { CartProvider } from './pages/Client/Components/Pages/Cart/CartContext';
 
 
 function App() {
     return (
+        <CartProvider>
         <Router>
             <Routes>
                 <Route path="/" element={<Signup />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/create-product" element={<CreateProduct />} />
+
+
                 <Route path="/client" element={<Layout />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/product/:id" element={<ProductDetails />} />
+                <Route path="/client-cart" element={<Cart />} />
+                <Route path="/client-product/:id" element={<ProductDetails />} />
+             
+                
                
               
                 
             </Routes>
         </Router>
+        </CartProvider>
     );
 }
 

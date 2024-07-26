@@ -19,7 +19,7 @@ const ProductCard = ({ data }) => {
   return (
     //onclick event for when user click on the product it will navigate to product detils page
     <div
-      onClick={() => navigate(`/product/${data.id}`)}
+      onClick={() => navigate(`/client-product/${data.id}`)}
       className="col-span-1 cursor-pointer border-[1.2px] border-slate-200 bg-slate-50 rounded-sm p-2 transition hover:scale-105 text-center text-small"
     >
       <div className="flex flex-col items-center w-full gap-1">
