@@ -26,7 +26,7 @@ const Signin = () => {
                 draggable: true,
                 progress: undefined,
             });
-            setTimeout(() => navigate('/dashboard'), 2000);
+            setTimeout(() => navigate('/Admin/ProductPage'), 2000);
         } catch (error) {
             setMessage('Signin failed!');
             toast.error('Signin failed!', {

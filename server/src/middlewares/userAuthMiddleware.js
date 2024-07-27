@@ -1,5 +1,6 @@
+// middleware/userAuthMiddleware.js
 const jwt = require('jsonwebtoken');
-const Admin = require('../models/Admin');
+const User = require('../models/User');
 const config = require('../config/config');
 
 exports.protect = async (req, res, next) => {
@@ -9,7 +10,7 @@ exports.protect = async (req, res, next) => {
         try {
             token = req.headers.authorization.split(' ')[1];
             const decoded = jwt.verify(token, config.jwtSecret);
-            req.admin = await Admin.findById(decoded.id).select('-password');
+            req.user = await User.findById(decoded.id).select('-password');
             next();
         } catch (error) {
             res.status(401).json({ message: 'Not authorized, token failed' });
@@ -20,4 +21,3 @@ exports.protect = async (req, res, next) => {
         res.status(401).json({ message: 'Not authorized, no token' });
     }
 };
-

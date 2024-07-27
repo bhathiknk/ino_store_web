@@ -5,16 +5,17 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    categoryDescription: {
+        type: String,
+        required: true,
+    },
     description: {
         type: String,
-    },
-    price: {
-        type: Number,
-        required: true,
     },
     images: [
         {
             type: String,
+            required: true,
         },
     ],
     admin: {
@@ -22,6 +23,33 @@ const productSchema = new mongoose.Schema({
         ref: 'Admin',
         required: true,
     },
+    isDiscount: {
+        type: Boolean,
+        default: false,
+    },
+    basePrice: {
+        type: Number,
+        required: true,
+    },
+    discountPrice: {
+        type: Number,
+    },
+    isFreeShipping: {
+        type: Boolean,
+        default: false,
+    },
+    shippingCost: {
+        type: Number,
+    },
+    quantity: {
+        type: Number,
+        required: true,
+        min: 0,
+    },
+    inStock: {
+        type: Boolean,
+        default: true,
+    }
 }, {
     timestamps: true,
 });
