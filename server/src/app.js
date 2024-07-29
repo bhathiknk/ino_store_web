@@ -12,6 +12,8 @@ const salesRoutes = require('./routes/salesRoutes');
 const errorHandler = require('./utils/errorHandler');
 const path = require('path');
 
+
+
 // Initialize express
 const app = express();
 
@@ -40,6 +42,7 @@ app.use('/api/users', userAuthRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/address', addressRoutes);
 app.use('/api/sales', salesRoutes);
+
 
 // Error handling middleware
 app.use(errorHandler);
