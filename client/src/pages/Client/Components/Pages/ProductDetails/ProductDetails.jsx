@@ -36,7 +36,7 @@ const ProductDetails = () => {
   };
 
   const HorizontalLine = () => {
-    return <hr className="w-[30%] my-2"></hr>;
+    return <hr className="w-[30%] my-2 "></hr>;
   };
 
   const averageRating = calculateAverageRating(product.reviews); // Calculate the average rating
@@ -74,9 +74,9 @@ const ProductDetails = () => {
     <div>
       <div className="flex flex-col min-h-screen">
         <ClientNabBar />
-        <main className="flex-grow py-6 md:py-8 lg:py-12">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <main className="flex-grow py-6 md:py-8 lg:py-12  ">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12  ">
               {/* Use the ProductImage component to display product images */}
               <ProductImage
                 product={product}

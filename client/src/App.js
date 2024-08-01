@@ -15,6 +15,9 @@ import ProductDetails from "./pages/Admin/CreateProduct/ProductDetails";
 import UpdateProduct from "./pages/Admin/CreateProduct/UpdateProduct";
 import ViewOrder from './pages/Admin/Orders/ViewOrder';
 import SalesSummary from './pages/Admin/SalesSummary'
+import ClientLogin from './pages/Client/Components/Signup/ClientLogin';
+import ClientSignup from './pages/Client/Components/Signup/ClientSignup';
+
 
 
 function App() {
@@ -22,15 +25,19 @@ function App() {
         <CartProvider>
         <Router>
             <Routes>
-                <Route path="/" element={<Signup />} />
+                <Route path="/signup" element={<Signup />} />
                 <Route path="/signin" element={<Signin />} />
 
         
 
 
-                <Route path="/client" element={<Layout />} />
+                <Route path="/" element={<Layout />} />
                 <Route path="/client-cart" element={<Cart />} />
                 <Route path="/client-product/:id" element={<ClientProductDetails />} />
+                <Route path="/client-login" element={<ClientLogin/>} />
+                <Route path="/client-signup" element={<ClientSignup />} />
+              
+
              
                 
                
