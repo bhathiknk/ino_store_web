@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { RiLoginCircleFill } from "react-icons/ri";
 import {
   FaShoppingCart, FaUser, FaBars, FaTshirt, FaPaintBrush, FaGem, FaHome,
-  FaUtensils, FaHeart, FaGamepad, FaPencilAlt, FaGift
+  FaUtensils, FaHeart, FaGamepad, FaPencilAlt, FaGift,FaUserCog, FaUserCircle,
 } from "react-icons/fa";
 import {
   ChevronDownIcon, UserCircleIcon, Cog6ToothIcon, InboxArrowDownIcon,
@@ -98,16 +99,21 @@ export default function ClientNavBar() {
                 <FaShoppingCart className="mr-2" />
                 Cart
               </Link>
-              <Link to="/client-login" className="flex items-center text-gray-700 hover:text-gray-900">
+              <Link to=" " className="flex items-center text-gray-700 hover:text-gray-900">
                 <FaUser className="mr-2" />
                 Username
               </Link>
+              <Link to="/client-login" className="flex items-center text-gray-700 hover:text-gray-900">
+                <RiLoginCircleFill className="mr-2" />
+                Login
+              </Link>
+              
               <div className="relative">
                 <button
                   onClick={toggleUserDropdown}
                   className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none"
                 >
-                  <FaUser className="mr-2" />
+                  <FaUserCog className="mr-2" />
                   User Menu
                   <ChevronDownIcon
                     strokeWidth={2}
