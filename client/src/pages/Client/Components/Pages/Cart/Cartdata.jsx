@@ -107,7 +107,7 @@ const Cart = () => {
                 border-none
                 hover:bg-red-600
                 transition
-                duration-300
+                duration-500
                 ease-in-out
                 py-2"
             >
@@ -129,7 +129,7 @@ const Cart = () => {
                   border-none
                   hover:bg-slate-900
                   transition
-                  duration-300
+                  duration-500
                   ease-in-out
                   py-2"
               >

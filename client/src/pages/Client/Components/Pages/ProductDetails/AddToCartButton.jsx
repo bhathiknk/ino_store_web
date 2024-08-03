@@ -25,6 +25,7 @@ const AddToCartButton = ({
              border-slate-700
              flex items-center
              justify-center
+             duration-700
              gap-2 
              ${outline ? "bg-white" : "bg-slate-700"}
              ${outline ? "text-slate-700" : "text-white"}

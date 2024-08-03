@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { RiLoginCircleFill } from "react-icons/ri";
 import { TruncateText } from '../Utils/truncate';
-import inoWebLogo from '../../Images/NavBar/inoweb-w-sh.png'
+import inoWebLogo from '../../Images/NavBar/inoweb.png'
 
 import {
   FaShoppingCart, FaUser, FaBars, FaTshirt, FaPaintBrush, FaGem, FaHome,

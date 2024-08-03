@@ -30,7 +30,7 @@ export default function Banner() {
   };
 
   return (
-    <div className="relative w-full h-80 mb-8 rounded-lg overflow-hidden">
+    <div className="relative w-full h-80 mb-12 rounded-lg overflow-hidden">
       {/* Slider Images */}
       <div className="absolute inset-0 flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
         {banners.map((banner, index) => (
@@ -54,13 +54,13 @@ export default function Banner() {
       {/* Navigation Buttons */}
       <button
         onClick={handlePrev}
-        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+        className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full  hover:bg-blue-600 duration-700"
       >
         <FaChevronLeft />
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+        className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full hover:bg-blue-600 duration-700"
       >
         <FaChevronRight />
       </button>
