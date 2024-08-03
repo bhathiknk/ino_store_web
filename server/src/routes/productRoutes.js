@@ -13,7 +13,7 @@ router.get('/my-products', protect, getProductsByAdmin); // Endpoint to get prod
 router.get('/products/:id', getProductById); //endpoint to get product details from seller
 router.put('/products/update/:id', protect, upload.array('images', 5), updateProduct); // Endpoint to update product from seller
 router.delete('/products/delete/:id', protect, deleteProduct); //endpoint for delete product from seller
-router.get('/user/products', protect, getAllProducts); //Endpoint for get all product to user interface
+router.get('/user/products', getAllProducts); //Endpoint for get all product to user interface
 
 
 module.exports = router;
