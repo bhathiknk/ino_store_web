@@ -17,6 +17,10 @@ import ViewOrder from './pages/Admin/Orders/ViewOrder';
 import SalesSummary from './pages/Admin/SalesSummary'
 import ClientLogin from './pages/Client/Components/Signup/ClientLogin';
 import ClientSignup from './pages/Client/Components/Signup/ClientSignup';
+import TermsAndConditions from './pages/Client/Components/TermsConditions/TermsAndConditions';
+
+
+
 
 
 
@@ -36,11 +40,13 @@ function App() {
                 <Route path="/client-product/:id" element={<ClientProductDetails />} />
                 <Route path="/client-login" element={<ClientLogin/>} />
                 <Route path="/client-signup" element={<ClientSignup />} />
+                <Route path="/client-terms-and-conditions" element={<TermsAndConditions />} />
+             
               
 
              
                 
-               
+        
               
                 
 

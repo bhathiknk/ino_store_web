@@ -1,335 +1,137 @@
 export const products = [
-    {
-      id: "1",
-      name: "Humanoid Robot",
-      description: "Humanoid robots are robots designed to resemble and mimic human form and behavior. They typically have a torso, a head, two arms, and two legs, enabling them to perform tasks in environments built for humans. These robots are equipped with sensors, cameras, and microphones to perceive their surroundings, as well as actuators and motors to move and interact with objects. Humanoid robots are used in various fields, including healthcare, customer service, education, and entertainment, demonstrating capabilities like walking, talking, recognizing faces, and even expressing emotions. They hold significant potential for assisting humans in everyday tasks, enhancing productivity, and improving the quality of life.is is a humanoid robot use for secuirty purpose bomb detections and indoor and outdoor works ",
-      price: 2999,
-      brand: "Tesla",
-      category: "Robots",
-      discount:"10%",
-      quantity:"10",
-      inStock: true,
-      images: [
-        {
-          color: "White",
-          colorCode: "#FFFFFF",
-          image: "/Assets/robot.png",
-        },
-        {
-          color: "Gray",
-          colorCode: "#808080",
-          image: "/Assets/BTS.jpg",
-        },
-        {
-          color: "Gray",
-          colorCode: "#808080",
-          image: "/Assets/BTS.jpg",
-        },
-        {
-          color: "Gray",
-          colorCode: "#808080",
-          image: "/Assets/BTS.jpg",
-        },
-        {
-          color: "Gray",
-          colorCode: "#808080",
-          image: "/Assets/BTS.jpg",
-        },
-        {
-          color: "Gray",
-          colorCode: "#808080",
-          image: "/Assets/BTS.jpg",
-        },
-        
-      ],
-      reviews: [
-        {
-          id: "1",
-          userId: "1",
-          productId: "1",
-          rating: 4,
-          comment: "Great, but a bit expensive. sbvwbrvwb vw fwh fwfw f wufbowi fw fbwfbwhf whfjhbfbjhejejejejejejejejejejejejejejejejewfbwfw fj4bfb4",
-          createdDate: "2024-07-14T10:00:00.000Z",
-          user: {
-            id: "1",
-            name: "John Doe",
-            email: "john@example.com",
-            image: "/images/user1.jpg",
-          },
-        },
-      ],
-    },
-    {
-      id: "2",
-      name: "Night Vision Portable Bulletproof Waterproof Sunglasses",
-      description: "Night vision portable bulletproof waterproof sunglasses are cutting-edge eyewear designed for extreme conditions. These sunglasses incorporate night vision technology, allowing users to see clearly in low-light environments. Their bulletproof lenses provide protection against ballistic impacts, ensuring safety in hazardous situations. Additionally, they are waterproof, making them suitable for use in wet or underwater conditions. Ideal for military, law enforcement, and adventure enthusiasts, these sunglasses offer unparalleled durability and functionality.",
-      price: 102.99,
-      brand: "Kalashnikov",
-      category: "Cloths",
-      discount:"50%",
-      quantity:"20",
-      inStock: true,
-      images: [
-        {
-          color: "Black",
-          colorCode: "#000000",
-          image: "/Assets/nvsunglass.png",
-        },
-        {
-          color: "Black",
-          colorCode: "#000000",
-          image: "/Assets/SWE-1.jpg",
-        },
-      ],
-      reviews: [
-        {
-          id: "2",
-          userId: "2",
-          productId: "2",
-          rating: 5,
-          comment: "Excellent keyboard for typing.",
-          createdDate: "2024-07-14T11:00:00.000Z",
-          user: {
-            id: "2",
-            name: "Jane Smith",
-            email: "jane@example.com",
-            image: "/images/user2.jpg",
-          },
-        },
-      ],
-    },
-    {
-      id: "3",
-      name: "Apple iPhone 13, 64GB",
-      description: "Refurbished iPhone 13 with excellent condition.",
-      price: 40,
-      brand: "Apple",
-      category: "Phone",
-      discount:"20%",
-      quantity:"10",
-      inStock: true,
-      images: [
-        {
-          color: "Black",
-          colorCode: "#000000",
-          image: "/Assets/15pro.png",
-        },
-        {
-          color: "Blue",
-          colorCode: "#0000FF",
-          image: "/images/iphone13_blue.jpg",
-        },
-        {
-          color: "Red",
-          colorCode: "#FF0000",
-          image: "/images/iphone13_red.jpg",
-        },
-      ],
-      reviews: [
-        {
-          id: "3",
-          userId: "3",
-          productId: "3",
-          rating: 4,
-          comment: "Good enough. I like the camera and casing.",
-          createdDate: "2024-07-14T12:00:00.000Z",
-          user: {
-            id: "3",
-            name: "Alex Johnson",
-            email: "alex@example.com",
-            image: "/images/user3.jpg",
-          },
-        },
-      ],
-    },
-    {
-      id: "4",
-      name: "Heavy duty Drone with 4K camera",
-      description: "AI drones are advanced unmanned aerial vehicles (UAVs) integrated with artificial intelligence. These drones can perform autonomous flights, navigate complex environments, and make real-time decisions based on sensor data. AI capabilities enable drones to recognize objects, track targets, avoid obstacles, and execute complex tasks without human intervention. Applications of AI drones span various fields, including agriculture, surveillance, logistics, and emergency response, where they can enhance efficiency, safety, and precision..",
-      price: 70,
-      brand: "DJI",
-      category: "Drones",
-      discount:"18%",
-      quantity:"10",
-      inStock: true,
-      images: [
-        {
-          color: "Graphite",
-          colorCode: "#383838",
-          image: "/Assets/hvdrone.png",
-        },
-      ],
-      reviews: [{
-        id: "3",
-        userId: "3",
-        productId: "3",
-        rating: 1,
-        comment: "Good enough. I like the camera and casing.",
-        createdDate: "2024-07-14T12:00:00.000Z",
-        user: {
-          id: "3",
-          name: "Alex Johnson",
-          email: "alex@example.com",
-          image: "/images/user3.jpg",
-        },
-      },],
-    },
-    {
-      id: "5",
-      name: "Smart Watch",
-      description: "Smartwatch with Bluetooth call and message reminder, fitness tracking.",
-      price: 50,
-      brand: "Nerunsa",
-      category: "Watch",
-      discount:"5%",
-      quantity:"10",
-      inStock: true,
-      images: [
-        {
-          color: "Black",
-          colorCode: "#000000",
-          image: "/Assets/15pro.png",
-        },
-        {
-          color: "Silver",
-          colorCode: "#C0C0C0",
-          image: "/images/15pro.jpg",
-        },
-      ],
-      reviews: [{
-        id: "3",
-        userId: "3",
-        productId: "3",
-        rating: 2,
-        comment: "Good enough. I like the camera and casing.",
-        createdDate: "2024-07-14T12:00:00.000Z",
-        user: {
-          id: "3",
-          name: "Alex Johnson",
-          email: "alex@example.com",
-          image: "/images/user3.jpg",
-        },
-      },],
-    },
-  
-  
   {
-    id: "6",
+    id: 1, // Unique identifier
+    name: "Humanoid Robot",
+    categoryDescription: "Humanoid robots designed to resemble and mimic human form and behavior.",
+    description: "Humanoid robots are designed to resemble and mimic human form and behavior, equipped with sensors and actuators. They are used in healthcare, customer service, education, and entertainment, with capabilities like walking, talking, and recognizing faces. They are used for security purposes, including bomb detections and various tasks.",
+    images: [
+      "/Assets/robot.png",
+      "/Assets/BTS.jpg"
+    ],
+    isDiscount: true,
+    basePrice: 2999,
+    discountPrice: 2699.10, // 10% off of 2999
+    isFreeShipping: false,
+    shippingCost: 0, // Assuming no shipping cost if not free
+    quantity: 10,
+    inStock: true,
+  },
+  {
+    id: 2, // Unique identifier
+    name: "Night Vision Portable Bulletproof Waterproof Sunglasses",
+    categoryDescription: "Eyewear designed for extreme conditions with night vision technology, bulletproof lenses, and waterproof features.",
+    description: "These sunglasses offer night vision, bulletproof protection, and are waterproof. Suitable for military, law enforcement, and adventure enthusiasts, they provide durability and functionality.",
+    images: [
+      "/Assets/nvsunglass.png",
+      "/Assets/SWE-1.jpg"
+    ],
+    isDiscount: true,
+    basePrice: 102.99,
+    discountPrice: 51.50, // 50% off of 102.99
+    isFreeShipping: false,
+    shippingCost: 0, // Assuming no shipping cost if not free
+    quantity: 20,
+    inStock: true,
+  },
+  {
+    id: 3, // Unique identifier
+    name: "Apple iPhone 13, 64GB",
+    categoryDescription: "Refurbished iPhone 13 with excellent condition.",
+    description: "Refurbished iPhone 13 in excellent condition.",
+    images: [
+      "/Assets/15pro.png",
+      "/images/iphone13_blue.jpg",
+      "/images/iphone13_red.jpg"
+    ],
+    isDiscount: true,
+    basePrice: 40,
+    discountPrice: 32, // 20% off of 40
+    isFreeShipping: false,
+    shippingCost: 0, // Assuming no shipping cost if not free
+    quantity: 10,
+    inStock: true,
+  },
+  {
+    id: 4, // Unique identifier
+    name: "Heavy Duty Drone with 4K Camera",
+    categoryDescription: "AI-enabled drones with advanced capabilities for autonomous flights and complex tasks.",
+    description: "Advanced AI drones with 4K camera capabilities, suitable for agriculture, surveillance, logistics, and emergency response.",
+    images: [
+      "/Assets/hvdrone.png"
+    ],
+    isDiscount: true,
+    basePrice: 70,
+    discountPrice: 57.40, // 18% off of 70
+    isFreeShipping: false,
+    shippingCost: 0, // Assuming no shipping cost if not free
+    quantity: 10,
+    inStock: true,
+  },
+  {
+    id: 5, // Unique identifier
+    name: "Smart Watch",
+    categoryDescription: "Smartwatch with Bluetooth call and message reminders, and fitness tracking.",
+    description: "Smartwatch with features for Bluetooth calls, message reminders, and fitness tracking.",
+    images: [
+      "/Assets/15pro.png",
+      "/images/15pro.jpg"
+    ],
+    isDiscount: true,
+    basePrice: 50,
+    discountPrice: 47.50, // 5% off of 50
+    isFreeShipping: false,
+    shippingCost: 0, // Assuming no shipping cost if not free
+    quantity: 10,
+    inStock: true,
+  },
+  {
+    id: 6, // Unique identifier
     name: "Spotter Drone",
-    description: "Mini drones are compact, lightweight unmanned aerial vehicles designed for easy portability and versatility. Despite their small size, mini drones can be equipped with high-resolution cameras, GPS, and other advanced features. They are popular for recreational use, photography, and educational purposes. Mini drones are also used in professional applications, such as inspections, surveillance, and research, where their maneuverability and accessibility to tight spaces offer significant advantages. Their user-friendly design and affordability make them accessible to a broad range of users.",
-    price: 2999,
-    brand: "Tesla",
-    category: "Robots",
-    discount:"60%",
-    quantity:"10",
-    inStock: true,
+    categoryDescription: "Mini drones equipped with high-resolution cameras, GPS, and other advanced features.",
+    description: "Compact and lightweight mini drones suitable for recreational use, photography, inspections, and professional applications.",
     images: [
-      {
-        color: "White",
-        colorCode: "#FFFFFF",
-        image: "/Assets/mndrone.png",
-      },
-      {
-        color: "Gray",
-        colorCode: "#808080",
-        image: "/Assets/mndrone.png",
-      },
+      "/Assets/mndrone.png"
     ],
-    reviews: [
-      {
-        id: "3",
-        userId: "3",
-        productId: "3",
-        rating: 4,
-        comment: "Humanoid robots are robots designed to resemble and mimic human form and behavior. They typically have a torso, a head, two arms, and two legs, enabling them to perform tasks in environments built for humans. These robots are equipped with sensors, cameras, and microphones to perceive their surroundings, as well as actuators and motors to move and interact with objects. Humanoid robots are used in various fields, including healthcare, customer service, education, and entertainment, demonstrating capabilities like walking, talking, recognizing faces, and even expressing emotions. They hold significant potential for assisting humans in everyday tasks, enhancing productivity, and improving the quality of life.reat, but a bit expensive. sbvwbrvwb vw fwh fwfw f wufbowi fw fbwfbwhf whfjhbfbjhejejejejejejejejejejejejejejejejewfbwfw fj4bfb4",
-        createdDate: "2024-07-14T10:00:00.000Z",
-        user: {
-          id: "3",
-          name: "John Doe",
-          email: "john@example.com",
-          image: "/images/user1.jpg",
-        },
-      },
-    ],
+    isDiscount: true,
+    basePrice: 2999,
+    discountPrice: 1199.60, // 60% off of 2999
+    isFreeShipping: false,
+    shippingCost: 0, // Assuming no shipping cost if not free
+    quantity: 10,
+    inStock: true,
   },
-
   {
-    id: "7",
+    id: 7, // Unique identifier
     name: "Humanoid Robot",
-    description: "This is a humanoid robot use for secuirty purpose bomb detections and indoor and outdoor works",
-    price: 2999,
-    brand: "Tesla",
-    category: "Robots",
-    discount:"10%",
-    quantity:"10",
-    inStock: true,
+    categoryDescription: "Humanoid robots designed for security purposes and various tasks.",
+    description: "A humanoid robot used for security purposes, including bomb detection and various indoor and outdoor tasks.",
     images: [
-      {
-        color: "White",
-        colorCode: "#FFFFFF",
-        image: "/Assets/robot.png",
-      },
-      {
-        color: "Gray",
-        colorCode: "#808080",
-        image: "/Assets/robot.png",
-      },
+      "/Assets/robot.png",
+      "/Assets/robot.png"
     ],
-    reviews: [
-      {
-        id: "3",
-        userId: "3",
-        productId: "3",
-        rating: 5,
-        comment: "Great, but a bit expensive. sbvwbrvwb vw fwh fwfw f wufbowi fw fbwfbwhf whfjhbfbjhejejejejejejejejejejejejejejejejewfbwfw fj4bfb4",
-        createdDate: "2024-07-14T10:00:00.000Z",
-        user: {
-          id: "3",
-          name: "John Doe",
-          email: "john@example.com",
-          image: "/images/user1.jpg",
-        },
-      },
-    ],
+    isDiscount: true,
+    basePrice: 2999,
+    discountPrice: 2699.10, // 10% off of 2999
+    isFreeShipping: false,
+    shippingCost: 0, // Assuming no shipping cost if not free
+    quantity: 10,
+    inStock: true,
   },
-
   {
-    id: "8",
+    id: 8, // Unique identifier
     name: "Humanoid Robot",
-    description: "Humanoid robots are robots designed to resemble and mimic human form and behavior. They typically have a torso, a head, two arms, and two legs, enabling them to perform tasks in environments built for humans. These robots are equipped with sensors, cameras, and microphones to perceive their surroundings, as well as actuators and motors to move and interact with objects. Humanoid robots are used in various fields, including healthcare, customer service, education, and entertainment, demonstrating capabilities like walking, talking, recognizing faces, and even expressing emotions. They hold significant potential for assisting humans in everyday tasks, enhancing productivity, and improving the quality of life.is is a humanoid robot use for secuirty purpose bomb detections and indoor and outdoor works",
-    price: 2999,
-    brand: "Tesla",
-    category: "Robots",
-    discount:"10%",
-    quantity:"10",
-    inStock: true,
+    categoryDescription: "Humanoid robots designed to mimic human form and behavior.",
+    description: "Humanoid robots with capabilities to mimic human actions, used for various purposes including security and interaction.",
     images: [
-      {
-        color: "White",
-        colorCode: "#FFFFFF",
-        image: "/Assets/robot.png",
-      },
-      {
-        color: "Gray",
-        colorCode: "#808080",
-        image: "/Assets/robot.png",
-      },
+      "/Assets/robot.png",
+      "/Assets/robot.png"
     ],
-    reviews: [
-      {
-        id: "3",
-        userId: "3",
-        productId: "3",
-        rating: 4,
-        comment: "Great, but a bit expensive. sbvwbrvwb vw fwh fwfw f wufbowi fw fbwfbwhf whfjhbfbjhejejejejejejejejejejejejejejejejewfbwfw fj4bfb4",
-        createdDate: "2024-07-14T10:00:00.000Z",
-        user: {
-          id: "3",
-          name: "John Doe",
-          email: "john@example.com",
-          image: "/images/user1.jpg",
-        },
-      },
-    ],
-  },
+    isDiscount: true,
+    basePrice: 2999,
+    discountPrice: 2699.10, // 10% off of 2999
+    isFreeShipping: false,
+    shippingCost: 0, // Assuming no shipping cost if not free
+    quantity: 10,
+    inStock: true,
+  }
 ];

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { products } from '../ClientProducts';
 import { Rating } from '@mui/material';
 import ClientNabBar from '../../Nav/ClientNabBar';
 import ClientFooter from '../../Footer/ClientFooter';
@@ -8,19 +7,22 @@ import AddToCartButton from './AddToCartButton';
 import SetQuantity from './SetQuantity';
 import ProductImage from './ProductImage'; // Import the ProductImage component
 import { useCart } from '../Cart/CartContext'; // Import the Cart context
+import { products } from '../ClientProducts'; // Import local products data
 
 const ProductDetails = () => {
   const [quantity, setQuantity] = useState(1); // State for quantity
   const [selectedImage, setSelectedImage] = useState(''); // State for selected image
   const { id } = useParams(); // Get product ID from URL
-  const product = products.find((p) => p.id === id); // Find product by ID
-  const { dispatch } = useCart(); // Use the Cart context
   const navigate = useNavigate(); // Use navigate to redirect
+  const { dispatch } = useCart(); // Use the Cart context
+
+  // Find product by ID
+  const product = products.find((p) => p.id === parseInt(id)); // Convert id to number for comparison
 
   // Set the initial selected image when the product changes
   useEffect(() => {
     if (product && product.images.length > 0) {
-      setSelectedImage(product.images[0].image);
+      setSelectedImage(product.images[0]);
     }
   }, [product]);
 
@@ -36,10 +38,10 @@ const ProductDetails = () => {
   };
 
   const HorizontalLine = () => {
-    return <hr className="w-[30%] my-2 "></hr>;
+    return <hr className="w-[30%] my-2 " />;
   };
 
-  const averageRating = calculateAverageRating(product.reviews); // Calculate the average rating
+  const averageRating = calculateAverageRating(product.reviews || []); // Calculate the average rating
 
   // Increase the quantity
   const handleQuantityIncrease = () => {
@@ -61,8 +63,7 @@ const ProductDetails = () => {
     const productToCart = {
       id: product.id,
       title: product.name,
-      price: product.price,
-      category: product.category,
+      price: product.discountPrice || product.basePrice,
       quantity: quantity,
       image: selectedImage,
     };
@@ -74,9 +75,9 @@ const ProductDetails = () => {
     <div>
       <div className="flex flex-col min-h-screen">
         <ClientNabBar />
-        <main className="flex-grow py-6 md:py-8 lg:py-12  ">
-          <div className="container mx-auto px-4 md:px-6 lg:px-8 ">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12  ">
+        <main className="flex-grow py-6 md:py-8 lg:py-12">
+          <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {/* Use the ProductImage component to display product images */}
               <ProductImage
                 product={product}
@@ -89,19 +90,19 @@ const ProductDetails = () => {
                 </h2>
                 <div className="flex items-center gap-2">
                   <Rating value={averageRating} readOnly />
-                  <div>{product.reviews.length} reviews</div>
+                  <div>{product.reviews ? product.reviews.length : 0} review{product.reviews && product.reviews.length !== 1 ? 's' : ''}</div>
                 </div>
                 <HorizontalLine />
                 <div className="text-justify">{product.description}</div>
                 <HorizontalLine />
                 <div>
                   <span className="font-semibold font-nunito">
-                    CATEGORY: {product.category}
+                    CATEGORY: {product.categoryDescription}
                   </span>
                 </div>
                 <div>
                   <span className="font-semibold font-nunito">
-                    BRAND: {product.brand}
+                    BRAND: {product.brand || 'N/A'}
                   </span>
                 </div>
                 <div className={product.inStock ? 'text-green-400' : 'text-red-400'}>
@@ -109,11 +110,11 @@ const ProductDetails = () => {
                 </div>
                 <HorizontalLine />
                 <div>
-                  <span className="font-semibold font-kanit">Discount: {product.discount}</span>
+                  <span className="font-semibold font-kanit">Discount: {product.isDiscount ? product.discountPrice : 'None'}</span>
                 </div>
                 <HorizontalLine />
                 <div>
-                  <span className="font-semibold font-kanit">Price: ${product.price}</span>
+                  <span className="font-semibold font-kanit">Price: ${product.discountPrice || product.basePrice}</span>
                 </div>
                 <HorizontalLine />
                 {/* Render SetQuantity component */}

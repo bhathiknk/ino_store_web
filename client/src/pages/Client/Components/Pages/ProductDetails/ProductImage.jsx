@@ -6,14 +6,14 @@ const ProductImage = ({ product, selectedImage, handleImageSelect }) => {
     <div className="grid grid-cols-6 gap-2 h-full max-h-[500px] min-h-[300px] sm:min-h-[400px]">
       {/* Image list */}
       <div className="flex flex-col items-center justify-center gap-4 cursor-pointer border h-full max-h-[500px] min-h-[300px] sm:min-h-[400px] rounded-md">
-        {product.images.map((imageObj, index) => (
+        {product.images.map((image, index) => (
           <div
             key={index}
-            onClick={() => handleImageSelect(imageObj.image)}
+            onClick={() => handleImageSelect(image)}
             className="relative w-4/5 aspect-square rounded border-blue-700"
           >
             <img
-              src={imageObj.image}
+              src={image}
               alt={`Product image ${index}`}
               className="object-contain w-full h-full"
             />
@@ -36,13 +36,7 @@ const ProductImage = ({ product, selectedImage, handleImageSelect }) => {
 
 ProductImage.propTypes = {
   product: PropTypes.shape({
-    images: PropTypes.arrayOf(
-      PropTypes.shape({
-        color: PropTypes.string.isRequired,
-        colorCode: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
-      }).isRequired
-    ).isRequired,
+    images: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
   selectedImage: PropTypes.string,
   handleImageSelect: PropTypes.func.isRequired,

@@ -3,7 +3,7 @@ import ClientNavBar from "../Nav/ClientNabBar";
 import ClientFooter from "../Footer/ClientFooter";
 import GoogleIcon from "../../Images/Login/google.svg";
 import coverimg from "../../Images/Login/coverimg.jpg";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 export default function ClientSignup() {
@@ -101,9 +101,7 @@ export default function ClientSignup() {
                   />
                   <p className="text-sm ml-2 text-gray-700">Agrree terms and conditions.</p>
                 </div>
-                <a href="#" className="text-sm font-medium text-blue-600 hover:underline">
-                  Terms & Conditions
-                </a>
+                <Link to="/client-terms-and-conditions" className="text-sm font-medium text-blue-600 hover:underline">Terms & Conditions</Link>
               </div>
               <button
                 type="submit"

@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { RiLoginCircleFill } from "react-icons/ri";
+import { TruncateText } from '../Utils/truncate';
+import inoWebLogo from '../../Images/NavBar/inoweb-w-sh.png'
+
 import {
   FaShoppingCart, FaUser, FaBars, FaTshirt, FaPaintBrush, FaGem, FaHome,
-  FaUtensils, FaHeart, FaGamepad, FaPencilAlt, FaGift,FaUserCog, FaUserCircle,
+  FaUtensils, FaHeart, FaGamepad, FaPencilAlt, FaGift, FaUserCog,
 } from "react-icons/fa";
 import {
   ChevronDownIcon, UserCircleIcon, Cog6ToothIcon, InboxArrowDownIcon,
@@ -12,16 +15,16 @@ import {
 import Container from "./Container";
 
 const categories = [
-  { name: "Textiles & Apparel", icon: <FaTshirt />, description: "Clothing and fabric items" },
-  { name: "Traditional Handicrafts", icon: <FaPaintBrush />, description: "Artisanal handmade products" },
-  { name: "Jewelry & Accessories", icon: <FaGem />, description: "Fashionable jewelry and accessories" },
-  { name: "Home Decor", icon: <FaHome />, description: "Decorative items for your home" },
-  { name: "Kitchen & Dining", icon: <FaUtensils />, description: "Kitchenware and dining essentials" },
-  { name: "Beauty & Personal Care", icon: <FaHeart />, description: "Beauty products and personal care" },
-  { name: "Toys & Games", icon: <FaGamepad />, description: "Fun toys and games for all ages" },
-  { name: "Stationery", icon: <FaPencilAlt />, description: "Stationery and office supplies" },
-  { name: "Gifts & Souvenirs", icon: <FaGift />, description: "Gifts and keepsakes" },
-  { name: "Art & Collectibles", icon: <FaPaintBrush />, description: "Artwork and collectibles" },
+  { name: "Traditional Handicrafts", icon: <FaPaintBrush />, description: TruncateText("Masks, Puppets, Batik Art, Lacquerware", 30) },
+  { name: "Textiles & Apparel", icon: <FaTshirt />, description: TruncateText("Sarongs, Handloom Fabrics, Traditional Clothing, Hand-painted Apparel", 30) },
+  { name: "Jewelry & Accessories", icon: <FaGem />, description: TruncateText("Gemstone Jewelry, Beaded Jewelry, Handcrafted Bags, Natural Fiber Hats", 30) },
+  { name: "Home Decor", icon: <FaHome />, description: TruncateText("Wooden Carvings, Handmade Cushions, Woven Rugs, Wall Hangings", 30) },
+  { name: "Kitchen & Dining", icon: <FaUtensils />, description: TruncateText("Handmade Utensils, Pottery, Coconut Shell Bowls, Table Linens", 30) },
+  { name: "Beauty & Personal Care", icon: <FaHeart />, description: TruncateText("Natural Soaps, Herbal Oils, Skincare Products, Hair Accessories", 30) },
+  { name: "Toys & Games", icon: <FaGamepad />, description: TruncateText("Handmade Dolls, Wooden Toys, Traditional Games, Educational Toys", 30) },
+  { name: "Stationery", icon: <FaPencilAlt />, description: TruncateText("Handmade Paper, Notebooks, Greeting Cards, Calligraphy Supplies", 30) },
+  { name: "Gifts & Souvenirs", icon: <FaGift />, description: TruncateText("Personalized Gifts, Souvenir Magnets, Keychains, Handmade Cards", 30) },
+  { name: "Art & Collectibles", icon: <FaPaintBrush />, description: TruncateText("Paintings, Sculptures, Photography, Limited Edition Prints", 30) },
 ];
 
 const profileMenuItems = [
@@ -33,9 +36,35 @@ const profileMenuItems = [
 ];
 
 export default function ClientNavBar() {
+  // State to manage dropdown visibility
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
+  
+  // Refs to access dropdown elements for click detection
+  const userDropdownRef = useRef(null);
+  const categoryDropdownRef = useRef(null);
 
+  // Effect to handle clicks outside dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Close user dropdown if click is outside
+      if (userDropdownRef.current && !userDropdownRef.current.contains(event.target)) {
+        setUserDropdownOpen(false);
+      }
+      // Close category dropdown if click is outside
+      if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target)) {
+        setCategoryDropdownOpen(false);
+      }
+    };
+
+    // Add event listener for mousedown
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    // Cleanup event listener on component unmount
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Toggle functions for dropdowns
   const toggleUserDropdown = () => {
     setUserDropdownOpen(!userDropdownOpen);
     setCategoryDropdownOpen(false);
@@ -52,7 +81,7 @@ export default function ClientNavBar() {
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">
             <Link to="/" className="text-xl font-bold text-gray-800">
-              E-Com-Innovation-Web-Logo
+              <img src={inoWebLogo} alt="E-Com Innovation Web Logo" className="h-8 w-auto md:h-10 md:w-auto" />
             </Link>
             <div className="hidden md:flex items-center w-full md:w-auto">
               <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
@@ -69,7 +98,11 @@ export default function ClientNavBar() {
               </div>
             </div>
             <div className="flex items-center gap-8 md:gap-12 relative">
-              <div className="relative">
+              <Link to="/" className="flex items-center text-gray-700 hover:text-gray-900">
+                <FaHome className="mr-2" />
+                Home
+              </Link>
+              <div className="relative" ref={categoryDropdownRef}>
                 <button
                   onClick={toggleCategoryDropdown}
                   className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none"
@@ -95,11 +128,8 @@ export default function ClientNavBar() {
                   </div>
                 )}
               </div>
-              <Link to="/cart" className="flex items-center text-gray-700 hover:text-gray-900">
-                <FaShoppingCart className="mr-2" />
-                Cart
-              </Link>
-              <Link to=" " className="flex items-center text-gray-700 hover:text-gray-900">
+
+              <Link to="/" className="flex items-center text-gray-700 hover:text-gray-900">
                 <FaUser className="mr-2" />
                 Username
               </Link>
@@ -107,8 +137,12 @@ export default function ClientNavBar() {
                 <RiLoginCircleFill className="mr-2" />
                 Login
               </Link>
-              
-              <div className="relative">
+              <Link to="/cart" className="flex items-center text-gray-700 hover:text-gray-900">
+                <FaShoppingCart className="mr-2" />
+                Cart
+              </Link>
+
+              <div className="relative" ref={userDropdownRef}>
                 <button
                   onClick={toggleUserDropdown}
                   className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none"
