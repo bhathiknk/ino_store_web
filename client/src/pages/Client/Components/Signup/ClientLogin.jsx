@@ -12,6 +12,7 @@ export default function ClientLogin() {
     email: '',
     password: ''
   });
+  const [userType, setUserType] = useState('buyer'); // State for user type
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
@@ -21,15 +22,26 @@ export default function ClientLogin() {
     });
   };
 
+  const handleUserTypeChange = (e) => {
+    const selectedUserType = e.target.value;
+    setUserType(selectedUserType);
+    if (selectedUserType === 'seller') {
+      // Redirect to admin signup page if "Seller" is selected
+      navigate('/signin');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/api/users/signin', formData);
-      // Handle success, e.g., navigate to client dashboard
-      localStorage.setItem('userToken', response.data.token); // Save token to local storage
-      navigate('/'); // Navigate to client dashboard after successful login
-    } catch (err) {
-      setError(err.response.data.message || 'An error occurred');
+    if (userType === 'buyer') {
+      try {
+        const response = await axios.post('http://localhost:5000/api/users/signin', formData);
+        // Handle success, e.g., navigate to client dashboard
+        localStorage.setItem('userToken', response.data.token); // Save token to local storage
+        navigate('/'); // Navigate to client dashboard after successful login
+      } catch (err) {
+        setError(err.response.data.message || 'An error occurred');
+      }
     }
   };
 
@@ -61,9 +73,19 @@ export default function ClientLogin() {
 
           {/* Form Section */}
           <div className="w-full lg:w-1/2 bg-white p-6 lg:px-16 lg:py-12 flex flex-col justify-center rounded-r-lg shadow-md">
-            <h1 className="text-2xl font-semibold mb-4 text-[#060606]">
-              Login
-            </h1>
+            <div className="flex items-center mb-4">
+              <h1 className="text-2xl font-semibold mb-4 text-[#060606]">
+                Login
+              </h1>
+              <select
+                value={userType}
+                onChange={handleUserTypeChange}
+                className="ml-10 w-24 py-1 px-2 border border-gray-300 rounded-md shadow-sm bg-white text-gray-700 focus:outline-none focus:border-blue-500 transition duration-300"
+              >
+                <option value="buyer" className="">Buyer</option>
+                <option value="seller">Seller</option>
+              </select>
+            </div>
             <p className="text-sm mb-4 text-gray-600">
               Welcome! Please enter your details to Login.
             </p>
@@ -97,12 +119,14 @@ export default function ClientLogin() {
                   Forgot Password
                 </a>
               </div>
-              <button
-                type="submit"
-                className="w-full py-2 px-3 bg-slate-700 text-white font-semibold rounded-md hover:bg-[#050505] hover:shadow-md transition duration-300"
-              >
-                Login
-              </button>
+              {userType === 'buyer' && (
+                <button
+                  type="submit"
+                  className="w-full py-2 px-3 bg-slate-700 text-white font-semibold rounded-md hover:bg-[#050505] hover:shadow-md transition duration-300"
+                >
+                  Login
+                </button>
+              )}
               <div className="relative flex items-center justify-center mt-4">
                 <div className="absolute inset-x-0 h-[1px] bg-gray-300" />
                 <p className="relative text-sm bg-white px-2 text-gray-600">Or</p>

@@ -6,10 +6,23 @@ import ClientFooter from '../../Footer/ClientFooter';
 const Cart = () => {
   const { cart, dispatch } = useCart();
 
-  // Calculate the total price of the cart
+  // Calculate the total price of the cart, including shipping costs
   const calculateTotal = () => {
+    return cart.reduce((total, item) => total + (item.price * item.quantity) + (item.shippingCost || 0), 0);
+  };
+
+  // Calculate the subtotal (excluding shipping costs)
+  const calculateSubtotal = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
+
+  // Calculate the total shipping cost
+  const calculateShippingCost = () => {
+    return cart.reduce((total, item) => total + (item.shippingCost || 0), 0);
+  };
+
+  // Determine if any item has a shipping cost
+  const hasShippingCost = cart.some(item => item.shippingCost && item.shippingCost > 0);
 
   // Handle clearing the entire cart
   const handleClearCart = () => {
@@ -46,11 +59,12 @@ const Cart = () => {
           <header className="text-3xl font-bold text-center mt-8 text-gray-800">
             Shopping Cart
           </header>
-          <div className="grid grid-cols-5 text-sm gap-4 pb-2 items-center mt-8 mx-8 bg-white p-4 rounded shadow-md">
+          <div className="grid grid-cols-6 text-sm gap-4 pb-2 items-center mt-8 mx-8 bg-white p-4 rounded shadow-md">
             {/* Table headers */}
             <div className="col-span-2 justify-self-start font-semibold text-gray-600">Product</div>
             <div className="justify-self-center font-semibold text-gray-600">Price</div>
             <div className="justify-self-center font-semibold text-gray-600">Quantity</div>
+            <div className="justify-self-center font-semibold text-gray-600">Shipping Cost</div>
             <div className="justify-self-center font-semibold text-gray-600">Total</div>
             
             {/* Render cart items */}
@@ -91,8 +105,12 @@ const Cart = () => {
                     +
                   </button>
                 </div>
+                {/* Shipping cost */}
+                <div className="justify-self-center text-gray-800">
+                  {item.shippingCost > 0 ? `Rs. ${roundToTwoDecimalPlaces(item.shippingCost).toFixed(2)}` : 'Free'}
+                </div>
                 {/* Total price for the item */}
-                <div className="justify-self-center text-gray-800">Rs.{roundToTwoDecimalPlaces(item.price * item.quantity).toFixed(2)}</div>
+                <div className="justify-self-center text-gray-800">Rs.{roundToTwoDecimalPlaces(item.price * item.quantity + (item.shippingCost || 0)).toFixed(2)}</div>
               </React.Fragment>
             ))}
           </div>
@@ -116,13 +134,25 @@ const Cart = () => {
             >
               Clear Cart
             </button>
-            {/* Subtotal and Checkout button */}
+            {/* Subtotal, Shipping Cost, and Checkout button */}
             <div className="text-lg font-semibold text-gray-800 flex flex-col gap-2 items-center md:items-start">
               <div>
                 <span>Sub Total: </span>
-                <span>Rs. {calculateTotal().toFixed(2)}</span>
+                <span>Rs. {calculateSubtotal().toFixed(2)}</span>
+              </div>
+              <div>
+                <span>Shipping Cost: </span>
+                <span>
+                  {hasShippingCost ? 
+                    `Rs. ${roundToTwoDecimalPlaces(calculateShippingCost()).toFixed(2)}` :
+                    'Free'}
+                </span>
               </div>
               <div className="text-sm text-gray-600">Taxes and shipping will be calculated at checkout</div>
+              <div>
+                <span>Total: </span>
+                <span>Rs. {roundToTwoDecimalPlaces(calculateTotal()).toFixed(2)}</span>
+              </div>
               <button
                 className="
                   rounded-md 

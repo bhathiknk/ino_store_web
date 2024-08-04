@@ -27,8 +27,8 @@ export default function ClientPage() {
     fetchProducts();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p className='font-normal py-10 px-10 '>Loading...</p>;
+  if (error) return <p className='font-normal text-red-600'>Error: {error}</p>;
 
   return (
     <div className="p-8 bg-white">

@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from 'react-router-dom';
-import { Rating } from '@mui/material';
-import ClientNabBar from '../../Nav/ClientNabBar';
-import ClientFooter from '../../Footer/ClientFooter';
-import AddToCartButton from './AddToCartButton';
-import SetQuantity from './SetQuantity';
-import ProductImage from './ProductImage'; // Import the ProductImage component
-import { useCart } from '../Cart/CartContext'; // Import the Cart context
-
+import { useParams, useNavigate } from "react-router-dom";
+import { Rating } from "@mui/material";
+import ClientNabBar from "../../Nav/ClientNabBar";
+import ClientFooter from "../../Footer/ClientFooter";
+import AddToCartButton from "./AddToCartButton";
+import SetQuantity from "./SetQuantity";
+import ProductImage from "./ProductImage"; 
+import { useCart } from "../Cart/CartContext"; 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null); // State for the product
   const [quantity, setQuantity] = useState(1); // State for quantity
-  const [selectedImage, setSelectedImage] = useState(''); // State for selected image
+  const [selectedImage, setSelectedImage] = useState(""); // State for selected image
   const { id } = useParams(); // Get product ID from URL
   const { dispatch } = useCart(); // Use the Cart context
   const navigate = useNavigate(); // Use navigate to redirect
@@ -20,9 +19,11 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/products/products/${id}`);
+        const response = await fetch(
+          `http://localhost:5000/api/products/products/${id}`
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch product');
+          throw new Error("Failed to fetch product");
         }
         const data = await response.json();
         setProduct(data);
@@ -49,7 +50,7 @@ const ProductDetails = () => {
   };
 
   const HorizontalLine = () => {
-    return <hr className="w-[30%] my-2 border-gray-300" />; // Adjusted color and width
+    return <hr className="w-[30%] border-gray-300" />; // Horizontal Line
   };
 
   const averageRating = calculateAverageRating(product.reviews || []); // Calculate the average rating
@@ -78,9 +79,15 @@ const ProductDetails = () => {
       category: product.category,
       quantity: quantity,
       image: selectedImage,
+      shippingCost: product.isFreeShipping ? 0 : product.shippingCost, 
     };
-    dispatch({ type: 'ADD_TO_CART', payload: productToCart });
-    navigate('/client-cart');
+    dispatch({ type: "ADD_TO_CART", payload: productToCart });
+    navigate("/client-cart");
+  };
+
+  // Price Rounded to decimal places
+  const roundToTwoDecimalPlaces = (num) => {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
   };
 
   return (
@@ -102,39 +109,62 @@ const ProductDetails = () => {
                 </h2>
                 <div className="flex items-center gap-2">
                   <Rating value={averageRating} readOnly />
-                  <div>{product.reviews ? `${product.reviews.length} reviews` : 'No reviews'}</div>
+                  <div>
+                    {product.reviews
+                      ? `${product.reviews.length} reviews`
+                      : "No reviews"}
+                  </div>
                 </div>
                 <HorizontalLine />
                 <div className="text-justify">{product.description}</div>
                 <HorizontalLine />
                 <div>
                   <span className="font-semibold font-nunito text-slate-700">
-                    CATEGORY: {product.category}
+                    CATEGORY:<span className="ml-2"> {product.name}</span>
                   </span>
                 </div>
-                <div>
-                  <span className="font-semibold font-kanit text-slate-700 ">
-                  Price: Rs. {product.isDiscount ?  <span className="line-through text-red-700"> {product.basePrice}</span> : 'None'}
-                  </span>
-                </div>
-                <div className={product.quantity > 0 ? 'text-green-400' : 'text-red-400'}>
-                  {product.quantity > 0 ? 'In Stock' : 'Out of Stock'}
+                <div
+                  className={
+                    product.quantity > 0 ? "text-green-400" : "text-red-400"
+                  }
+                >
+                  {product.quantity > 0 ? "In Stock" : "Out of Stock"}
                 </div>
                 <HorizontalLine />
                 <div>
-                  <span className="font-semibold font-kanit text-slate-700 float-center">
-                  Shipping Status
+                  <span className="font-semibold font-kanit text-slate-700 ">
+                    Price: Rs.
+                    <span className="line-through text-red-700">
+                      {roundToTwoDecimalPlaces(product.basePrice).toFixed(2)}
+                    </span>
                   </span>
                 </div>
+
+                <HorizontalLine />
                 <div>
-                  <span className="font-semibold font-nunito text-slate-700">
-                    Shiping : Free {product.brand}
-                  </span>
+                  {product.isFreeShipping ? (
+                    <span className="font-semibold font-kanit text-slate-700">
+                      Shipping :
+                      <span className="ml-1 text-green-600">Free Shipping</span>
+                    </span>
+                  ) : (
+                    <span className="font-semibold font-kanit text-slate-700">
+                      Shipping Cost:
+                      <span className="ml-1 text-green-600">
+                        Rs. {roundToTwoDecimalPlaces(product.shippingCost).toFixed(2)}
+                      </span>
+                    </span>
+                  )}
                 </div>
                 <HorizontalLine />
                 <div>
                   <span className="font-semibold font-kanit text-slate-700">
-                    With Discount: ${product.discountPrice}
+                    {product.isDiscount ? "With Discount:" : "Price:"}
+                    <span className="ml-2 text-slate-600 font-normal">
+                      Rs. {product.isDiscount
+                        ? roundToTwoDecimalPlaces(product.discountPrice).toFixed(2)
+                        : roundToTwoDecimalPlaces(product.basePrice).toFixed(2)}
+                    </span>
                   </span>
                 </div>
                 <HorizontalLine />
@@ -148,7 +178,10 @@ const ProductDetails = () => {
                 <HorizontalLine />
                 <div className="max-w-[300px]">
                   {/* Render AddToCartButton component */}
-                  <AddToCartButton label="Add to cart" onClick={handleAddToCart} />
+                  <AddToCartButton
+                    label="Add to cart"
+                    onClick={handleAddToCart}
+                  />
                 </div>
               </div>
             </div>

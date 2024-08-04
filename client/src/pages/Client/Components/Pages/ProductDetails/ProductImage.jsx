@@ -3,12 +3,12 @@ import React from 'react';
 const ProductImage = ({ product, selectedImage, handleImageSelect }) => {
   // Ensure product.images is defined and is an array of strings
   if (!Array.isArray(product.images)) {
-    return <div>No images available</div>;
+    return <div className='font-normal py-5 px-5  max-w-full '>No images available</div>;
   }
 
   // Handle when no images are available
   if (product.images.length === 0) {
-    return <div>No images available</div>;
+    return <div className='font-normal py-5 px-5  max-w-full '>No images available</div>;
   }
 
   // Default image to show if no image is selected
@@ -22,10 +22,10 @@ const ProductImage = ({ product, selectedImage, handleImageSelect }) => {
           <div
             key={index}
             onClick={() => handleImageSelect(image)}
-            className="relative w-full aspect-square rounded border border-gray-300"
+            className="relative w-full aspect-square rounded border hover:border-blue-900 transition duration-300"
           >
             <img
-              src={`http://localhost:5000${image}`} // Ensure URL is correct
+              src={`http://localhost:5000${image}`}
               alt={`Product image ${index}`}
               className="object-cover w-full h-full rounded border border-gray-300"
             />
