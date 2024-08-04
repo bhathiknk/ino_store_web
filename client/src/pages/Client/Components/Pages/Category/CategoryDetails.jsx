@@ -1,9 +1,7 @@
 import React from 'react';
 import ProductCard from '../../Products/ProductCard';
 
-
 const products = [
-  // Example products
   {
     id: '1',
     name: 'Sample Product',
@@ -23,17 +21,23 @@ export default function CategoryDetails() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Hero Banner */}
-      <div className="bg-gradient-to-r from-blue-700 to-indigo-600 text-white text-center py-8 rounded-lg shadow-xl mb-12">
+      <div className="relative bg-gradient-to-r from-blue-700 to-indigo-600 text-white text-center py-8 rounded-lg shadow-xl mb-12">
         <h1 className="text-4xl font-extrabold mb-4">Discover Our Categories</h1>
-        <p className="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+        <p className="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-6">
           Explore our diverse range of products and find what suits you best. From unique gifts to everyday essentials, our categories are crafted for your convenience.
         </p>
+        <a
+          href="#products"
+          className="inline-block px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg shadow-md hover:bg-gray-100 transition ease-in-out duration-300"
+        >
+          Explore Now
+        </a>
       </div>
 
       {/* Divider */}
       <div className="bg-gray-100 py-6 mb-8">
         <div className="container mx-auto px-4">
-          <div className="h- bg-gradient-to-r from-blue-300 to-indigo-200 rounded-md" />
+          <div className="h-1 bg-gradient-to-r from-blue-300 to-indigo-200 rounded-md" />
         </div>
       </div>
 
@@ -56,25 +60,25 @@ export default function CategoryDetails() {
         {/* Products List */}
         <div className="md:col-span-3">
           {/* Search and Filters */}
-          <div className="flex flex-col md:flex-row md:items-center mb-8">
+          <div className="flex flex-col md:flex-row md:items-center mb-8 space-y-4 md:space-y-0 md:space-x-4">
             {/* Search Bar */}
             <input
               type="text"
               placeholder="Search products..."
-              className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg shadow-md mb-4 md:mb-0 mr-0 md:mr-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition ease-in-out duration-300"
             />
 
             {/* Filters */}
             <div className="flex space-x-4">
-              <select className="px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <select className="px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition ease-in-out duration-300">
                 <option>Sort by</option>
                 <option>Price: Low to High</option>
                 <option>Price: High to Low</option>
               </select>
-              <select className="px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <select className="px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition ease-in-out duration-300">
                 <option>Category</option>
-                <option>Category 1</option>
-                <option>Category 2</option>
+                <option>Mask</option>
+                <option>Cloths </option>
               </select>
             </div>
           </div>

@@ -33,11 +33,10 @@ const Cart = () => {
     }
   };
 
-  //Rounded decimal paces in subtotal
+  // Rounded decimal places in subtotal
   const roundToTwoDecimalPlaces = (num) => {
     return Math.round((num + Number.EPSILON) * 100) / 100;
   };
-  
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
@@ -59,19 +58,23 @@ const Cart = () => {
               <React.Fragment key={index}>
                 {/* Product details */}
                 <div className="col-span-2 justify-self-start flex items-center">
-                  <img src={item.image} alt={item.title} className="w-16 h-16 mr-4 rounded border" />
+                  <img
+                    src={`http://localhost:5000${item.image}`} // Ensure URL is correct
+                    alt={item.title}
+                    className="w-16 h-16 mr-4 rounded border"
+                  />
                   <div className="flex flex-col">
                     <span className="text-gray-800">{item.title}</span>
                     <button
                       onClick={() => handleRemoveItem(item)}
-                     className="mt-2 py-1 px-2 w-20 text-xs rounded bg-red-700 text-white hover:text-white hover:bg-gray-900 transition duration-300 ease-in-out"
+                      className="mt-2 py-1 px-2 w-20 text-xs rounded bg-red-700 text-white hover:text-white hover:bg-gray-900 transition duration-300 ease-in-out"
                     >
                       Remove
                     </button>
                   </div>
                 </div>
                 {/* Product price */}
-                <div className="justify-self-center text-gray-800">${item.price}</div>
+                <div className="justify-self-center text-gray-800">Rs.{item.price}</div>
                 {/* Quantity controls */}
                 <div className="justify-self-center flex items-center space-x-2 text-gray-800">
                   <button
@@ -83,13 +86,13 @@ const Cart = () => {
                   <span className="px-4 py-1 border-t border-b border-gray-300">{item.quantity}</span>
                   <button
                     onClick={() => handleQuantityIncrease(item)}
-                    className="px-3 py-1 bg-gray-300 rounded-r text-gray-800 hover:bg-gray-400 transition duration-300 ease-in-out " 
+                    className="px-3 py-1 bg-gray-300 rounded-r text-gray-800 hover:bg-gray-400 transition duration-300 ease-in-out"
                   >
                     +
                   </button>
                 </div>
                 {/* Total price for the item */}
-                <div className="justify-self-center text-gray-800">${roundToTwoDecimalPlaces(item.price * item.quantity).toFixed(2)}</div>
+                <div className="justify-self-center text-gray-800">Rs.{roundToTwoDecimalPlaces(item.price * item.quantity).toFixed(2)}</div>
               </React.Fragment>
             ))}
           </div>
@@ -117,7 +120,7 @@ const Cart = () => {
             <div className="text-lg font-semibold text-gray-800 flex flex-col gap-2 items-center md:items-start">
               <div>
                 <span>Sub Total: </span>
-                <span>${calculateTotal().toFixed(2)}</span>
+                <span>Rs. {calculateTotal().toFixed(2)}</span>
               </div>
               <div className="text-sm text-gray-600">Taxes and shipping will be calculated at checkout</div>
               <button

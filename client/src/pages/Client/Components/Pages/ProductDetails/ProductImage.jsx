@@ -1,45 +1,47 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
 
 const ProductImage = ({ product, selectedImage, handleImageSelect }) => {
+  // Ensure product.images is defined and is an array of strings
+  if (!Array.isArray(product.images)) {
+    return <div>No images available</div>;
+  }
+
+  // Handle when no images are available
+  if (product.images.length === 0) {
+    return <div>No images available</div>;
+  }
+
+  // Default image to show if no image is selected
+  const defaultImage = product.images[0]; // Show the first image by default
+
   return (
     <div className="grid grid-cols-6 gap-2 h-full max-h-[500px] min-h-[300px] sm:min-h-[400px]">
-      {/* Image list */}
-      <div className="flex flex-col items-center justify-center gap-4 cursor-pointer border h-full max-h-[500px] min-h-[300px] sm:min-h-[400px] rounded-md">
+      {/* Thumbnail images list */}
+      <div className="flex flex-col items-center justify-center gap-4 cursor-pointer border h-full max-h-[500px] min-h-[300px] sm:min-h-[400px] rounded-md border-gray-300">
         {product.images.map((image, index) => (
           <div
             key={index}
             onClick={() => handleImageSelect(image)}
-            className="relative w-4/5 aspect-square rounded border-blue-700"
+            className="relative w-full aspect-square rounded border border-gray-300"
           >
             <img
-              src={image}
+              src={`http://localhost:5000${image}`} // Ensure URL is correct
               alt={`Product image ${index}`}
-              className="object-contain w-full h-full"
+              className="object-cover w-full h-full rounded border border-gray-300"
             />
           </div>
         ))}
       </div>
       {/* Large selected image */}
       <div className="col-span-5 relative aspect-square">
-        {selectedImage && (
-          <img
-            src={selectedImage}
-            alt="Selected Product"
-            className="object-contain w-full h-full max-h-[500px] min-h-[300px] sm:min-h-[400px]"
-          />
-        )}
+        <img
+          src={`http://localhost:5000${selectedImage || defaultImage}`} // Use selectedImage if available, otherwise use defaultImage
+          alt="Product"
+          className="object-cover w-full h-full max-h-[500px] min-h-[300px] sm:min-h-[400px] rounded border border-gray-300"
+        />
       </div>
     </div>
   );
-};
-
-ProductImage.propTypes = {
-  product: PropTypes.shape({
-    images: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }).isRequired,
-  selectedImage: PropTypes.string,
-  handleImageSelect: PropTypes.func.isRequired,
 };
 
 export default ProductImage;
