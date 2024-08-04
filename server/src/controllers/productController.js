@@ -1,5 +1,6 @@
 const Product = require('../models/Product');
 const path = require('path');
+const Category = require('../models/Category');
 const fs = require('fs');
 
 // Add product with images
@@ -149,3 +150,5 @@ exports.getAllProducts = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
