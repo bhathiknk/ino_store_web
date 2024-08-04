@@ -1,7 +1,8 @@
 import React from 'react';
 import { useCart } from '../Cart/CartContext';
-import ClientNabBar from '../../Nav/ClientNabBar';
+import ClientNavBar from '../../Nav/ClientNabBar';
 import ClientFooter from '../../Footer/ClientFooter';
+import { FaCcMastercard } from "react-icons/fa";
 
 const Cart = () => {
   const { cart, dispatch } = useCart();
@@ -41,31 +42,41 @@ const Cart = () => {
 
   // Handle decreasing the quantity of a specific item
   const handleQuantityDecrease = (item) => {
-    if (item.quantity > 1) { // Ensure quantity does not go below 1
+    if (item.quantity > 1) {
       dispatch({ type: 'UPDATE_CART_ITEM', payload: { ...item, quantity: item.quantity - 1 } });
     }
   };
 
-  // Rounded decimal places in subtotal
+  // Round to two decimal places for display
   const roundToTwoDecimalPlaces = (num) => {
     return Math.round((num + Number.EPSILON) * 100) / 100;
   };
+   
+   // Horizontal Line
+  const HorizontalLine = () => {
+    return <hr className="w-[200%] border-gray-300 " />; 
+  };
+
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
-      <ClientNabBar />
+      {/* Navigation Bar */}
+      <ClientNavBar />
       <main className="flex-grow py-6 md:py-8 lg:py-12">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
+          {/* Header */}
           <header className="text-3xl font-bold text-center mt-8 text-gray-800">
             Shopping Cart
           </header>
+          
+          {/* Cart Items Table */}
           <div className="grid grid-cols-6 text-sm gap-4 pb-2 items-center mt-8 mx-8 bg-white p-4 rounded shadow-md">
             {/* Table headers */}
-            <div className="col-span-2 justify-self-start font-semibold text-gray-600">Product</div>
-            <div className="justify-self-center font-semibold text-gray-600">Price</div>
-            <div className="justify-self-center font-semibold text-gray-600">Quantity</div>
-            <div className="justify-self-center font-semibold text-gray-600">Shipping Cost</div>
-            <div className="justify-self-center font-semibold text-gray-600">Total</div>
+            <div className="col-span-2 justify-self-start font-bold text-gray-600">Product</div>
+            <div className="justify-self-center font-bold text-gray-600">Price</div>
+            <div className="justify-self-center font-bold text-gray-600">Quantity</div>
+            <div className="justify-self-center font-bold text-gray-600">Shipping Cost</div>
+            <div className="justify-self-center font-bold text-gray-600">Total</div>
             
             {/* Render cart items */}
             {cart.map((item, index) => (
@@ -88,7 +99,7 @@ const Cart = () => {
                   </div>
                 </div>
                 {/* Product price */}
-                <div className="justify-self-center text-gray-800">Rs.{item.price}</div>
+                <div className="justify-self-center text-gray-800 font-sm">Rs.{roundToTwoDecimalPlaces(item.price).toFixed(2)}</div>
                 {/* Quantity controls */}
                 <div className="justify-self-center flex items-center space-x-2 text-gray-800">
                   <button
@@ -106,72 +117,64 @@ const Cart = () => {
                   </button>
                 </div>
                 {/* Shipping cost */}
-                <div className="justify-self-center text-gray-800">
-                  {item.shippingCost > 0 ? `Rs. ${roundToTwoDecimalPlaces(item.shippingCost).toFixed(2)}` : 'Free'}
+                <div className="justify-self-center text-gray-800 font-kanit">
+                  {item.shippingCost > 0 ? `Rs. ${roundToTwoDecimalPlaces(item.shippingCost).toFixed(2)}` : 'Rs. 0.00'}
                 </div>
                 {/* Total price for the item */}
-                <div className="justify-self-center text-gray-800">Rs.{roundToTwoDecimalPlaces(item.price * item.quantity + (item.shippingCost || 0)).toFixed(2)}</div>
+                <div className="justify-self-center text-gray-800 font-kanit">Rs.{roundToTwoDecimalPlaces(item.price * item.quantity + (item.shippingCost || 0)).toFixed(2)}</div>
               </React.Fragment>
             ))}
           </div>
           
-          {/* Cart summary and actions */}
+          {/* Cart Summary and Actions */}
           <div className="border-t-[1.5px] border-gray-200 py-4 flex flex-col md:flex-row justify-between items-center gap-4 mt-4 mx-8">
-            {/* Clear Cart button */}
+            {/* Clear Cart Button */}
             <button
               onClick={handleClearCart}
-              className="
-                rounded-md 
-                bg-red-500
-                text-white
-                w-[120px] /* Fixed width */
-                border-none
-                hover:bg-red-600
-                transition
-                duration-500
-                ease-in-out
-                py-2"
+              className="rounded-md bg-red-500 text-white w-[120px] border-none hover:bg-red-600 transition duration-500 ease-in-out py-2"
             >
               Clear Cart
             </button>
-            {/* Subtotal, Shipping Cost, and Checkout button */}
-            <div className="text-lg font-semibold text-gray-800 flex flex-col gap-2 items-center md:items-start">
-              <div>
-                <span>Sub Total: </span>
-                <span>Rs. {calculateSubtotal().toFixed(2)}</span>
-              </div>
-              <div>
-                <span>Shipping Cost: </span>
-                <span>
-                  {hasShippingCost ? 
-                    `Rs. ${roundToTwoDecimalPlaces(calculateShippingCost()).toFixed(2)}` :
-                    'Free'}
-                </span>
-              </div>
-              <div className="text-sm text-gray-600">Taxes and shipping will be calculated at checkout</div>
-              <div>
-                <span>Total: </span>
-                <span>Rs. {roundToTwoDecimalPlaces(calculateTotal()).toFixed(2)}</span>
-              </div>
+            {/* Order Summary */}
+            <div className="bg-white p-4 rounded-lg shadow-md w-full max-w-md">
+              <div className="text-lg font-semibold text-gray-800 mb-8 mt-2 bg-black text-white rounded-md py-1 shadow-md text-center">Order Summary</div>
+              <table className="w-full text-sm">
+                <tbody>
+                  <tr className='mt-6 mb-6'>
+                    <td className="text-gray-600 text-base">Sub Total:</td>
+                    <td className="text-center font-kanit text-base">Rs. {calculateSubtotal().toFixed(2)}</td>
+                  </tr>
+                  <HorizontalLine/>
+                  <tr className='mt-6 mb-6'>
+                    <td className="text-gray-600 text-base">Shipping Cost:</td>
+                    <td className="text-center font-kanit text-base ">
+                      {hasShippingCost ? `Rs. ${roundToTwoDecimalPlaces(calculateShippingCost()).toFixed(2)}` : 'Rs. 0.00'}
+                    </td>
+                  </tr>
+                  <HorizontalLine/>
+                  <tr className='mt-6 mb-6'>
+                    <td className="text-gray-600 col-span-2 text-center" colSpan="2">
+                     {/*aditional*/}
+                    </td>
+                  </tr>
+      
+                  <tr className='mt-6 mb-6' >
+                    <td className="text-gray-600 font-bold text-lg">Total:</td>
+                    <td className="text-center font-kanit font-bold text-lg">Rs. {roundToTwoDecimalPlaces(calculateTotal()).toFixed(2)}</td>
+                  </tr>
+                  <HorizontalLine/>
+                </tbody>
+              </table>
               <button
-                className="
-                  rounded-md 
-                  bg-slate-700
-                  text-white
-                  w-[318px] /* Fixed width */
-                  border-none
-                  hover:bg-slate-900
-                  transition
-                  duration-500
-                  ease-in-out
-                  py-2"
+                className="rounded-md bg-slate-700 text-white w-full border-none hover:bg-slate-900 transition duration-500 ease-in-out py-2 mt-4 flex items-center justify-center hover:shadow-md transition-500"
               >
-                Checkout
+                <FaCcMastercard className="mr-3 text-xl"/> Checkout
               </button>
             </div>
           </div>
         </div>
       </main>
+      {/* Footer */}
       <ClientFooter />
     </div>
   );
