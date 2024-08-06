@@ -27,8 +27,23 @@ export default function ClientPage() {
     fetchProducts();
   }, []);
 
-  if (loading) return <p className='font-normal py-10 px-10 '>Loading...</p>;
-  if (error) return <p className='font-normal text-red-600'>Error: {error}</p>;
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="font-normal text-2xl py-10 px-10">Loading...</p>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="font-normal text-red-600 text-2xl border border-red-600 p-4 rounded-lg">
+          Error: {error}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-8 bg-white">

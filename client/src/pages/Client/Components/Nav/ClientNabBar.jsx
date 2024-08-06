@@ -1,32 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { RiLoginCircleFill } from "react-icons/ri";
-import { TruncateText } from '../Utils/truncate';
-import inoWebLogo from '../../Images/NavBar/inoweb.png'
-
 import {
   FaShoppingCart, FaUser, FaBars, FaTshirt, FaPaintBrush, FaGem, FaHome,
   FaUtensils, FaHeart, FaGamepad, FaPencilAlt, FaGift, FaUserCog,
 } from "react-icons/fa";
-import {
-  ChevronDownIcon, UserCircleIcon, Cog6ToothIcon, InboxArrowDownIcon,
-  LifebuoyIcon, PowerIcon
-} from "@heroicons/react/24/solid";
+import { ChevronDownIcon,UserCircleIcon, Cog6ToothIcon, InboxArrowDownIcon,LifebuoyIcon, PowerIcon } from "@heroicons/react/24/solid";
+
 import Container from "./Container";
+import inoWebLogo from '../../Images/NavBar/inoweb.png';
 
-const categories = [
-  { name: "Traditional Handicrafts", icon: <FaPaintBrush />, description: TruncateText("Masks, Puppets, Batik Art, Lacquerware", 30) },
-  { name: "Textiles & Apparel", icon: <FaTshirt />, description: TruncateText("Sarongs, Handloom Fabrics, Traditional Clothing, Hand-painted Apparel", 30) },
-  { name: "Jewelry & Accessories", icon: <FaGem />, description: TruncateText("Gemstone Jewelry, Beaded Jewelry, Handcrafted Bags, Natural Fiber Hats", 30) },
-  { name: "Home Decor", icon: <FaHome />, description: TruncateText("Wooden Carvings, Handmade Cushions, Woven Rugs, Wall Hangings", 30) },
-  { name: "Kitchen & Dining", icon: <FaUtensils />, description: TruncateText("Handmade Utensils, Pottery, Coconut Shell Bowls, Table Linens", 30) },
-  { name: "Beauty & Personal Care", icon: <FaHeart />, description: TruncateText("Natural Soaps, Herbal Oils, Skincare Products, Hair Accessories", 30) },
-  { name: "Toys & Games", icon: <FaGamepad />, description: TruncateText("Handmade Dolls, Wooden Toys, Traditional Games, Educational Toys", 30) },
-  { name: "Stationery", icon: <FaPencilAlt />, description: TruncateText("Handmade Paper, Notebooks, Greeting Cards, Calligraphy Supplies", 30) },
-  { name: "Gifts & Souvenirs", icon: <FaGift />, description: TruncateText("Personalized Gifts, Souvenir Magnets, Keychains, Handmade Cards", 30) },
-  { name: "Art & Collectibles", icon: <FaPaintBrush />, description: TruncateText("Paintings, Sculptures, Photography, Limited Edition Prints", 30) },
-];
+// Helper function to truncate text
+const truncateText = (text, maxLength) => text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
 
+// Define the profile menu items with labels, icons, and paths
 const profileMenuItems = [
   { label: "My Profile", icon: UserCircleIcon, path: "/profile" },
   { label: "Edit Profile", icon: Cog6ToothIcon, path: "/edit-profile" },
@@ -35,41 +22,67 @@ const profileMenuItems = [
   { label: "Sign Out", icon: PowerIcon, path: "/sign-out" },
 ];
 
+// Mapping of category names to icons
+const categoryIcons = {
+  'Textiles & Apparel': FaTshirt,
+  'Traditional Handicrafts': FaPaintBrush,
+  'Jewelry & Accessories': FaGem,
+  'Home Decor': FaHome,
+  'Kitchen & Dining': FaUtensils,
+  'Beauty & Personal Care': FaHeart,
+  'Toys & Games': FaGamepad,
+  'Stationery': FaPencilAlt,
+  'Gift and Souvenirs': FaGift,
+  'Art and Collectibles': FaPaintBrush,
+};
+
 export default function ClientNavBar() {
-  // State to manage dropdown visibility
+  // State variables
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
-  
-  // Refs to access dropdown elements for click detection
+  const [categories, setCategories] = useState([]);
+
+  // Refs for dropdowns
   const userDropdownRef = useRef(null);
   const categoryDropdownRef = useRef(null);
 
-  // Effect to handle clicks outside dropdowns
+  // Effect to handle clicks outside of dropdowns
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Close user dropdown if click is outside
       if (userDropdownRef.current && !userDropdownRef.current.contains(event.target)) {
         setUserDropdownOpen(false);
       }
-      // Close category dropdown if click is outside
       if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target)) {
         setCategoryDropdownOpen(false);
       }
     };
 
-    // Add event listener for mousedown
     document.addEventListener('mousedown', handleClickOutside);
-    
-    // Cleanup event listener on component unmount
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Toggle functions for dropdowns
+  // Effect to fetch categories from API
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/categories/get');
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  // Toggle user dropdown visibility
   const toggleUserDropdown = () => {
     setUserDropdownOpen(!userDropdownOpen);
     setCategoryDropdownOpen(false);
   };
 
+  // Toggle category dropdown visibility
   const toggleCategoryDropdown = () => {
     setCategoryDropdownOpen(!categoryDropdownOpen);
     setUserDropdownOpen(false);
@@ -80,9 +93,12 @@ export default function ClientNavBar() {
       <div className="py-4 border-b-[1px] border-gray-200">
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">
+            {/* Logo and Home Link */}
             <Link to="/" className="text-xl font-bold text-gray-800">
               <img src={inoWebLogo} alt="E-Com Innovation Web Logo" className="h-8 w-auto md:h-10 md:w-auto" />
             </Link>
+
+            {/* Search Bar */}
             <div className="hidden md:flex items-center w-full md:w-auto">
               <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
                 <div className="grid place-items-center h-full w-12 text-gray-300">
@@ -97,11 +113,15 @@ export default function ClientNavBar() {
                   placeholder="Search something.." />
               </div>
             </div>
+
+            {/* Navigation Links */}
             <div className="flex items-center gap-8 md:gap-12 relative">
               <Link to="/" className="flex items-center text-gray-700 hover:text-gray-900">
                 <FaHome className="mr-2" />
                 Home
               </Link>
+
+              {/* Categories Dropdown */}
               <div className="relative" ref={categoryDropdownRef}>
                 <button
                   onClick={toggleCategoryDropdown}
@@ -112,23 +132,30 @@ export default function ClientNavBar() {
                 </button>
                 {categoryDropdownOpen && (
                   <div className="absolute left-0 mt-2 w-64 bg-white rounded-md shadow-lg py-2 z-20">
-                    {categories.map((category) => (
-                      <Link
-                        key={category.name}
-                        to={`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/\s+/g, '-')}`}
-                        className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
-                      >
-                        {category.icon}
-                        <div className="ml-2">
-                          <div className="font-medium">{category.name}</div>
-                          <div className="text-sm text-gray-500">{category.description}</div>
-                        </div>
-                      </Link>
-                    ))}
+                    {categories.map((category) => {
+                      // Get the icon for the category, default to FaHome if not found
+                      const Icon = categoryIcons[category.name] || FaHome;
+                      return (
+                        <Link
+                          key={category._id} // Assuming categories have _id
+                          to={`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/\s+/g, '-')}`}
+                          className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
+                        >
+                          <div className="mr-2">
+                            <Icon /> {/* Display the corresponding icon */}
+                          </div>
+                          <div>
+                            <div className="font-medium">{category.name}</div>
+                            <div className="text-sm text-gray-500">{truncateText(category.description, 26)}</div>
+                          </div>
+                        </Link>
+                      );
+                    })}
                   </div>
                 )}
               </div>
 
+              {/* User Links */}
               <Link to="/" className="flex items-center text-gray-700 hover:text-gray-900">
                 <FaUser className="mr-2" />
                 Username
@@ -142,6 +169,7 @@ export default function ClientNavBar() {
                 Cart
               </Link>
 
+              {/* User Dropdown */}
               <div className="relative" ref={userDropdownRef}>
                 <button
                   onClick={toggleUserDropdown}
