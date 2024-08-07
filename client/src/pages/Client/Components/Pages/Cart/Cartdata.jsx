@@ -3,9 +3,11 @@ import { useCart } from '../Cart/CartContext';
 import ClientNavBar from '../../Nav/ClientNabBar';
 import ClientFooter from '../../Footer/ClientFooter';
 import { FaCcMastercard } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const { cart, dispatch } = useCart();
+  const navigate = useNavigate();
 
   // Calculate the total price of the cart, including shipping costs
   const calculateTotal = () => {
@@ -56,7 +58,10 @@ const Cart = () => {
   const HorizontalLine = () => {
     return <hr className="w-[200%] border-gray-300 " />; 
   };
-
+  // Handle checkout button click Navigate to the client-address page
+  const handleCheckoutBtn = () => {
+    navigate('/client-address'); 
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
@@ -165,7 +170,7 @@ const Cart = () => {
                   <HorizontalLine/>
                 </tbody>
               </table>
-              <button
+              <button onClick={handleCheckoutBtn}
                 className="rounded-md bg-slate-700 text-white w-full border-none hover:bg-slate-900 transition duration-500 ease-in-out py-2 mt-4 flex items-center justify-center hover:shadow-md transition-500"
               >
                 <FaCcMastercard className="mr-3 text-xl"/> Checkout

@@ -19,6 +19,7 @@ import ClientLogin from './pages/Client/Components/Signup/ClientLogin';
 import ClientSignup from './pages/Client/Components/Signup/ClientSignup';
 import TermsAndConditions from './pages/Client/Components/TermsConditions/TermsAndConditions';
 import Category from './pages/Client/Components/Pages/Category/Category';
+import AddressLayout from './pages/Client/Components/Pages/Address/AddressLayout';
 
 
 
@@ -41,6 +42,7 @@ function App() {
             <Route path="/client-terms-and-conditions" element={<TermsAndConditions />}/>
             <Route path="/client-category/:categoryName" element={<Category />} />
             <Route path="/client-category/:Id" element={<Category />} />
+            <Route path="/client-address" element={<AddressLayout />} />
 
            
 
