@@ -27,41 +27,35 @@ import Category from './pages/Client/Components/Pages/Category/Category';
 
 function App() {
     return (
-        <CartProvider>
+      <CartProvider>
         <Router>
-            <Routes>
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/signin" element={<Signin />} />
+          <Routes>
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/signin" element={<Signin />} />
 
-        
+            <Route path="/" element={<Layout />} />
+            <Route path="/client-cart" element={<Cart />} />
+            <Route path="/client-product/:id" element={<ClientProductDetails />} />
+            <Route path="/client-login" element={<ClientLogin />} />
+            <Route path="/client-signup" element={<ClientSignup />} />
+            <Route path="/client-terms-and-conditions" element={<TermsAndConditions />}/>
+            <Route path="/client-category/:categoryName" element={<Category />} />
+            <Route path="/client-category/:Id" element={<Category />} />
+
+           
 
 
-                <Route path="/" element={<Layout />} />
-                <Route path="/client-cart" element={<Cart />} />
-                <Route path="/client-product/:id" element={<ClientProductDetails />} />
-                <Route path="/client-login" element={<ClientLogin/>} />
-                <Route path="/client-signup" element={<ClientSignup />} />
-                <Route path="/client-terms-and-conditions" element={<TermsAndConditions />} />
-                <Route path="/client-category" element={<Category />} />
-             
-              
 
-             
-                
-        
-              
-                
 
-                <Route path="/Admin/ProductPage" element={<ProductPage />} />
-                <Route path="/Admin/create-product" element={<CreateProduct />} />
-                <Route path="/Admin/product/:id" element={<ProductDetails />} />
-                <Route path="/Admin/update-product/:id" element={<UpdateProduct />} />
-                <Route path="/Admin/orders" element={<ViewOrder />} />
-                <Route path="/Admin/SalesSummary" element={<SalesSummary />} />
-
-            </Routes>
+            <Route path="/Admin/ProductPage" element={<ProductPage />} />
+            <Route path="/Admin/create-product" element={<CreateProduct />} />
+            <Route path="/Admin/product/:id" element={<ProductDetails />} />
+            <Route path="/Admin/update-product/:id" element={<UpdateProduct />}/>
+            <Route path="/Admin/orders" element={<ViewOrder />} />
+            <Route path="/Admin/SalesSummary" element={<SalesSummary />} />
+          </Routes>
         </Router>
-        </CartProvider>
+      </CartProvider>
     );
 }
 

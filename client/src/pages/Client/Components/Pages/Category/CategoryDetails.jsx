@@ -1,30 +1,49 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductCard from '../../Products/ProductCard';
-
-const products = [
-  {
-    id: '1',
-    name: 'Sample Product',
-    categoryDescription: 'Description of the product',
-    images: ['/Assets/robot.png'],
-    reviews: [{ rating: 4 }, { rating: 5 }],
-    basePrice: 20,
-    discountPrice: 15,
-    isDiscount: true,
-    discount: '25%',
-    inStock: true,
-  },
-  // More products
-];
+import { useParams } from 'react-router-dom'; // Import useParams hook to get URL parameters
 
 export default function CategoryDetails() {
+  const { categoryName } = useParams(); // Get the categoryName from URL parameters
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  // Decode the category name
+  const decodedCategoryName = decodeURIComponent(categoryName);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        // Use the decoded category name for the API request
+        const response = await fetch(`http://localhost:5000/api/products/products/category/${decodedCategoryName}`);
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        setProducts(data); // Adjust based on your API response format
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [decodedCategoryName]); // Fetch products whenever the decodedCategoryName changes
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Hero Banner */}
       <div className="relative bg-gradient-to-r from-blue-700 to-indigo-600 text-white text-center py-8 rounded-lg shadow-xl mb-12">
-        <h1 className="text-4xl font-extrabold mb-4">Discover Our Categories</h1>
+        <h1 className="text-4xl font-extrabold mb-4"> {decodedCategoryName}</h1>
         <p className="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-6">
-          Explore our diverse range of products and find what suits you best. From unique gifts to everyday essentials, our categories are crafted for your convenience.
+          {decodedCategoryName}
         </p>
         <a
           href="#products"
@@ -84,11 +103,15 @@ export default function CategoryDetails() {
           </div>
 
           {/* Product Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} data={product} />
-            ))}
-          </div>
+          {products.length === 0 ? (
+            <p className="text-center text-lg font-semibold text-gray-600">No products available in this category.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {products.map((product) => (
+                <ProductCard key={product.id} data={product} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -53,13 +53,13 @@ const ProductPage = () => {
                     + Create New Product
                 </Link>
             </div>
-            <div className="bg-white shadow-md rounded-lg p-6">
+            <div className="bg-gray-200 shadow-md rounded-lg p-6">
                 {products.length === 0 ? (
                     <div className="text-center text-gray-500">No products available. Please add some products.</div>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                         {products.map((product) => (
-                            <div key={product._id} className="bg-gray-100 border p-1 rounded-lg flex flex-col items-center">
+                            <div key={product._id} className="bg-white border p-1 rounded-lg flex flex-col items-center">
                                 <Link to={`/Admin/product/${product._id}`} className="w-full h-40 relative group">
                                     <img
                                         src={`http://localhost:5000${product.images[currentImageIndices[product._id]]}`}

@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { RiLoginCircleFill } from "react-icons/ri";
 import {
-  FaShoppingCart, FaUser, FaBars, FaTshirt, FaPaintBrush, FaGem, FaHome,
-  FaUtensils, FaHeart, FaGamepad, FaPencilAlt, FaGift, FaUserCog,
+  FaShoppingCart, FaUser, FaUserCog, FaBars, FaTshirt, FaPaintBrush, FaGem, FaHome,
+  FaUtensils, FaHeart, FaGamepad, FaPencilAlt, FaGift
 } from "react-icons/fa";
-import { ChevronDownIcon,UserCircleIcon, Cog6ToothIcon, InboxArrowDownIcon,LifebuoyIcon, PowerIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon, UserCircleIcon, Cog6ToothIcon, InboxArrowDownIcon, LifebuoyIcon, PowerIcon } from "@heroicons/react/24/solid";
 
 import Container from "./Container";
 import inoWebLogo from '../../Images/NavBar/inoweb.png';
@@ -138,7 +138,7 @@ export default function ClientNavBar() {
                       return (
                         <Link
                           key={category._id} // Assuming categories have _id
-                          to={`/${category.name.toLowerCase().replace(/ & /g, '-').replace(/\s+/g, '-')}`}
+                          to={`/client-category/${encodeURIComponent(category.name)}`} // Link to category details page with category ID
                           className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
                         >
                           <div className="mr-2">
