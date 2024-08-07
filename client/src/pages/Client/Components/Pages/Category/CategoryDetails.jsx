@@ -7,7 +7,7 @@ export default function CategoryDetails() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   // Decode the category name
   const decodedCategoryName = decodeURIComponent(categoryName);
 
@@ -34,20 +34,29 @@ export default function CategoryDetails() {
     fetchProducts();
   }, [decodedCategoryName]); // Fetch products whenever the decodedCategoryName changes
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return (
+    <div className='flex items-center justify-center h-screen'>
+      <p className='text-lg font-semibold text-gray-700'>Loading...</p>
+    </div>
+  );
+  
+  if (error) return (
+    <div className='flex items-center justify-center h-screen'>
+      <p className='text-lg font-semibold text-red-600'>Error: {error}</p>
+    </div>
+  );
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-6 py-8">
       {/* Hero Banner */}
-      <div className="relative bg-gradient-to-r from-blue-700 to-indigo-600 text-white text-center py-8 rounded-lg shadow-xl mb-12">
-        <h1 className="text-4xl font-extrabold mb-4"> {decodedCategoryName}</h1>
+      <div className="relative bg-gradient-to-r from-blue-700 to-indigo-600 text-white text-center py-16 px-8 rounded-lg shadow-lg mb-12">
+        <h1 className="text-4xl font-extrabold mb-4">{decodedCategoryName}</h1>
         <p className="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-6">
-          {decodedCategoryName}
+          Explore our collection of {decodedCategoryName} products, carefully curated to meet your needs.
         </p>
         <a
           href="#products"
-          className="inline-block px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg shadow-md hover:bg-gray-100 transition ease-in-out duration-300"
+          className="inline-block px-6 py-3 bg-white text-blue-700 font-semibold rounded-lg shadow-md hover:bg-gray-100 transition duration-300"
         >
           Explore Now
         </a>
@@ -62,7 +71,7 @@ export default function CategoryDetails() {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Sub-Categories */}
-        <div className="md:col-span-1 bg-white rounded-lg shadow-lg p-6">
+        <div className="md:col-span-1 bg-white rounded-lg shadow-md p-6">
           <h2 className="text-2xl font-semibold mb-6 border-b border-gray-300 pb-3">Sub-Categories</h2>
           <ul className="space-y-4">
             {/* Example sub-categories */}
@@ -84,20 +93,20 @@ export default function CategoryDetails() {
             <input
               type="text"
               placeholder="Search products..."
-              className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition ease-in-out duration-300"
+              className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
             />
 
             {/* Filters */}
             <div className="flex space-x-4">
-              <select className="px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition ease-in-out duration-300">
+              <select className="px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
                 <option>Sort by</option>
                 <option>Price: Low to High</option>
                 <option>Price: High to Low</option>
               </select>
-              <select className="px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition ease-in-out duration-300">
+              <select className="px-4 py-2 border border-gray-300 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
                 <option>Category</option>
                 <option>Mask</option>
-                <option>Cloths </option>
+                <option>Clothes</option>
               </select>
             </div>
           </div>
