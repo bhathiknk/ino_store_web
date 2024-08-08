@@ -89,34 +89,54 @@ export default function ClientNavBar() {
   };
 
   return (
-    <div className="sticky top-0 w-full bg-gray-100 z-30 shadow-sm"> {/*bg-white default -search bar and navbar*/}
+    <div className="sticky top-0 w-full bg-gray-100 z-30 shadow-sm">
+      {/*bg-white default -search bar and navbar*/}
       <div className="py-4 border-b-[1px] border-gray-200">
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">
             {/* Logo and Home Link */}
             <Link to="/" className="text-xl font-bold text-gray-800">
-              <img src={inoWebLogo} alt="E-Com Innovation Web Logo" className="h-8 w-auto md:h-10 md:w-auto" />
+              <img
+                src={inoWebLogo}
+                alt="E-Com Innovation Web Logo"
+                className="h-8 w-auto md:h-10 md:w-auto"
+              />
             </Link>
 
             {/* Search Bar */}
-            <div className="hidden md:flex items-center w-full md:w-auto">
-              <div className="relative flex items-center w-full h-12 rounded-full focus-within:shadow-lg bg-gray-100 overflow-hidden">
+            <div className="hidden md:flex items-center w-full lg:w-2/3 mr-4">
+              <div className="relative flex items-center w-full h-12 rounded-full border border-gray-300 focus-within:shadow-lg bg-gray-100 overflow-hidden">
                 <div className="grid place-items-center h-full w-12 text-gray-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
                   </svg>
                 </div>
                 <input
-                  className="peer h-full w-full outline-none text-sm text-gray-700  bg-gray-100 pr-2"
+                  className="peer h-full w-full outline-none text-sm text-gray-700 bg-gray-100 pl-4 pr-2"
                   type="text"
                   id="search"
-                  placeholder="Search something.." />
+                  placeholder="Search here.."
+                />
               </div>
             </div>
 
             {/* Navigation Links */}
             <div className="flex items-center gap-8 md:gap-12 relative">
-              <Link to="/" className="flex items-center text-gray-700 hover:text-gray-900">
+              <Link
+                to="/"
+                className="flex items-center text-gray-700 hover:text-gray-900"
+              >
                 <FaHome className="mr-2" />
                 Home
               </Link>
@@ -138,7 +158,9 @@ export default function ClientNavBar() {
                       return (
                         <Link
                           key={category._id} // Assuming categories have _id
-                          to={`/client-category/${encodeURIComponent(category.name)}`} // Link to category details page with category ID
+                          to={`/client-category/${encodeURIComponent(
+                            category.name
+                          )}`} // Link to category details page with category ID
                           className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
                         >
                           <div className="mr-2">
@@ -146,7 +168,9 @@ export default function ClientNavBar() {
                           </div>
                           <div>
                             <div className="font-medium">{category.name}</div>
-                            <div className="text-sm text-gray-500">{truncateText(category.description, 26)}</div>
+                            <div className="text-sm text-gray-500">
+                              {truncateText(category.description, 26)}
+                            </div>
                           </div>
                         </Link>
                       );
@@ -156,15 +180,24 @@ export default function ClientNavBar() {
               </div>
 
               {/* User Links */}
-              <Link to="/" className="flex items-center text-gray-700 hover:text-gray-900">
+              <Link
+                to="/"
+                className="flex items-center text-gray-700 hover:text-gray-900"
+              >
                 <FaUser className="mr-2" />
                 Username
               </Link>
-              <Link to="/client-login" className="flex items-center text-gray-700 hover:text-gray-900">
+              <Link
+                to="/client-login"
+                className="flex items-center text-gray-700 hover:text-gray-900"
+              >
                 <RiLoginCircleFill className="mr-2" />
                 Login
               </Link>
-              <Link to="/cart" className="flex items-center text-gray-700 hover:text-gray-900">
+              <Link
+                to="/cart"
+                className="flex items-center text-gray-700 hover:text-gray-900"
+              >
                 <FaShoppingCart className="mr-2" />
                 Cart
               </Link>
@@ -176,10 +209,12 @@ export default function ClientNavBar() {
                   className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none"
                 >
                   <FaUserCog className="mr-2" />
-                  User Menu
+                  User
                   <ChevronDownIcon
                     strokeWidth={2}
-                    className={`h-4 w-4 ml-2 transition-transform ${userDropdownOpen ? "rotate-180" : ""}`}
+                    className={`h-4 w-4 ml-2 transition-transform ${
+                      userDropdownOpen ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
                 {userDropdownOpen && (
@@ -188,13 +223,27 @@ export default function ClientNavBar() {
                       <Link
                         key={label}
                         to={path}
-                        className={`flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md ${key === profileMenuItems.length - 1 ? "text-red-500" : ""}`}
+                        className={`flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md ${
+                          key === profileMenuItems.length - 1
+                            ? "text-red-500"
+                            : ""
+                        }`}
                       >
                         {React.createElement(icon, {
-                          className: `h-4 w-4 mr-2 ${key === profileMenuItems.length - 1 ? "text-red-500" : ""}`,
+                          className: `h-4 w-4 mr-2 ${
+                            key === profileMenuItems.length - 1
+                              ? "text-red-500"
+                              : ""
+                          }`,
                           strokeWidth: 2,
                         })}
-                        <span className={`font-normal ${key === profileMenuItems.length - 1 ? "text-red-500" : ""}`}>
+                        <span
+                          className={`font-normal ${
+                            key === profileMenuItems.length - 1
+                              ? "text-red-500"
+                              : ""
+                          }`}
+                        >
                           {label}
                         </span>
                       </Link>
