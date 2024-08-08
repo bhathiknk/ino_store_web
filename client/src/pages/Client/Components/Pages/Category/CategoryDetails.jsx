@@ -69,7 +69,7 @@ export default function CategoryDetails() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 bg-gray-100">
         {/* Sub-Categories */}
         <div className="md:col-span-1 bg-white rounded-lg shadow-md p-6">
           <h2 className="text-2xl font-semibold mb-6 border-b border-gray-300 pb-3">Sub-Categories</h2>

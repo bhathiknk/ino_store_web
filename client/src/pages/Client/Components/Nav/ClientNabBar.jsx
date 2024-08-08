@@ -95,17 +95,21 @@ export default function ClientNavBar() {
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">
             {/* Logo and Home Link */}
-            <Link to="/" className="text-xl font-bold text-gray-800">
+            <Link
+              to="/"
+              className="text-xl font-bold text-gray-800 flex items-center"
+            >
               <img
                 src={inoWebLogo}
                 alt="E-Com Innovation Web Logo"
-                className="h-8 w-auto md:h-10 md:w-auto"
+                className="h-12 w-auto object-contain md:h-12" // Fixed height and auto width
               />
             </Link>
 
             {/* Search Bar */}
+
             <div className="hidden md:flex items-center w-full lg:w-2/3 mr-4">
-              <div className="relative flex items-center w-full h-12 rounded-full border border-gray-300 focus-within:shadow-lg bg-gray-100 overflow-hidden">
+              <div className="relative flex items-center w-full h-12 rounded-full border border-gray-300 bg-gray-100 overflow-hidden transition-shadow duration-300 ease-in-out hover:shadow-lg">
                 <div className="grid place-items-center h-full w-12 text-gray-300">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +127,7 @@ export default function ClientNavBar() {
                   </svg>
                 </div>
                 <input
-                  className="peer h-full w-full outline-none text-sm text-gray-700 bg-gray-100 pl-4 pr-2"
+                  className="peer h-full w-full outline-none text-sm text-gray-950 bg-gray-100 pl-4 pr-2"
                   type="text"
                   id="search"
                   placeholder="Search here.."
@@ -135,7 +139,7 @@ export default function ClientNavBar() {
             <div className="flex items-center gap-8 md:gap-12 relative">
               <Link
                 to="/"
-                className="flex items-center text-gray-700 hover:text-gray-900"
+                className="flex items-center text-gray-700 hover:text-gray-900 transition-transform duration-300 ease-in-out transform hover:scale-105"
               >
                 <FaHome className="mr-2" />
                 Home
@@ -145,7 +149,7 @@ export default function ClientNavBar() {
               <div className="relative" ref={categoryDropdownRef}>
                 <button
                   onClick={toggleCategoryDropdown}
-                  className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none"
+                  className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none transition-transform duration-300 ease-in-out transform hover:scale-105"
                 >
                   <FaBars className="mr-2" />
                   Categories
@@ -182,34 +186,34 @@ export default function ClientNavBar() {
               {/* User Links */}
               <Link
                 to="/"
-                className="flex items-center text-gray-700 hover:text-gray-900"
+                className="flex items-center text-gray-700 hover:text-gray-900 hover:underline underline-offset-4 transition-transform duration-300 ease-in-out transform hover:scale-105"
               >
                 <FaUser className="mr-2" />
-                Username
+                <span>Username</span>
               </Link>
               <Link
                 to="/client-login"
-                className="flex items-center text-gray-700 hover:text-gray-900"
+                className="flex items-center text-gray-700 hover:text-gray-900 transition-transform duration-300 ease-in-out transform hover:scale-105"
               >
                 <RiLoginCircleFill className="mr-2" />
-                Login
+                <span> Login</span>
               </Link>
               <Link
                 to="/cart"
-                className="flex items-center text-gray-700 hover:text-gray-900"
+                className="flex items-center text-gray-700 hover:text-gray-900 transition-transform duration-300 ease-in-out transform hover:scale-105"
               >
                 <FaShoppingCart className="mr-2" />
-                Cart
+                <span>Cart</span>
               </Link>
 
               {/* User Dropdown */}
               <div className="relative" ref={userDropdownRef}>
                 <button
                   onClick={toggleUserDropdown}
-                  className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none"
+                  className="flex items-center text-gray-700 hover:text-gray-900 focus:outline-none transition-transform duration-300 ease-in-out transform hover:scale-105"
                 >
                   <FaUserCog className="mr-2" />
-                  User
+                  <span>User</span>
                   <ChevronDownIcon
                     strokeWidth={2}
                     className={`h-4 w-4 ml-2 transition-transform ${
