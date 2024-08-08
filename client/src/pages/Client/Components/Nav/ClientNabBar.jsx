@@ -89,7 +89,7 @@ export default function ClientNavBar() {
   };
 
   return (
-    <div className="sticky top-0 w-full bg-white z-30 shadow-sm">
+    <div className="sticky top-0 w-full bg-gray-100 z-30 shadow-sm"> {/*bg-white default -search bar and navbar*/}
       <div className="py-4 border-b-[1px] border-gray-200">
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">
@@ -100,14 +100,14 @@ export default function ClientNavBar() {
 
             {/* Search Bar */}
             <div className="hidden md:flex items-center w-full md:w-auto">
-              <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+              <div className="relative flex items-center w-full h-12 rounded-full focus-within:shadow-lg bg-gray-100 overflow-hidden">
                 <div className="grid place-items-center h-full w-12 text-gray-300">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </div>
                 <input
-                  className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+                  className="peer h-full w-full outline-none text-sm text-gray-700  bg-gray-100 pr-2"
                   type="text"
                   id="search"
                   placeholder="Search something.." />

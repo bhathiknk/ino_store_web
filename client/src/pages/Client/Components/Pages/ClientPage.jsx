@@ -46,7 +46,7 @@ export default function ClientPage() {
   }
 
   return (
-    <div className="p-8 bg-white">
+    <div className="p-8 bg-gray-100"> {/* white default */}
       <Container>
         <div>
           <Banner />
