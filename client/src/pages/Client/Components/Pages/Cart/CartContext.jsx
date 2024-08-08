@@ -1,6 +1,7 @@
 // CartContext.js
 import React, { createContext, useReducer, useContext } from 'react';
 
+
 // Create a context for the cart
 const CartContext = createContext();
 
