@@ -199,7 +199,7 @@ export default function ClientNavBar() {
                 <span> Login</span>
               </Link>
               <Link
-                to="/cart"
+                to="/client-cart"
                 className="flex items-center text-gray-700 hover:text-gray-900 transition-transform duration-300 ease-in-out transform hover:scale-105"
               >
                 <FaShoppingCart className="mr-2" />
