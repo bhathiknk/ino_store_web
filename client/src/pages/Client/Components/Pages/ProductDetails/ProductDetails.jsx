@@ -5,8 +5,11 @@ import ClientNabBar from "../../Nav/ClientNabBar";
 import ClientFooter from "../../Footer/ClientFooter";
 import AddToCartButton from "./AddToCartButton";
 import SetQuantity from "./SetQuantity";
-import ProductImage from "./ProductImage"; 
-import { useCart } from "../Cart/CartContext"; 
+import ProductImage from "./ProductImage";
+import { useCart } from "../Cart/CartContext";
+import { ToastContainer, toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
+
 const ProductDetails = () => {
   const [product, setProduct] = useState(null); // State for the product
   const [quantity, setQuantity] = useState(1); // State for quantity
@@ -14,6 +17,8 @@ const ProductDetails = () => {
   const { id } = useParams(); // Get product ID from URL
   const { dispatch } = useCart(); // Use the Cart context
   const navigate = useNavigate(); // Use navigate to redirect
+  const [alertMessage, setAlertMessage] = useState(""); // State for success alert (declared alert 0)
+  const [showPopup, setShowPopup] = useState(false); //popup custom alert (custom declared alert 1)
 
   // Fetch the product details
   useEffect(() => {
@@ -79,16 +84,60 @@ const ProductDetails = () => {
       category: product.category,
       quantity: quantity,
       image: selectedImage,
-      shippingCost: product.isFreeShipping ? 0 : product.shippingCost, 
+      shippingCost: product.isFreeShipping ? 0 : product.shippingCost,
     };
     dispatch({ type: "ADD_TO_CART", payload: productToCart });
-    navigate("/client-cart");
+    //navigate("/client-cart");
+    //setAlertMessage("You successfully added to cart!"); // inline test default alert message
+    //  toast notification
+    toast.success("You successfully added the product to the cart!"); //(custom declared alert 1 library)
+
+    // Show the popup (custom declared alert 1)
+    setShowPopup(true);
+
+    // Automatically hide the popup after 3 seconds (custom declared alert 1)
+    setTimeout(() => setShowPopup(false), 3000);
   };
+
+  // Hide alert after 3 seconds
+  setTimeout(() => {
+    setAlertMessage("");
+  }, 4000);
 
   // Price Rounded to decimal places
   const roundToTwoDecimalPlaces = (num) => {
     return Math.round((num + Number.EPSILON) * 100) / 100;
   };
+
+  // Render the alert message inline
+  {
+    /*
+  const renderAlert = () => {
+    if (alertMessage) {
+      return (
+        <div
+          className="flex items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50"
+          role="alert"
+        >
+          <svg
+            className="flex-shrink-0 inline w-4 h-4 me-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+          </svg>
+          <span className="sr-only">Info</span>
+          <div>
+            <span className="font-medium">{alertMessage}</span>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };*/
+  }
 
   return (
     <div className="bg-gray-100">
@@ -96,6 +145,7 @@ const ProductDetails = () => {
         <ClientNabBar />
         <main className="flex-grow py-6 md:py-8 lg:py-12">
           <div className="container mx-auto px-4 md:px-6 lg:px-8">
+            {/*{renderAlert()}  Show success alert inline*/}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {/* Use the ProductImage component to display product images */}
               <ProductImage
@@ -151,7 +201,10 @@ const ProductDetails = () => {
                     <span className="font-semibold font-kanit text-slate-700">
                       Shipping Cost:
                       <span className="ml-1 text-green-600">
-                        Rs. {roundToTwoDecimalPlaces(product.shippingCost).toFixed(2)}
+                        Rs.{" "}
+                        {roundToTwoDecimalPlaces(product.shippingCost).toFixed(
+                          2
+                        )}
                       </span>
                     </span>
                   )}
@@ -161,8 +214,11 @@ const ProductDetails = () => {
                   <span className="font-semibold font-kanit text-slate-700">
                     {product.isDiscount ? "With Discount:" : "Price:"}
                     <span className="ml-2 text-slate-600 font-normal">
-                      Rs. {product.isDiscount
-                        ? roundToTwoDecimalPlaces(product.discountPrice).toFixed(2)
+                      Rs.{" "}
+                      {product.isDiscount
+                        ? roundToTwoDecimalPlaces(
+                            product.discountPrice
+                          ).toFixed(2)
                         : roundToTwoDecimalPlaces(product.basePrice).toFixed(2)}
                     </span>
                   </span>
@@ -187,7 +243,40 @@ const ProductDetails = () => {
             </div>
           </div>
         </main>
+        <ToastContainer
+          position="bottom-right" // Toast notification position
+          autoClose={2000} // Custom auto-close time (3 seconds)
+          hideProgressBar={false} // Show progress bar
+          newestOnTop={false} // Toast appears at the bottom if this is set to false
+          closeOnClick={true} // Close toast when clicked
+          draggable={true} // Make toast draggable
+          limit={4} // Limit the number of toasts shown at once
+          className="fixed bottom-0 right-0 w-1/3 z-50 " // You can add custom styles with className
+        />
+        {/*alert lib*/}
         <ClientFooter />
+
+        {/*{showPopup && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className="flex items-center text-green-800">
+        <svg
+          className="w-6 h-6 mr-3"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+        >
+          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+        </svg>
+        <span className="font-medium">Success!</span>
+      </div>
+      <p className="mt-2 text-sm text-gray-700">
+        You successfully added the product to the cart.
+      </p>
+      
+    </div>
+  </div>
+)}*/}
       </div>
     </div>
   );
