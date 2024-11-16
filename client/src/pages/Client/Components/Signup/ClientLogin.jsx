@@ -31,19 +31,35 @@ export default function ClientLogin() {
     }
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (userType === 'buyer') {
+  //     try {
+  //       const response = await axios.post('http://localhost:5000/api/users/signin', formData);
+  //       // Handle success, e.g., navigate to client dashboard
+  //       localStorage.setItem('userToken', response.data.token); // Save token to local storage
+  //       navigate('/'); // Navigate to client dashboard after successful login
+  //     } catch (err) {
+  //       setError(err.response.data.message || 'An error occurred');
+  //     }
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (userType === 'buyer') {
-      try {
-        const response = await axios.post('http://localhost:5000/api/users/signin', formData);
-        // Handle success, e.g., navigate to client dashboard
-        localStorage.setItem('userToken', response.data.token); // Save token to local storage
-        navigate('/'); // Navigate to client dashboard after successful login
-      } catch (err) {
-        setError(err.response.data.message || 'An error occurred');
-      }
+        try {
+            const response = await axios.post('http://localhost:5000/api/users/signin', formData);
+            
+            const userData = response.data; // User data returned from the server
+            localStorage.setItem('user', JSON.stringify(userData)); // Save the entire user object in local storage
+            
+            navigate('/'); // Redirect after successful login
+        } catch (err) {
+            setError(err.response.data.message || 'An error occurred');
+        }
     }
-  };
+};
 
   const navigateToSignUpPage = () => {
     navigate("/client-signup");

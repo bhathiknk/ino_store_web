@@ -61,3 +61,22 @@ exports.signin = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
+// Get logged-in user's profile
+exports.getUserProfile = async (req, res) => {
+    try {
+        const user = req.user; // Populated by the 'protect' middleware
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
