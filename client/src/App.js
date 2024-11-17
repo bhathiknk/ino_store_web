@@ -20,6 +20,8 @@ import ClientSignup from './pages/Client/Components/Signup/ClientSignup';
 import TermsAndConditions from './pages/Client/Components/TermsConditions/TermsAndConditions';
 import Category from './pages/Client/Components/Pages/Category/Category';
 import AddressLayout from './pages/Client/Components/Pages/Address/AddressLayout';
+import MyProfile from './pages/Client/Components/Pages/User/MyProfile';
+import EditProfile from './pages/Client/Components/Pages/User/EditProfile';
 
 
 
@@ -43,6 +45,9 @@ function App() {
             <Route path="/client-category/:categoryName" element={<Category />} />
             <Route path="/client-category/:Id" element={<Category />} />
             <Route path="/client-address" element={<AddressLayout />} />
+            <Route path="/client-user-profile" element={<MyProfile />} />
+            <Route path="/client-user-profile-edit" element={<EditProfile />} />
+
 
            
 

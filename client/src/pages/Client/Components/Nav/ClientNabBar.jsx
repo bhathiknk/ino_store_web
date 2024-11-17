@@ -20,7 +20,7 @@ import {
   ChevronDownIcon,
   UserCircleIcon,
   Cog6ToothIcon,
-  InboxArrowDownIcon,
+  DocumentTextIcon,
   LifebuoyIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
@@ -34,11 +34,11 @@ const truncateText = (text, maxLength) =>
 
 // Define the profile menu items with labels, icons, and paths
 const profileMenuItems = [
-  { label: "My Profile", icon: UserCircleIcon, path: "/profile" },
-  { label: "Edit Profile", icon: Cog6ToothIcon, path: "/edit-profile" },
-  { label: "Inbox", icon: InboxArrowDownIcon, path: "/inbox" },
-  { label: "Help", icon: LifebuoyIcon, path: "/help" },
-  { label: "Sign Out", icon: PowerIcon, path: "/sign-out", action: "logout" },
+  { label: "My Profile", icon: UserCircleIcon, path: "/client-user-profile" },
+  { label: "Edit Profile", icon: Cog6ToothIcon, path: "/client-user-profile-edit" },
+  { label: "Terms & Conditions", icon: DocumentTextIcon, path: "/client-terms-and-conditions" },
+  { label: "Help", icon: LifebuoyIcon, path: "/" },
+  { label: "Logout", icon: PowerIcon, path: "/sign-out", action: "logout" },
 ];
 
 // Mapping of category names to icons
@@ -270,12 +270,12 @@ export default function ClientNavBar() {
                             >
                               {React.createElement(icon, {
                                 className: `h-4 w-4 mr-2 ${
-                                  action === "logout" ? "text-red-500" : ""
+                                  action === "logout" ? "text-red-500 hover:text-blue-500 transition duration-300 ease-in-out" : ""
                                 }`,
                                 strokeWidth: 2,
                               })}
                               {action === "logout" ? (
-                                <span className="font-normal text-red-500">
+                                <span className="font-normal text-red-500 hover:text-blue-500 transition duration-300 ease-in-out">
                                   {label}
                                 </span>
                               ) : (
