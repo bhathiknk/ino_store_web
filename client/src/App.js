@@ -22,6 +22,7 @@ import Category from './pages/Client/Components/Pages/Category/Category';
 import AddressLayout from './pages/Client/Components/Pages/Address/AddressLayout';
 import MyProfile from './pages/Client/Components/Pages/User/MyProfile';
 import EditProfile from './pages/Client/Components/Pages/User/EditProfile';
+import Orders from './pages/Client/Components/Pages/User/Orders';
 
 
 
@@ -47,6 +48,8 @@ function App() {
             <Route path="/client-address" element={<AddressLayout />} />
             <Route path="/client-user-profile" element={<MyProfile />} />
             <Route path="/client-user-profile-edit" element={<EditProfile />} />
+            <Route path="/client-user-orders" element={<Orders />} />
+
 
 
            

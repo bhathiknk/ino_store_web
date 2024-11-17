@@ -21,7 +21,7 @@ import {
   UserCircleIcon,
   Cog6ToothIcon,
   DocumentTextIcon,
-  LifebuoyIcon,
+  ShoppingBagIcon,
   PowerIcon,
 } from "@heroicons/react/24/solid";
 
@@ -36,8 +36,8 @@ const truncateText = (text, maxLength) =>
 const profileMenuItems = [
   { label: "My Profile", icon: UserCircleIcon, path: "/client-user-profile" },
   { label: "Edit Profile", icon: Cog6ToothIcon, path: "/client-user-profile-edit" },
+  { label: "Orders", icon: ShoppingBagIcon, path: "/client-user-orders" },
   { label: "Terms & Conditions", icon: DocumentTextIcon, path: "/client-terms-and-conditions" },
-  { label: "Help", icon: LifebuoyIcon, path: "/" },
   { label: "Logout", icon: PowerIcon, path: "/sign-out", action: "logout" },
 ];
 
