@@ -14,12 +14,7 @@ export default function Orders() {
           {/* Do not edit other code in this file. You can only add, edit, or delete code within this 'Editable area' section. */}
           {/* Editable area start */}
 
-          <h2 className="text-2xl text-center mt-20  text-cyan-950">
-            Orders
-          </h2>
-          <h5 className="text-base text-center mt-2 mb-20 text-red-600 underline">
-            Please read comments in the code
-          </h5>
+          
           {/* Editable area end  */}
         </main>
 

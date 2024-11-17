@@ -77,10 +77,11 @@ const ProductDetails = () => {
 
   // Handle adding the product to the cart
   const handleAddToCart = () => {
-
     if (!selectedImage) {
       // If no image is selected, show a popup or toast message
-      toast.error("Please select an image from the image set above before adding to the cart.");
+      toast.error(
+        "Please select an image from the image set above before adding to the cart."
+      );
       return; // Prevent adding to the cart if no image is selected
     }
 
@@ -115,7 +116,6 @@ const ProductDetails = () => {
   const roundToTwoDecimalPlaces = (num) => {
     return Math.round((num + Number.EPSILON) * 100) / 100;
   };
-  //git test
 
   // Render the alert message inline
   {
@@ -209,7 +209,7 @@ const ProductDetails = () => {
                     <span className="font-semibold font-kanit text-slate-700">
                       Shipping Cost:
                       <span className="ml-1 text-green-600">
-                        Rs.{" "}
+                        Rs.
                         {roundToTwoDecimalPlaces(product.shippingCost).toFixed(
                           2
                         )}
@@ -222,7 +222,7 @@ const ProductDetails = () => {
                   <span className="font-semibold font-kanit text-slate-700">
                     {product.isDiscount ? "With Discount:" : "Price:"}
                     <span className="ml-2 text-slate-600 font-normal">
-                      Rs.{" "}
+                      Rs.
                       {product.isDiscount
                         ? roundToTwoDecimalPlaces(
                             product.discountPrice
