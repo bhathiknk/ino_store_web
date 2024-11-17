@@ -77,12 +77,6 @@ const ProductDetails = () => {
 
   // Handle adding the product to the cart
   const handleAddToCart = () => {
-    // Check if an image is selected
-    if (!selectedImage) {
-      toast.error("Please select an product image before adding to the cart!"); // Show an error toast
-      return; // Do not proceed with adding to cart
-    }
-
     const productToCart = {
       id: product._id,
       title: product.name,
