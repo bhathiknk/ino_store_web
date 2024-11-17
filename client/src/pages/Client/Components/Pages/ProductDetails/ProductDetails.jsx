@@ -115,6 +115,7 @@ const ProductDetails = () => {
   const roundToTwoDecimalPlaces = (num) => {
     return Math.round((num + Number.EPSILON) * 100) / 100;
   };
+  //git test
 
   // Render the alert message inline
   {
