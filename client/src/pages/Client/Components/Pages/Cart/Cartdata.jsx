@@ -101,7 +101,7 @@ const Cart = () => {
                 {/* Product details */}
                 <div className="col-span-2 justify-self-start flex items-center">
                   <img
-                    src={`http://localhost:5000${item.image}`} // Ensure URL is correct
+                    src={`http://localhost:5000${item.image}`} // Item image pass to the cart
                     alt={item.title}
                     className="w-16 h-16 mr-4 rounded border"
                   />
