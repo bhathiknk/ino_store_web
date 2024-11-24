@@ -10,11 +10,10 @@ import ClientProductDetails from './pages/Client/Components/Pages/ProductDetails
 
 import { CartProvider } from './pages/Client/Components/Pages/Cart/CartContext';
 
-
 import ProductDetails from "./pages/Admin/CreateProduct/ProductDetails";
 import UpdateProduct from "./pages/Admin/CreateProduct/UpdateProduct";
 import ViewOrder from './pages/Admin/Orders/ViewOrder';
-import SalesSummary from './pages/Admin/SalesSummary'
+import SalesSummary from './pages/Admin/SalesSummary';
 import ClientLogin from './pages/Client/Components/Signup/ClientLogin';
 import ClientSignup from './pages/Client/Components/Signup/ClientSignup';
 import TermsAndConditions from './pages/Client/Components/TermsConditions/TermsAndConditions';
@@ -24,48 +23,46 @@ import MyProfile from './pages/Client/Components/Pages/User/MyProfile';
 import EditProfile from './pages/Client/Components/Pages/User/EditProfile';
 import Orders from './pages/Client/Components/Pages/User/Orders';
 
-
-
-
-
+import HandlerSignup from './pages/Handler/handlerLogging/handlerSignup';
+import HandlerSignin from './pages/Handler/handlerLogging/handlerSignin';
+import HandlerDashboard from './pages/Handler/handlerDashboard';
 
 function App() {
     return (
-      <CartProvider>
-        <Router>
-          <Routes>
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signin" element={<Signin />} />
+        <CartProvider>
+            <Router>
+                <Routes>
+                    {/* Client Routes */}
+                    <Route path="/" element={<Layout />} />
+                    <Route path="/client-cart" element={<Cart />} />
+                    <Route path="/client-product/:id" element={<ClientProductDetails />} />
+                    <Route path="/client-login" element={<ClientLogin />} />
+                    <Route path="/client-signup" element={<ClientSignup />} />
+                    <Route path="/client-terms-and-conditions" element={<TermsAndConditions />} />
+                    <Route path="/client-category/:categoryName" element={<Category />} />
+                    <Route path="/client-category/:Id" element={<Category />} />
+                    <Route path="/client-address" element={<AddressLayout />} />
+                    <Route path="/client-user-profile" element={<MyProfile />} />
+                    <Route path="/client-user-profile-edit" element={<EditProfile />} />
+                    <Route path="/client-user-orders" element={<Orders />} />
 
-            <Route path="/" element={<Layout />} />
-            <Route path="/client-cart" element={<Cart />} />
-            <Route path="/client-product/:id" element={<ClientProductDetails />} />
-            <Route path="/client-login" element={<ClientLogin />} />
-            <Route path="/client-signup" element={<ClientSignup />} />
-            <Route path="/client-terms-and-conditions" element={<TermsAndConditions />}/>
-            <Route path="/client-category/:categoryName" element={<Category />} />
-            <Route path="/client-category/:Id" element={<Category />} />
-            <Route path="/client-address" element={<AddressLayout />} />
-            <Route path="/client-user-profile" element={<MyProfile />} />
-            <Route path="/client-user-profile-edit" element={<EditProfile />} />
-            <Route path="/client-user-orders" element={<Orders />} />
+                    {/* Admin Routes */}
+                    <Route path="/signup" element={<Signup />} />
+                    <Route path="/signin" element={<Signin />} />
+                    <Route path="/Admin/ProductPage" element={<ProductPage />} />
+                    <Route path="/Admin/create-product" element={<CreateProduct />} />
+                    <Route path="/Admin/product/:id" element={<ProductDetails />} />
+                    <Route path="/Admin/update-product/:id" element={<UpdateProduct />} />
+                    <Route path="/Admin/orders" element={<ViewOrder />} />
+                    <Route path="/Admin/SalesSummary" element={<SalesSummary />} />
 
-
-
-           
-
-
-
-
-            <Route path="/Admin/ProductPage" element={<ProductPage />} />
-            <Route path="/Admin/create-product" element={<CreateProduct />} />
-            <Route path="/Admin/product/:id" element={<ProductDetails />} />
-            <Route path="/Admin/update-product/:id" element={<UpdateProduct />}/>
-            <Route path="/Admin/orders" element={<ViewOrder />} />
-            <Route path="/Admin/SalesSummary" element={<SalesSummary />} />
-          </Routes>
-        </Router>
-      </CartProvider>
+                    {/* Handler Routes */}
+                    <Route path="/handler/signup" element={<HandlerSignup />} />
+                    <Route path="/handler/signin" element={<HandlerSignin />} />
+                    <Route path="/handler/dashboard" element={<HandlerDashboard />} />
+                </Routes>
+            </Router>
+        </CartProvider>
     );
 }
 
