@@ -42,3 +42,20 @@ exports.updateAddress = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
+// Fetch all addresses for the logged-in user
+exports.getUserAddresses = async (req, res) => {
+    try {
+        const user = req.user._id; // Logged-in user's ID from the `protect` middleware
+        const addresses = await Address.find({ user });
+
+        if (!addresses || addresses.length === 0) {
+            return res.status(404).json({ message: 'No addresses found for the user' });
+        }
+
+        res.status(200).json(addresses);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
