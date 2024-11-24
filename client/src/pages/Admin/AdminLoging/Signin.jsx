@@ -14,6 +14,23 @@ const Signin = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:5000/api/admin/signin', { email, password });
+
+            // Check if the admin is approved
+            if (!response.data.isApproved) {
+                setMessage('Your account has not been approved by the handler yet.');
+                toast.error('Your account has not been approved by the handler yet.', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                return;
+            }
+
+            // Proceed if approved
             setMessage('Signin successful!');
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('adminId', response.data._id);
@@ -28,16 +45,32 @@ const Signin = () => {
             });
             setTimeout(() => navigate('/Admin/ProductPage'), 2000);
         } catch (error) {
-            setMessage('Signin failed!');
-            toast.error('Signin failed!', {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            // Handle errors
+            if (error.response && error.response.status === 403) {
+                // Account not approved
+                setMessage('Your account has not been approved by the handler yet.');
+                toast.error('Your account has not been approved by the handler yet.', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            } else {
+                // General signin failure
+                setMessage('Signin failed!');
+                toast.error('Signin failed!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         }
     };
 

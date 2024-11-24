@@ -14,10 +14,9 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/admin/signup', { name, email, password });
-            setMessage('Signup successful!');
-            localStorage.setItem('adminId', response.data._id);
-            toast.success('Signup successful!', {
+            await axios.post('http://localhost:5000/api/admin/signup', { name, email, password });
+            setMessage('Signup successful! Your account needs to be approved by the handler.');
+            toast.success('Signup successful! Your account needs to be approved by the handler.', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -26,7 +25,7 @@ const Signup = () => {
                 draggable: true,
                 progress: undefined,
             });
-            setTimeout(() => navigate('/signin'), 2000);
+            setTimeout(() => navigate('/signin'), 5000);
         } catch (error) {
             setMessage('Signup failed!');
             toast.error('Signup failed!', {
