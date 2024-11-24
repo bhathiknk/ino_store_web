@@ -6,12 +6,16 @@ import Signin from './pages/Admin/AdminLoging/Signin';
 import ProductDetails from "./pages/Admin/CreateProduct/ProductDetails";
 import UpdateProduct from "./pages/Admin/CreateProduct/UpdateProduct";
 import ViewOrder from './pages/Admin/Orders/ViewOrder';
-import SalesSummary from './pages/Admin/SalesSummary'
+import SalesSummary from './pages/Admin/SalesSummary';
+import HandlerSignup from './pages/Handler/handlerLogging/handlerSignup';
+import HandlerSignin from './pages/Handler/handlerLogging/handlerSignin';
+import HandlerDashboard from './pages/Handler/handlerDashboard';
 
 function App() {
     return (
         <Router>
             <Routes>
+                {/* Admin Routes */}
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/Admin/ProductPage" element={<ProductPage />} />
@@ -20,6 +24,11 @@ function App() {
                 <Route path="/Admin/update-product/:id" element={<UpdateProduct />} />
                 <Route path="/Admin/orders" element={<ViewOrder />} />
                 <Route path="/Admin/SalesSummary" element={<SalesSummary />} />
+
+                {/* Handler Routes */}
+                <Route path="/handler/signup" element={<HandlerSignup />} />
+                <Route path="/handler/signin" element={<HandlerSignin />} />
+                <Route path="/handler/dashboard" element={<HandlerDashboard />} />
             </Routes>
         </Router>
     );
