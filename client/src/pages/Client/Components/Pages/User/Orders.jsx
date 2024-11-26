@@ -14,7 +14,7 @@ export default function Orders() {
           {/* Do not edit other code in this file. You can only add, edit, or delete code within this 'Editable area' section. */}
           {/* Editable area start */}
 
-          Ranidu
+          Ranidu Am
           {/* Editable area end  */}
         </main>
 
