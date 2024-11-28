@@ -57,6 +57,7 @@ function App() {
                     <Route path="/Admin/SalesSummary" element={<SalesSummary />} />
 
                     {/* Handler Routes */}
+                    {/* Handler Routes */}
                     <Route path="/handler/signup" element={<HandlerSignup />} />
                     <Route path="/handler/signin" element={<HandlerSignin />} />
                     <Route path="/handler/dashboard" element={<HandlerDashboard />} />
