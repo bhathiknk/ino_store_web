@@ -62,9 +62,11 @@ export default function ClientNavBar() {
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [categories, setCategories] = useState([]);
   const user = JSON.parse(localStorage.getItem("user")); // Retrieve user data from localStorage
+  console.log(localStorage.getItem('userToken'));
 
   const logout = () => {
     localStorage.removeItem("user"); // Clear user data on logout
+    localStorage.removeItem("userToken"); // Clear user token
     navigate("/client-login"); // Redirect to login page
   };
 

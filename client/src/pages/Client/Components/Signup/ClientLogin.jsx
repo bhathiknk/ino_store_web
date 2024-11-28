@@ -52,6 +52,7 @@ export default function ClientLogin() {
             const response = await axios.post('http://localhost:5000/api/users/signin', formData);
             
             const userData = response.data; // User data returned from the server
+            localStorage.setItem("userToken", userData.token);  // Save token to local storage
             localStorage.setItem('user', JSON.stringify(userData)); // Save the entire user object in local storage
             
             navigate('/'); // Redirect after successful login
