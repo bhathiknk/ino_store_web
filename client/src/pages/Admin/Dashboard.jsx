@@ -50,7 +50,7 @@ const ProductPage = () => {
             <div className="flex justify-between items-center mt-6 mb-4">
                 <div className="text-lg">Products</div>
                 <Link to="/Admin/create-product" className="bg-blue-500 text-white py-2 px-4 rounded">
-                    + Create New Product
+                    + Create New Products
                 </Link>
             </div>
             <div className="bg-gray-200 shadow-md rounded-lg p-6">
