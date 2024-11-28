@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const adminSchema = new mongoose.Schema({
+const handlerSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -15,16 +15,12 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    isApproved: {
-        type: Boolean,
-        default: false, // Admins are not approved by default
-    },
 }, {
     timestamps: true,
 });
 
 // Password hashing middleware
-adminSchema.pre('save', async function (next) {
+handlerSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
         return next();
     }
@@ -34,10 +30,10 @@ adminSchema.pre('save', async function (next) {
 });
 
 // Method to match password
-adminSchema.methods.matchPassword = async function (enteredPassword) {
+handlerSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const Admin = mongoose.model('Admin', adminSchema);
+const Handler = mongoose.model('Handler', handlerSchema);
 
-module.exports = Admin;
+module.exports = Handler;

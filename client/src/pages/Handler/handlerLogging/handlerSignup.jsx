@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Signup = () => {
+const HandlerSignup = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -14,9 +14,9 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/admin/signup', { name, email, password });
-            setMessage('Signup successful! Your account needs to be approved by the handler.');
-            toast.success('Signup successful! Your account needs to be approved by the handler.', {
+            await axios.post('http://localhost:5000/api/handler/auth/signup', { name, email, password });
+            setMessage('Signup successful! You can now sign in.');
+            toast.success('Signup successful! You can now sign in.', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -25,7 +25,7 @@ const Signup = () => {
                 draggable: true,
                 progress: undefined,
             });
-            setTimeout(() => navigate('/signin'), 5000);
+            setTimeout(() => navigate('/handler/signin'), 5000);
         } catch (error) {
             setMessage('Signup failed!');
             toast.error('Signup failed!', {
@@ -43,7 +43,7 @@ const Signup = () => {
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
-                <h2 className="text-2xl font-bold text-center">Signup</h2>
+                <h2 className="text-2xl font-bold text-center">Handler Signup</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label className="block mb-1">Name:</label>
@@ -75,24 +75,26 @@ const Signup = () => {
                             className="w-full px-4 py-2 border rounded"
                         />
                     </div>
-                    <button type="submit"
-                            className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600">
+                    <button
+                        type="submit"
+                        className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600"
+                    >
                         Signup
                     </button>
                 </form>
                 {message && <p className="mt-4 text-center">{message}</p>}
                 <div className="text-center">
                     <button
-                        onClick={() => navigate('/signin')}
+                        onClick={() => navigate('/handler/signin')}
                         className="mt-4 text-blue-500 hover:underline"
                     >
                         Already have an account? Signin
                     </button>
                 </div>
-                <ToastContainer/>
+                <ToastContainer />
             </div>
         </div>
     );
 };
 
-export default Signup;
+export default HandlerSignup;
