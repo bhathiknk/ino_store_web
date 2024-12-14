@@ -22,6 +22,7 @@ import AddressLayout from './pages/Client/Components/Pages/Address/AddressLayout
 import MyProfile from './pages/Client/Components/Pages/User/MyProfile';
 import EditProfile from './pages/Client/Components/Pages/User/EditProfile';
 import Orders from './pages/Client/Components/Pages/User/Orders';
+import CheckoutForm from './pages/Client/Components/Pages/Checkout/CheckoutForm';
 
 import HandlerSignup from './pages/Handler/handlerLogging/handlerSignup';
 import HandlerSignin from './pages/Handler/handlerLogging/handlerSignin';
@@ -45,6 +46,7 @@ function App() {
                     <Route path="/client-user-profile" element={<MyProfile />} />
                     <Route path="/client-user-profile-edit" element={<EditProfile />} />
                     <Route path="/client-user-orders" element={<Orders />} />
+                    <Route path="/checkout" element={<CheckoutForm />} />
 
                     {/* Admin Routes */}
                     <Route path="/signup" element={<Signup />} />
