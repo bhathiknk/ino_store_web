@@ -1,43 +1,43 @@
 import React, { useEffect, useState } from 'react';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { useCart } from '../Cart/CartContext';
+import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
 
 const CheckoutForm = () => {
-    const { cart } = useCart(); // Access cart items from CartContext
+    const { cart, dispatch } = useCart();
     const [addressDetails, setAddressDetails] = useState({
         address: '',
         province: '',
         zip: '',
         mobile: '',
     });
-
-    const [error, setError] = useState(null);
+    const [orderTotal, setOrderTotal] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     // Fetch address details on component mount
     useEffect(() => {
         const fetchAddressDetails = async () => {
             try {
-                const token = localStorage.getItem('userToken'); // Get token from localStorage
+                const token = localStorage.getItem('userToken');
                 const response = await axios.get('http://localhost:5000/api/address/user', {
                     headers: {
-                        Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+                        Authorization: `Bearer ${token}`,
                     },
                 });
 
                 if (response.data && response.data.length > 0) {
-                    const address = response.data[0]; // Assume the first address for now
+                    const address = response.data[0];
                     setAddressDetails({
                         address: address.address,
                         province: address.province,
-                        zip: address.zipcode,
+                        zip: address.zipcode, // Ensure key matches backend expectation
                         mobile: address.contactNumber,
                     });
                 }
             } catch (err) {
-                setError(err.response?.data?.message || 'Failed to fetch address details');
-                toast.error('Failed to fetch address details'); // Show error toast
+                toast.error('Failed to fetch address details');
             }
         };
 
@@ -45,8 +45,50 @@ const CheckoutForm = () => {
     }, []);
 
     // Calculate total price for cart items
-    const calculateTotal = () => {
-        return cart.reduce((total, item) => total + (item.price * item.quantity) + (item.shippingCost || 0), 0).toFixed(2);
+    useEffect(() => {
+        const total = cart.reduce(
+            (sum, item) => sum + item.price * item.quantity + (item.shippingCost || 0),
+            0
+        );
+        setOrderTotal(total.toFixed(2));
+    }, [cart]);
+
+    // Handle order creation after successful PayPal payment
+    const handleOrderCreation = async (paymentId, payerId) => {
+        try {
+            const token = localStorage.getItem('userToken');
+            const orderData = {
+                products: cart.map((item) => ({
+                    product: item.id,
+                    quantity: item.quantity,
+                })),
+                paymentMethod: 'PayPal',
+                shippingDetails: {
+                    address: addressDetails.address,
+                    province: addressDetails.province,
+                    zipcode: addressDetails.zip,
+                    contactNumber: addressDetails.mobile,
+                },
+                paymentId,
+                payerId,
+            };
+
+            console.log("Order Data:", orderData);
+
+            const response = await axios.post('http://localhost:5000/api/orders', orderData, {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (response.status === 201) {
+                toast.success('Order saved successfully!');
+
+            } else {
+                throw new Error('Unexpected backend response');
+            }
+        } catch (err) {
+            console.error("Order Creation Error:", err);
+            toast.error('Payment successful, but order saving failed.');
+        }
     };
 
     return (
@@ -60,7 +102,6 @@ const CheckoutForm = () => {
                     </header>
 
                     <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {/* Address Details */}
                         <div className="bg-white p-6 rounded-lg shadow-md">
                             <h2 className="text-lg font-semibold text-gray-800 mb-4">Shipping Address</h2>
                             <p className="text-gray-600">
@@ -77,7 +118,6 @@ const CheckoutForm = () => {
                             </p>
                         </div>
 
-                        {/* Cart Items */}
                         <div className="bg-white p-6 rounded-lg shadow-md">
                             <h2 className="text-lg font-semibold text-gray-800 mb-4">Cart Items</h2>
                             <ul className="space-y-4">
@@ -85,34 +125,57 @@ const CheckoutForm = () => {
                                     <li key={index} className="flex justify-between items-center">
                                         <div>
                                             <p className="text-gray-800 font-medium">{item.title}</p>
-                                            <p className="text-sm text-gray-600">
-                                                Quantity: {item.quantity}
-                                            </p>
+                                            <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
                                         </div>
-                                        <p className="text-gray-800">
-                                            Rs.{(item.price * item.quantity).toFixed(2)}
-                                        </p>
+                                        <p className="text-gray-800">Rs.{(item.price * item.quantity).toFixed(2)}</p>
                                     </li>
                                 ))}
                             </ul>
                             <hr className="my-4" />
                             <div className="flex justify-between items-center">
                                 <p className="text-lg font-semibold text-gray-800">Total:</p>
-                                <p className="text-lg font-bold text-gray-800">
-                                    Rs. {calculateTotal()}
-                                </p>
+                                <p className="text-lg font-bold text-gray-800">Rs. {orderTotal}</p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Confirm Order Button */}
                     <div className="mt-8 text-center">
-                        <button
-                            className="px-6 py-3 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition duration-300"
-                            onClick={() => toast.success('Order placed successfully!')}
+                        <PayPalScriptProvider
+                            options={{
+                                'client-id': 'ASywn340iQU7BjJuemulqqNRrsHxtm6MeYmXF9yyX2lmrGveAg5ITybweaNa3WbgCHCHb5j6yDCU2dIK',
+                                currency: 'USD',
+                            }}
                         >
-                            Confirm Order
-                        </button>
+                            <PayPalButtons
+                                createOrder={(data, actions) => {
+                                    const formattedOrderTotal = parseFloat(orderTotal).toFixed(2);
+                                    return actions.order.create({
+                                        purchase_units: [
+                                            {
+                                                amount: {
+                                                    value: formattedOrderTotal,
+                                                },
+                                            },
+                                        ],
+                                    });
+                                }}
+                                onApprove={async (data, actions) => {
+                                    setIsLoading(true);
+                                    try {
+                                        const details = await actions.order.capture();
+                                        await handleOrderCreation(details.id, details.payer.payer_id);
+                                    } catch (err) {
+                                        console.error("Payment or Order Saving Error:", err);
+                                    } finally {
+                                        setIsLoading(false);
+                                    }
+                                }}
+                                onError={(err) => {
+                                    console.error("PayPal Error:", err);
+                                    toast.error('Payment error. Please try again.');
+                                }}
+                            />
+                        </PayPalScriptProvider>
                     </div>
                 </div>
             </main>

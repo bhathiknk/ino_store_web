@@ -1,8 +1,20 @@
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+const paypal = require('paypal-rest-sdk');
+require('dotenv').config();
+
+
+// Configure PayPal SDK with environment variables
+paypal.configure({
+    mode: process.env.PAYPAL_MODE, // 'sandbox' or 'live'
+    client_id: process.env.PAYPAL_CLIENT_ID,
+    client_secret: process.env.PAYPAL_CLIENT_SECRET,
+});
 
 exports.createOrder = async (req, res) => {
-    const { products, paymentMethod, shippingDetails } = req.body;
+    const { products, paymentMethod, shippingDetails, paymentId, payerId } = req.body;
+
+    console.log("Received Order Data:", req.body);
 
     if (!req.user) {
         return res.status(401).json({ message: 'Not authorized, user not found' });
@@ -11,7 +23,10 @@ exports.createOrder = async (req, res) => {
     const buyerId = req.user._id;
 
     try {
-        // Step 1: Fetch product details and group by seller
+        if (!products || products.length === 0) {
+            return res.status(400).json({ message: 'No products in the order' });
+        }
+
         const sellerOrders = {};
 
         await Promise.all(
@@ -22,8 +37,6 @@ exports.createOrder = async (req, res) => {
                 }
 
                 const sellerId = product.admin._id;
-
-                // Determine the correct price to use
                 const price = product.discountPrice || product.basePrice;
 
                 if (!sellerOrders[sellerId]) {
@@ -34,23 +47,22 @@ exports.createOrder = async (req, res) => {
                         paymentMethod,
                         isPaid: true,
                         paidAt: Date.now(),
+                        paymentId,
+                        payerId,
                         shippingDetails,
                         orderStatus: 'Processing',
                     };
                 }
 
-                // Add product to the seller's order
                 sellerOrders[sellerId].products.push({
                     product: product._id,
                     quantity: item.quantity,
                 });
 
-                // Update the total amount using the determined price
                 sellerOrders[sellerId].totalAmount += item.quantity * price;
             })
         );
 
-        // Step 2: Create and save orders for each seller
         const savedOrders = [];
         for (const sellerId in sellerOrders) {
             const order = new Order({
@@ -63,11 +75,17 @@ exports.createOrder = async (req, res) => {
             savedOrders.push(savedOrder);
         }
 
+        console.log("Saved Orders:", savedOrders);
         res.status(201).json(savedOrders);
     } catch (error) {
+        console.error("Order Creation Error:", error.message);
         res.status(500).json({ message: error.message });
     }
 };
+
+
+
+
 
 
 exports.getOrdersBySeller = async (req, res) => {
