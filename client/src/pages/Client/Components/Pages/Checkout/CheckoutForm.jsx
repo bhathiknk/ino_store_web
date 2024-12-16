@@ -4,6 +4,7 @@ import { useCart } from '../Cart/CartContext';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom'; // For redirection
 
 const CheckoutForm = () => {
     const { cart, dispatch } = useCart();
@@ -15,6 +16,8 @@ const CheckoutForm = () => {
     });
     const [orderTotal, setOrderTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false); // Success popup state
+    const navigate = useNavigate(); // React Router navigate hook
 
     // Fetch address details on component mount
     useEffect(() => {
@@ -32,7 +35,7 @@ const CheckoutForm = () => {
                     setAddressDetails({
                         address: address.address,
                         province: address.province,
-                        zip: address.zipcode, // Ensure key matches backend expectation
+                        zip: address.zipcode,
                         mobile: address.contactNumber,
                     });
                 }
@@ -73,15 +76,14 @@ const CheckoutForm = () => {
                 payerId,
             };
 
-            console.log("Order Data:", orderData);
-
             const response = await axios.post('http://localhost:5000/api/orders', orderData, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
             if (response.status === 201) {
                 toast.success('Order saved successfully!');
-
+                dispatch({ type: 'CLEAR_CART' }); // Clear the cart
+                setShowSuccessModal(true); // Show success modal
             } else {
                 throw new Error('Unexpected backend response');
             }
@@ -91,10 +93,14 @@ const CheckoutForm = () => {
         }
     };
 
+    const handleModalClose = () => {
+        setShowSuccessModal(false);
+        navigate('/'); // Redirect to home page
+    };
+
     return (
         <div className="flex flex-col min-h-screen bg-gray-100">
             <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
-
             <main className="flex-grow py-6 md:py-8 lg:py-12">
                 <div className="container mx-auto px-4 md:px-6 lg:px-8">
                     <header className="text-3xl font-bold text-center mt-8 text-gray-800">
@@ -139,46 +145,66 @@ const CheckoutForm = () => {
                         </div>
                     </div>
 
-                    <div className="mt-8 text-center">
-                        <PayPalScriptProvider
-                            options={{
-                                'client-id': 'ASywn340iQU7BjJuemulqqNRrsHxtm6MeYmXF9yyX2lmrGveAg5ITybweaNa3WbgCHCHb5j6yDCU2dIK',
-                                currency: 'USD',
-                            }}
-                        >
-                            <PayPalButtons
-                                createOrder={(data, actions) => {
-                                    const formattedOrderTotal = parseFloat(orderTotal).toFixed(2);
-                                    return actions.order.create({
-                                        purchase_units: [
-                                            {
-                                                amount: {
-                                                    value: formattedOrderTotal,
-                                                },
-                                            },
-                                        ],
-                                    });
-                                }}
-                                onApprove={async (data, actions) => {
-                                    setIsLoading(true);
-                                    try {
-                                        const details = await actions.order.capture();
-                                        await handleOrderCreation(details.id, details.payer.payer_id);
-                                    } catch (err) {
-                                        console.error("Payment or Order Saving Error:", err);
-                                    } finally {
-                                        setIsLoading(false);
-                                    }
-                                }}
-                                onError={(err) => {
-                                    console.error("PayPal Error:", err);
-                                    toast.error('Payment error. Please try again.');
-                                }}
-                            />
-                        </PayPalScriptProvider>
-                    </div>
                 </div>
             </main>
+
+            {/* Success Modal */}
+            {showSuccessModal && (
+                <div
+                    className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50"
+                    style={{
+                        pointerEvents: 'auto',
+                        zIndex: 10000 // Very high z-index to stay above PayPal iframe
+                    }}
+                >
+                    <div className="bg-white p-6 rounded-lg shadow-lg text-center max-w-sm w-full relative">
+                        <h2 className="text-xl font-semibold text-gray-800 mb-4">Order Successful!</h2>
+                        <p className="text-gray-600 mb-6">Your payment was successful and the order has been saved.</p>
+                        <button
+                            onClick={handleModalClose}
+                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
+            <div
+                style={{ visibility: showSuccessModal ? 'hidden' : 'visible' }} // Hide PayPal
+            >
+                <PayPalScriptProvider
+                    options={{
+                        'client-id': 'ASywn340iQU7BjJuemulqqNRrsHxtm6MeYmXF9yyX2lmrGveAg5ITybweaNa3WbgCHCHb5j6yDCU2dIK',
+                        currency: 'USD',
+                    }}
+                >
+                    <PayPalButtons
+                        createOrder={(data, actions) => {
+                            const formattedOrderTotal = parseFloat(orderTotal).toFixed(2);
+                            return actions.order.create({
+                                purchase_units: [{ amount: { value: formattedOrderTotal } }],
+                            });
+                        }}
+                        onApprove={async (data, actions) => {
+                            setIsLoading(true);
+                            try {
+                                const details = await actions.order.capture();
+                                await handleOrderCreation(details.id, details.payer.payer_id);
+                            } catch (err) {
+                                console.error("Payment or Order Saving Error:", err);
+                            } finally {
+                                setIsLoading(false);
+                            }
+                        }}
+                        onError={(err) => {
+                            console.error("PayPal Error:", err);
+                            toast.error('Payment error. Please try again.');
+                        }}
+                    />
+                </PayPalScriptProvider>
+            </div>
+
+
         </div>
     );
 };
