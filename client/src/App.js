@@ -24,9 +24,6 @@ import EditProfile from './pages/Client/Components/Pages/User/EditProfile';
 import Orders from './pages/Client/Components/Pages/User/Orders';
 import CheckoutForm from './pages/Client/Components/Pages/Checkout/CheckoutForm';
 
-import HandlerSignup from './pages/Handler/handlerLogging/handlerSignup';
-import HandlerSignin from './pages/Handler/handlerLogging/handlerSignin';
-import HandlerDashboard from './pages/Handler/handlerDashboard';
 
 function App() {
     return (
@@ -58,11 +55,7 @@ function App() {
                     <Route path="/Admin/orders" element={<ViewOrder />} />
                     <Route path="/Admin/SalesSummary" element={<SalesSummary />} />
 
-                    {/* Handler Routes */}
-                    {/* Handler Routes */}
-                    <Route path="/handler/signup" element={<HandlerSignup />} />
-                    <Route path="/handler/signin" element={<HandlerSignin />} />
-                    <Route path="/handler/dashboard" element={<HandlerDashboard />} />
+
                 </Routes>
             </Router>
         </CartProvider>

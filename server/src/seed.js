@@ -28,7 +28,6 @@ const categories = [
 async function insertCategories() {
     try {
         await Category.insertMany(categories);
-        console.log('Categories inserted successfully');
     } catch (err) {
         console.error('Error inserting categories', err);
     }

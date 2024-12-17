@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 const Signin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -15,62 +14,28 @@ const Signin = () => {
         try {
             const response = await axios.post('http://localhost:5000/api/admin/signin', { email, password });
 
-            // Check if the admin is approved
-            if (!response.data.isApproved) {
-                setMessage('Your account has not been approved by the handler yet.');
-                toast.error('Your account has not been approved by the handler yet.', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-                return;
-            }
-
-            // Proceed if approved
-            setMessage('Signin successful!');
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('adminId', response.data._id);
+
             toast.success('Signin successful!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+            });
+
+            setTimeout(() => navigate('/Admin/ProductPage'), 2000);
+        } catch (error) {
+            toast.error('Signin failed! Invalid credentials.', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
-                progress: undefined,
             });
-            setTimeout(() => navigate('/Admin/ProductPage'), 2000);
-        } catch (error) {
-            // Handle errors
-            if (error.response && error.response.status === 403) {
-                // Account not approved
-                setMessage('Your account has not been approved by the handler yet.');
-                toast.error('Your account has not been approved by the handler yet.', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            } else {
-                // General signin failure
-                setMessage('Signin failed!');
-                toast.error('Signin failed!', {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
         }
     };
 
@@ -103,7 +68,6 @@ const Signin = () => {
                         Signin
                     </button>
                 </form>
-                {message && <p className="mt-4 text-center">{message}</p>}
                 <ToastContainer />
             </div>
         </div>

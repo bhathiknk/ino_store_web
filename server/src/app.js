@@ -9,8 +9,6 @@ const userAuthRoutes = require('./routes/userAuthRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const addressRoutes = require('./routes/UserAddress');
 const salesRoutes = require('./routes/salesRoutes');
-const handlerRoutes = require('./routes/handlerRoutes');
-const handlerAuthRoutes = require('./routes/handlerAuthRoutes');
 const errorHandler = require('./utils/errorHandler');
 const path = require('path');
 
@@ -44,8 +42,7 @@ app.use('/api/users', userAuthRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/address', addressRoutes);
 app.use('/api/sales', salesRoutes);
-app.use('/api/handler', handlerRoutes);
-app.use('/api/handler/auth', handlerAuthRoutes);
+
 
 
 // Error handling middleware

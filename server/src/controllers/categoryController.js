@@ -30,8 +30,6 @@ exports.createCategory = async (req, res) => {
 exports.getProductsByCategoryName = async (req, res) => {
     const { categoryName } = req.params;
 
-    console.log(`Searching for category: ${categoryName}`);
-
     try {
         // Find the category by name
         const category = await Category.findOne({ name: categoryName });
@@ -39,15 +37,11 @@ exports.getProductsByCategoryName = async (req, res) => {
             return res.status(404).json({ message: 'Category not found' });
         }
 
-        console.log(`Found category: ${category.name} with description: ${category.description}`);
-
         // Split the category description into an array of individual descriptions
         const descriptions = category.description.split(',').map(desc => desc.trim());
 
         // Find products with matching category descriptions
         const products = await Product.find({ categoryDescription: { $in: descriptions } });
-
-        console.log(`Found products: ${products.length}`);
 
         res.status(200).json(products);
     } catch (err) {

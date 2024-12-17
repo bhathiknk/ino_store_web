@@ -66,7 +66,6 @@ export default function ClientNavBar() {
   useEffect(() => {
     // Log the JWT token only once after component mounts
     const userToken = localStorage.getItem('userToken');
-    console.log(userToken);
   }, []); // Empty dependency array means this effect runs once after initial render
 
 

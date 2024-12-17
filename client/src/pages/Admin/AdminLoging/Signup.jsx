@@ -8,34 +8,31 @@ const Signup = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await axios.post('http://localhost:5000/api/admin/signup', { name, email, password });
-            setMessage('Signup successful! Your account needs to be approved by the handler.');
-            toast.success('Signup successful! Your account needs to be approved by the handler.', {
+
+            toast.success('Signup successful! You can now signin.', {
                 position: "top-right",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
-                progress: undefined,
             });
-            setTimeout(() => navigate('/signin'), 5000);
+
+            setTimeout(() => navigate('/signin'), 3000);
         } catch (error) {
-            setMessage('Signup failed!');
-            toast.error('Signup failed!', {
+            toast.error('Signup failed! Email may already exist.', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
-                progress: undefined,
             });
         }
     };
@@ -80,7 +77,6 @@ const Signup = () => {
                         Signup
                     </button>
                 </form>
-                {message && <p className="mt-4 text-center">{message}</p>}
                 <div className="text-center">
                     <button
                         onClick={() => navigate('/signin')}
@@ -89,7 +85,7 @@ const Signup = () => {
                         Already have an account? Signin
                     </button>
                 </div>
-                <ToastContainer/>
+                <ToastContainer />
             </div>
         </div>
     );
