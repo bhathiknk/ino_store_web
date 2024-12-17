@@ -52,9 +52,6 @@ jobs:
           npm install
 
       - name: Run tests in Server
-        run: npx jest
-
-      - name: Run tests in Server
         run: |
          cd server
          npm test
