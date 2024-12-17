@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16.x'  # Directly specify the Node.js version
+          node-version: '16.x'
           cache: 'npm'
 
       - name: Set environment variables from secrets
@@ -35,18 +35,17 @@ jobs:
           cd client
           npm test
 
-      - name: Change to Server Directory
-        run: |
-          cd server
-          pwd
-          ls -la 
-
-      - name: Install dependencies in Server
+      - name: Change to Server Directory and Install dependencies
         run: |
           cd server
           npm install
 
-      - name: Run tests in Server
+      - name: Fix permissions for Jest
         run: |
-         cd server
-         npm test
+          cd server
+          chmod +x ./node_modules/.bin/jest
+
+      - name: Run tests in Server using npx
+        run: |
+          cd server
+          npx jest
