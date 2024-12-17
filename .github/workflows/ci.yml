@@ -35,30 +35,19 @@ jobs:
           cd client
           npm test
 
-      - name: Change to Server Directory
+      - name: Change to Server Directory and install dependencies
         run: |
           cd server
-          pwd
-          ls -la  # This will confirm the directory's contents
+          npm install  # This installs all dependencies including Jest
 
       - name: Verify package.json contents in Server
         run: |
-          cd server
           cat package.json
 
-      - name: Install dependencies in Server
+      - name: List bin directory to check Jest installation
         run: |
-          cd server
-          npm install
+          ls -la node_modules/.bin
 
-
-
-      - name: Make Jest executable
+      - name: Run tests in Server using npx
         run: |
-          chmod +x node_modules/.bin/jest
-          working-directory: ./server
-
-      - name: Run tests in Server
-        run: |
-          npm test
-          working-directory: ./server
+          npx jest  # Use npx to execute Jest directly
