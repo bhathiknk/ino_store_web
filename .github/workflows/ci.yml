@@ -1,0 +1,30 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ CI/CD ]
+  pull_request:
+    branches: [ CI/CD ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]  # specify the Node.js version
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: |
+          cd client && npm install
+          cd ../server && npm install
+      - name: Run tests
+        run: |
+          cd client && npm test
+          cd ../server && npm test
