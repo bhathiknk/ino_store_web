@@ -33,7 +33,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "echo 'No tests yet'",
+    "test": "echo 'No server tests specified yet' && exit 0",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
