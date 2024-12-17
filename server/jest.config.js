@@ -1,5 +1,7 @@
-// jest.config.js
 module.exports = {
-    verbose: true, // Enable verbose results
-    testEnvironment: 'node' // Specify the environment in which the tests are run
+    testEnvironment: 'node',
+    testMatch: [
+        '**/__tests__/**/*.[jt]s?(x)',
+        '**/?(*.)+(spec|test).[tj]s?(x)'
+    ]
 };
