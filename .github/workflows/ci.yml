@@ -15,6 +15,19 @@ jobs:
         node-version: [16.x]  # specify the Node.js version
 
     steps:
+name: Node.js CI
+
+on:
+  push:
+    branches: [ CI/CD ]
+  pull_request:
+    branches: [ CI/CD ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
       - uses: actions/checkout@v2
 
       - name: Set up Node.js
@@ -34,24 +47,26 @@ jobs:
           cd client
           npm install
 
-      - name: Clear npm cache
-        run: |
-          npm cache clean --force
-
-      - name: Verify package.json and Jest Config
-        run: |
-          cd client
-          cat package.json
-          cat jest.config.js
-
       - name: Run tests in Client
         run: |
           cd client
           npm test
 
-      - name: Install dependencies in Server
+      - name: Navigate to Server
         run: |
           cd server
+
+      - name: Check current directory and contents
+        run: |
+          pwd
+          ls -la
+
+      - name: Verify package.json in Server
+        run: |
+          cat package.json
+
+      - name: Install dependencies in Server
+        run: |
           npm install
 
       - name: Run tests in Server
