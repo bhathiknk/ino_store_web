@@ -34,8 +34,19 @@ jobs:
           cd client
           npm install
 
+      - name: Clear npm cache
+        run: |
+          npm cache clean --force
+
+      - name: Verify package.json and Jest Config
+        run: |
+          cd client
+          cat package.json
+          cat jest.config.js
+
       - name: Run tests in Client
         run: |
+          cd client
           npm test
 
       - name: Install dependencies in Server
