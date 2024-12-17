@@ -11,12 +11,12 @@ export default function ClientFooter() {
       <Container>
         <div className="flex flex-col md:flex-row justify-between pt-16 pb-8">
           <FooterList>
-            <h3 className="text-base font-bold mb-2">Categories</h3>
+            <h3 className="text-base font-bold mb-2">Categories </h3>
             {/* Updated Links */}
             <Link to="/category/Textiles & Apparel" className="hover:underline">Textiles & Apparel</Link>
             <Link to="/category/Traditional-Handicrafts" className="hover:underline">Traditional Handicrafts</Link>
             <Link to="/category/category3" className="hover:underline">Jewelry & Accessories</Link>
-            <Link to="/category/category4" className="hover:underline">Home Decor</Link>
+            <Link to="/category/category4" className="hover:underline">Home Decor </Link>
             <Link to="/category/category5" className="hover:underline">Kitchen & Dining</Link>
             <Link to="/category/category6" className="hover:underline">Beauty & Personal Care</Link>
             <Link to="/category/category6" className="hover:underline">Toys & Games</Link>

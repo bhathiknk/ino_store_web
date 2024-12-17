@@ -35,7 +35,6 @@ const ProductCard = ({ data }) => {
   // Handle adding to cart
   const handleAddToCart = (e) => {
     e.stopPropagation();
-    console.log('Add to cart:', data);
     navigate(`/client-product/${data._id}`);
   };
 

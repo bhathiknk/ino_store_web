@@ -29,7 +29,6 @@ const ViewOrder = () => {
                 };
 
                 const response = await axios.get('http://localhost:5000/api/orders/seller', config);
-                console.log(response.data); // Check if image URLs are present
                 setOrders(response.data);
                 setLoading(false);
             } catch (error) {

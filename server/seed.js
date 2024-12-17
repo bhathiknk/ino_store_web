@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
-const Category = require('./models/Category');
+const Category = require('./src/models/Category');
 
-mongoose.connect('mongodb://localhost:27017/inoweb', {
+mongoose.connect('mongodb://mongo:27017/inoweb', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(async () => {
-    console.log('Connected to MongoDB');
     await insertCategories();  // Await the async function
     mongoose.disconnect(); // Disconnect after the insertion is complete
 }).catch(err => {
@@ -28,7 +27,6 @@ const categories = [
 async function insertCategories() {
     try {
         await Category.insertMany(categories);
-        console.log('Categories inserted successfully');
     } catch (err) {
         console.error('Error inserting categories', err);
     }

@@ -14,8 +14,6 @@ paypal.configure({
 exports.createOrder = async (req, res) => {
     const { products, paymentMethod, shippingDetails, paymentId, payerId } = req.body;
 
-    console.log("Received Order Data:", req.body);
-
     if (!req.user) {
         return res.status(401).json({ message: 'Not authorized, user not found' });
     }
@@ -74,8 +72,6 @@ exports.createOrder = async (req, res) => {
             const savedOrder = await order.save();
             savedOrders.push(savedOrder);
         }
-
-        console.log("Saved Orders:", savedOrders);
         res.status(201).json(savedOrders);
     } catch (error) {
         console.error("Order Creation Error:", error.message);

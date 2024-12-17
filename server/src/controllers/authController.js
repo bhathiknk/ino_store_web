@@ -23,14 +23,13 @@ exports.signup = async (req, res) => {
         const admin = new Admin({
             name,
             email,
-            password,
-            isApproved: false, // Default is false
+            password
         });
 
         const savedAdmin = await admin.save();
 
         res.status(201).json({
-            message: 'Signup request submitted. Awaiting approval by handler.',
+            message: 'Admin registered successfully.',
             adminId: savedAdmin._id,
         });
     } catch (error) {
@@ -49,16 +48,11 @@ exports.signin = async (req, res) => {
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
-        if (!admin.isApproved) {
-            return res.status(403).json({ message: 'Your account has not been approved by the handler yet.' });
-        }
-
         if (admin && (await admin.matchPassword(password))) {
             res.json({
                 _id: admin._id,
                 name: admin.name,
                 email: admin.email,
-                isApproved: admin.isApproved,
                 token: generateToken(admin._id),
             });
         } else {
@@ -68,4 +62,3 @@ exports.signin = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
