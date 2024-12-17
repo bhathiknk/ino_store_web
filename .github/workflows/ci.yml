@@ -53,7 +53,12 @@ jobs:
 
 
 
+      - name: Make Jest executable
+        run: |
+          chmod +x node_modules/.bin/jest
+          working-directory: ./server
+
       - name: Run tests in Server
         run: |
-         cd server
-         npx jest
+          npm test
+          working-directory: ./server
