@@ -21,34 +21,26 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Set environment variables from secrets
+        run: |
+          echo "PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "PAYPAL_MODE=${{ secrets.PAYPAL_MODE }}" >> $GITHUB_ENV
+
       - name: Install dependencies in Client
         run: |
-          echo "Navigating to client directory..."
           cd client
-          echo "Current Directory:"
-          pwd
-          echo "Listing files:"
-          ls
-          echo "Installing client dependencies..."
           npm install
 
       - name: Run tests in Client
         run: |
-          echo "Running tests in client directory..."
           npm test
 
       - name: Install dependencies in Server
         run: |
-          echo "Navigating to server directory..."
           cd ../server
-          echo "Current Directory:"
-          pwd
-          echo "Listing files:"
-          ls
-          echo "Installing server dependencies..."
           npm install
 
       - name: Run tests in Server
         run: |
-          echo "Running tests in server directory..."
           npm test
