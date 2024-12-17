@@ -51,7 +51,7 @@ jobs:
 
       - name: Install dependencies in Server
         run: |
-          cd ../server
+          cd server
           npm install
 
       - name: Run tests in Server
