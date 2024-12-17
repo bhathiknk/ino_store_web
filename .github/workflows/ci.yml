@@ -49,7 +49,7 @@ jobs:
       - name: Install dependencies in Server
         run: |
           cd server
-         npm install
+          npm install
 
       - name: Run tests in Server
         run: |
