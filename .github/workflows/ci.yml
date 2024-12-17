@@ -51,8 +51,8 @@ jobs:
           cd server
           npm install
 
-      - name: Make Jest executable
-        run: chmod +x node_modules/.bin/jest
+      - name: Run tests in Server
+        run: npx jest
 
       - name: Run tests in Server
         run: |
