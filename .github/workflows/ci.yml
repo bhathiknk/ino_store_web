@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: '16.x'  # Directly specify the Node.js version
           cache: 'npm'
 
       - name: Set environment variables from secrets
@@ -35,23 +35,18 @@ jobs:
           cd client
           npm test
 
-      - name: Navigate to Server
+      - name: Change to Server Directory
         run: |
           cd server
-
-      - name: Check current directory and contents
-        run: |
           pwd
-          ls -la
+          ls -la  # This will confirm the directory's contents
 
-      - name: Verify package.json in Server
+      - name: Verify package.json contents in Server
         run: |
           cat package.json
 
       - name: Install dependencies in Server
-        run: |
-          npm install
+        run: npm install
 
       - name: Run tests in Server
-        run: |
-          npm test
+        run: npm test
