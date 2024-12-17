@@ -43,10 +43,15 @@ jobs:
 
       - name: Verify package.json contents in Server
         run: |
+          cd server
           cat package.json
 
       - name: Install dependencies in Server
-        run: npm install
+        run: |
+          cd server
+         npm install
 
       - name: Run tests in Server
-        run: npm test
+        run: |
+         cd server
+         npm test
