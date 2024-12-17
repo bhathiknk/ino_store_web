@@ -20,11 +20,35 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install dependencies
+
+      - name: Install dependencies in Client
         run: |
-          cd client && npm install
-          cd ../server && npm install
-      - name: Run tests
+          echo "Navigating to client directory..."
+          cd client
+          echo "Current Directory:"
+          pwd
+          echo "Listing files:"
+          ls
+          echo "Installing client dependencies..."
+          npm install
+
+      - name: Run tests in Client
         run: |
-          cd client && npm test
-          cd ../server && npm test
+          echo "Running tests in client directory..."
+          npm test
+
+      - name: Install dependencies in Server
+        run: |
+          echo "Navigating to server directory..."
+          cd ../server
+          echo "Current Directory:"
+          pwd
+          echo "Listing files:"
+          ls
+          echo "Installing server dependencies..."
+          npm install
+
+      - name: Run tests in Server
+        run: |
+          echo "Running tests in server directory..."
+          npm test
