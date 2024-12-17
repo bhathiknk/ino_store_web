@@ -1,0 +1,33 @@
+name: Node.js CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Install dependencies
+      run: |
+        cd server && npm install
+        cd ../client && npm install
+    - name: Run tests
+      run: |
+        cd server && npm test
+        cd ../client && npm test
+    - name: Build client (if using a framework like React)
+      run: |
+        cd client && npm run build
