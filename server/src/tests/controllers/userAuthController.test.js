@@ -1,7 +1,7 @@
+const mongoose = require('mongoose');
 const { signup } = require('../../controllers/userAuthController');
 const User = require('../../models/User');
 const httpMocks = require('node-mocks-http');
-const mongoose = require('mongoose');
 
 describe('UserAuthController', () => {
     beforeAll(async () => {
@@ -9,13 +9,11 @@ describe('UserAuthController', () => {
     });
 
     beforeEach(async () => {
-        // Clears the database and adds some testing data.
-        await User.deleteMany({});
+        await mongoose.connection.db.dropDatabase(); // Clear database before each test
     });
 
     afterAll(async () => {
-        // Closes the Mongoose connection
-        await mongoose.disconnect();
+        await mongoose.connection.close(); // Ensure connection is closed
     });
 
     it('should not allow signup with an email that already exists', async () => {
@@ -28,7 +26,7 @@ describe('UserAuthController', () => {
 
         const req = httpMocks.createRequest({
             method: 'POST',
-            body: user
+            body: { name: 'Test User', email: 'test@example.com', password: 'password123' }
         });
         const res = httpMocks.createResponse();
 

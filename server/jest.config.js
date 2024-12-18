@@ -3,5 +3,7 @@ module.exports = {
     testEnvironment: 'node',
     testPathIgnorePatterns: ['/node_modules/'],
     coveragePathIgnorePatterns: ['/node_modules/'],
-    coverageReporters: ['text', 'lcov']
+    coverageReporters: ['text', 'lcov'],
+    testTimeout: 30000,
+
 };

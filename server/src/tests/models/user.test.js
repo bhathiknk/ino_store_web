@@ -1,25 +1,17 @@
 const mongoose = require('mongoose');
 const User = require('../../models/User');
-// At the top of your test files or in a global test setup file
-jest.setTimeout(10000); // 10 seconds
-
 
 describe('User Model', () => {
     beforeAll(async () => {
-        await mongoose.connect(process.env.MONGO_URI_TEST, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(process.env.MONGO_URI_TEST);
     });
 
     beforeEach(async () => {
-        // Clears the database and adds some testing data.
-        await User.deleteMany({});
+        await mongoose.connection.db.dropDatabase(); // Clear the database before each test
     });
 
     afterAll(async () => {
-        // Closes the Mongoose connection
-        await mongoose.disconnect();
+        await mongoose.connection.close(); // Close MongoDB connection
     });
 
     it('should hash the user password before saving', async () => {

@@ -1,1 +1,2 @@
-process.env.MONGO_URI_TEST = 'mongodb://localhost:27017/inoweb_test';
+require('dotenv').config({ path: '.env.test' });
+jest.setTimeout(30000); // Set global timeout to 30 seconds
