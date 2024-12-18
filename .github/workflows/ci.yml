@@ -30,26 +30,15 @@ jobs:
           node-version: '16.x'
           cache: 'npm'
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Set environment variables
         run: |
           echo "MONGO_URI_TEST=mongodb://localhost:27017/inoweb_test" >> $GITHUB_ENV
 
-      - name: Install dependencies in Client
-        run: |
-          cd client
-          npm install
+      - name: Fix Jest Permissions
+        run: chmod +x ./node_modules/.bin/jest
 
-      - name: Run tests in Client
-        run: |
-          cd client
-          npm test
-
-      - name: Install dependencies in Server
-        run: |
-          cd server
-          npm install
-
-      - name: Run tests in Server
-        run: |
-          cd server
-          npm test
+      - name: Run tests
+        run: npm test
