@@ -20,7 +20,6 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-
     steps:
       - uses: actions/checkout@v2
 
@@ -30,15 +29,37 @@ jobs:
           node-version: '16.x'
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Set environment variables from secrets
+        run: |
+          echo "PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "PAYPAL_MODE=${{ secrets.PAYPAL_MODE }}" >> $GITHUB_ENV
+
+      - name: Install dependencies in Client
+        run: |
+          cd client
+          npm install
+
+      - name: Run tests in Client
+        run: |
+          cd client
+          npm test
+
+      - name: Change to Server Directory and Install dependencies
+        run: |
+          cd server
+          npm install
 
       - name: Set environment variables
         run: |
           echo "MONGO_URI_TEST=mongodb://localhost:27017/inoweb_test" >> $GITHUB_ENV
 
-      - name: Fix Jest Permissions
-        run: chmod +x ./node_modules/.bin/jest
+      - name: Fix permissions for Jest
+        run: |
+          cd server
+          chmod +x ./node_modules/.bin/jest
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests in Server using npx
+        run: |
+          cd server
+          npm test
