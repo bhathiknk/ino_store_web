@@ -1,7 +1,7 @@
 module.exports = {
+    setupFiles: ['<rootDir>/jest.setup.js'],
     testEnvironment: 'node',
-    testMatch: [
-        '**/__tests__/**/*.[jt]s?(x)',
-        '**/?(*.)+(spec|test).[tj]s?(x)'
-    ]
+    testPathIgnorePatterns: ['/node_modules/'],
+    coveragePathIgnorePatterns: ['/node_modules/'],
+    coverageReporters: ['text', 'lcov']
 };
