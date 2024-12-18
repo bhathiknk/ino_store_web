@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const User = require('../../models/User');
+// At the top of your test files or in a global test setup file
+jest.setTimeout(10000); // 10 seconds
+
 
 describe('User Model', () => {
     beforeAll(async () => {

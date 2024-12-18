@@ -48,4 +48,4 @@ jobs:
       - name: Run tests in Server using npx
         run: |
           cd server
-          npx jest
+          npm test
