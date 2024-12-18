@@ -7,7 +7,7 @@ describe('User Model', () => {
     });
 
     beforeEach(async () => {
-        await mongoose.connection.db.dropDatabase(); // Clear the database before each test
+        await mongoose.connection.db.dropDatabase(); // Clear database before each test
     });
 
     afterAll(async () => {
@@ -18,7 +18,7 @@ describe('User Model', () => {
         const user = new User({
             name: 'John Doe',
             email: 'john@example.com',
-            password: 'password123'
+            password: 'password123',
         });
 
         await user.save();

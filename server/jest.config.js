@@ -4,6 +4,5 @@ module.exports = {
     testPathIgnorePatterns: ['/node_modules/'],
     coveragePathIgnorePatterns: ['/node_modules/'],
     coverageReporters: ['text', 'lcov'],
-    testTimeout: 30000,
-
+    testTimeout: 30000, // Increase timeout to 30 seconds
 };

@@ -13,20 +13,20 @@ describe('UserAuthController', () => {
     });
 
     afterAll(async () => {
-        await mongoose.connection.close(); // Ensure connection is closed
+        await mongoose.connection.close(); // Close MongoDB connection
     });
 
     it('should not allow signup with an email that already exists', async () => {
         const user = new User({
             name: 'Test User',
             email: 'test@example.com',
-            password: 'password123'
+            password: 'password123',
         });
         await user.save();
 
         const req = httpMocks.createRequest({
             method: 'POST',
-            body: { name: 'Test User', email: 'test@example.com', password: 'password123' }
+            body: { name: 'Test User', email: 'test@example.com', password: 'password123' },
         });
         const res = httpMocks.createResponse();
 
@@ -42,8 +42,8 @@ describe('UserAuthController', () => {
             body: {
                 name: 'New User',
                 email: 'new@example.com',
-                password: 'password123'
-            }
+                password: 'password123',
+            },
         });
         const res = httpMocks.createResponse();
 

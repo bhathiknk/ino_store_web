@@ -10,6 +10,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      mongodb:
+        image: mongo:4.4
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "echo 'db.runCommand(\"ping\").ok' | mongo localhost:27017/test --quiet"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
 
@@ -19,11 +30,9 @@ jobs:
           node-version: '16.x'
           cache: 'npm'
 
-      - name: Set environment variables from secrets
+      - name: Set environment variables
         run: |
-          echo "PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }}" >> $GITHUB_ENV
-          echo "PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }}" >> $GITHUB_ENV
-          echo "PAYPAL_MODE=${{ secrets.PAYPAL_MODE }}" >> $GITHUB_ENV
+          echo "MONGO_URI_TEST=mongodb://localhost:27017/inoweb_test" >> $GITHUB_ENV
 
       - name: Install dependencies in Client
         run: |
@@ -35,17 +44,12 @@ jobs:
           cd client
           npm test
 
-      - name: Change to Server Directory and Install dependencies
+      - name: Install dependencies in Server
         run: |
           cd server
           npm install
 
-      - name: Fix permissions for Jest
-        run: |
-          cd server
-          chmod +x ./node_modules/.bin/jest
-
-      - name: Run tests in Server using npx
+      - name: Run tests in Server
         run: |
           cd server
           npm test
