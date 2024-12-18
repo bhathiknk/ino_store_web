@@ -84,22 +84,25 @@ exports.createOrder = async (req, res) => {
 
 
 
+// Example getOrdersBySeller controller fix
 exports.getOrdersBySeller = async (req, res) => {
-    const adminId = req.admin._id;
-
     try {
-        const products = await Product.find({ admin: adminId }).select('_id');
-        const productIds = products.map(product => product._id);
+        const adminId = req.admin?._id; // Safely check for admin._id
+        if (!adminId) {
+            return res.status(401).json({ message: 'Not authorized as admin' });
+        }
 
-        const orders = await Order.find({ 'products.product': { $in: productIds } })
-            .populate('products.product', 'name images') // Include image field
-            .populate('buyer', 'name email');
+        const orders = await Order.find({
+            'products.product': { $in: await Product.find({ admin: adminId }).select('_id') },
+        }).populate('products.product');
 
         res.status(200).json(orders);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Error fetching orders by seller:', error.message);
+        res.status(500).json({ message: 'Server Error' });
     }
 };
+
 
 // controllers/orderController.js
 exports.updateOrderStatus = async (req, res) => {
