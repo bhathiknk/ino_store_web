@@ -108,6 +108,41 @@ const CheckoutForm = () => {
                     </header>
 
                     <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* PayPal Button on the left */}
+                        <div className="flex flex-col justify-center items-center bg-white p-6 rounded-lg shadow-md">
+                            <PayPalScriptProvider
+                                options={{
+                                    'client-id': 'ASywn340iQU7BjJuemulqqNRrsHxtm6MeYmXF9yyX2lmrGveAg5ITybweaNa3WbgCHCHb5j6yDCU2dIK',
+                                    currency: 'USD',
+                                }}
+                            >
+                                <PayPalButtons
+                                    createOrder={(data, actions) => {
+                                        const formattedOrderTotal = parseFloat(orderTotal).toFixed(2);
+                                        return actions.order.create({
+                                            purchase_units: [{ amount: { value: formattedOrderTotal } }],
+                                        });
+                                    }}
+                                    onApprove={async (data, actions) => {
+                                        setIsLoading(true);
+                                        try {
+                                            const details = await actions.order.capture();
+                                            await handleOrderCreation(details.id, details.payer.payer_id);
+                                        } catch (err) {
+                                            console.error("Payment or Order Saving Error:", err);
+                                        } finally {
+                                            setIsLoading(false);
+                                        }
+                                    }}
+                                    onError={(err) => {
+                                        console.error("PayPal Error:", err);
+                                        toast.error('Payment error. Please try again.');
+                                    }}
+                                />
+                            </PayPalScriptProvider>
+                        </div>
+
+                        {/* Cart items and Shipping Address on the right */}
                         <div className="bg-white p-6 rounded-lg shadow-md">
                             <h2 className="text-lg font-semibold text-gray-800 mb-4">Shipping Address</h2>
                             <p className="text-gray-600">
@@ -122,9 +157,7 @@ const CheckoutForm = () => {
                             <p className="text-gray-600">
                                 <strong>Mobile Number:</strong> {addressDetails.mobile || 'N/A'}
                             </p>
-                        </div>
-
-                        <div className="bg-white p-6 rounded-lg shadow-md">
+                            <hr className="my-4" />
                             <h2 className="text-lg font-semibold text-gray-800 mb-4">Cart Items</h2>
                             <ul className="space-y-4">
                                 {cart.map((item, index) => (
@@ -137,14 +170,12 @@ const CheckoutForm = () => {
                                     </li>
                                 ))}
                             </ul>
-                            <hr className="my-4" />
                             <div className="flex justify-between items-center">
                                 <p className="text-lg font-semibold text-gray-800">Total:</p>
                                 <p className="text-lg font-bold text-gray-800">Rs. {orderTotal}</p>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </main>
 
@@ -169,42 +200,6 @@ const CheckoutForm = () => {
                     </div>
                 </div>
             )}
-            <div
-                style={{ visibility: showSuccessModal ? 'hidden' : 'visible' }} // Hide PayPal
-            >
-                <PayPalScriptProvider
-                    options={{
-                        'client-id': 'ASywn340iQU7BjJuemulqqNRrsHxtm6MeYmXF9yyX2lmrGveAg5ITybweaNa3WbgCHCHb5j6yDCU2dIK',
-                        currency: 'USD',
-                    }}
-                >
-                    <PayPalButtons
-                        createOrder={(data, actions) => {
-                            const formattedOrderTotal = parseFloat(orderTotal).toFixed(2);
-                            return actions.order.create({
-                                purchase_units: [{ amount: { value: formattedOrderTotal } }],
-                            });
-                        }}
-                        onApprove={async (data, actions) => {
-                            setIsLoading(true);
-                            try {
-                                const details = await actions.order.capture();
-                                await handleOrderCreation(details.id, details.payer.payer_id);
-                            } catch (err) {
-                                console.error("Payment or Order Saving Error:", err);
-                            } finally {
-                                setIsLoading(false);
-                            }
-                        }}
-                        onError={(err) => {
-                            console.error("PayPal Error:", err);
-                            toast.error('Payment error. Please try again.');
-                        }}
-                    />
-                </PayPalScriptProvider>
-            </div>
-
-
         </div>
     );
 };
