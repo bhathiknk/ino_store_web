@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node src/server.js",
-    "dev": "cross-env NODE_ENV=development nodemon src/server.js",
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles"
+    "start": "nodemon src/server.js",
+    "test": "jest --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
@@ -24,7 +23,6 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
     "dotenv": "^16.4.7",
     "jest": "^28.1.3",
     "mongoose": "^8.9.1",
