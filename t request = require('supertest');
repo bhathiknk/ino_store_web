@@ -1,0 +1,723 @@
+[33mcommit 400246743a08e757cfdc7245cdd887bdafb80fcb[m[33m ([m[1;36mHEAD -> [m[1;32mCI/CD[m[33m, [m[1;31morigin/CI/CD[m[33m)[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 11:37:50 2024 +0530
+
+    add unit test for product
+
+[33mcommit 22359e9b9e87320acab56e2f7ddc12b17a24ee20[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 11:19:41 2024 +0530
+
+    yml bug fixed
+
+[33mcommit 80a01436ba36c95484c77fb1289ccfc20526ba46[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 11:12:50 2024 +0530
+
+    yml bug fixed
+
+[33mcommit 1f21bd8fa33f9846b6fbb588071e9d801aba67d8[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 11:09:38 2024 +0530
+
+    fix test error
+
+[33mcommit a24a5269a27de6d2b3b683b8462b41d887708478[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 11:01:09 2024 +0530
+
+    fix unit test bug
+
+[33mcommit 879a5dd713128bd491ed4569beafbf289eba07e8[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 10:51:59 2024 +0530
+
+    Install missing modules and adjust Jest configuration
+
+[33mcommit 1d459ab9afb5da767706a25b81bd2b1d2d17aab5[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 10:45:31 2024 +0530
+
+    Add tests
+
+[33mcommit cb98fd4752aad3a40b96673652bf32f5c8b57609[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 08:46:55 2024 +0530
+
+    paypal button UI chenged
+
+[33mcommit 3e1c9263f87c0745c44c56bfd8513786a06c971f[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 03:28:13 2024 +0530
+
+    yml up
+
+[33mcommit a3768464e593143e9b5d42531ab31eff297d0b03[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 03:24:55 2024 +0530
+
+    update yml
+
+[33mcommit d5a83ed1ba4cc819d72d401b285cc02449d88b11[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 03:17:36 2024 +0530
+
+    up yml
+
+[33mcommit ae6f1d11651c68116ca7439881d1b5293ca569da[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 03:12:11 2024 +0530
+
+    yml
+
+[33mcommit 06caeef259282d3bbc0cb5b694289958e20245ed[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 03:06:55 2024 +0530
+
+    up yml
+
+[33mcommit 9a77172d4afcac401c4a6b2efff9451a96f48378[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:59:56 2024 +0530
+
+    yml up
+
+[33mcommit 6f18c18f400ca559ee623a7382990991532ecd42[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:57:54 2024 +0530
+
+    update yml
+
+[33mcommit 0e02cfa6148233f0c604999203aea919b6f89b10[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:49:28 2024 +0530
+
+    yml updated
+
+[33mcommit 9a3ddfd259ecb5f5809792ddef614a4a6948d6c9[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:42:45 2024 +0530
+
+    update yml
+
+[33mcommit ebe056ede5d4e793f7112c63075127c65f944591[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:35:12 2024 +0530
+
+    update yml
+
+[33mcommit 80c2ddbd31804bd64a673ce56c10a8bc0572ae61[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:30:40 2024 +0530
+
+    update yml
+
+[33mcommit 0cd8c03a4b6832200dcb2e9ea67ae0de3f012c50[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:29:38 2024 +0530
+
+    update yml
+
+[33mcommit 2cde156d0106861f8d7eeebd73f9536b002e038c[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:25:53 2024 +0530
+
+    json remove
+
+[33mcommit f204cd4d541d968368912906327043b90022885e[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:19:30 2024 +0530
+
+    update yml
+
+[33mcommit 350797014a57cb8f3f62fd22983549ca71572edf[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:15:37 2024 +0530
+
+    update uml
+
+[33mcommit 3ceeed7a6700876ce577c322afc39f1ace208fc1[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:14:33 2024 +0530
+
+    üpdate yml
+
+[33mcommit db687104fadcf74b708d7b980f7788e12a863576[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:08:03 2024 +0530
+
+    Add basic server test with Jest and Supertest
+
+[33mcommit e9d07b27227b97f55fe437e4cb2f7b7b31f61c7e[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 02:03:25 2024 +0530
+
+    fixed server error
+
+[33mcommit cbd88902141806221c14ebb6bf0c4eb6ced55daa[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 01:59:15 2024 +0530
+
+    add sample test client
+
+[33mcommit 58a797b43cbf1cfa84c8a3b19a2c4947d737e4c5[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 01:54:10 2024 +0530
+
+    update YAML  file
+
+[33mcommit 3876b5945d467d2ee58ab99b843d855d859e31b3[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 01:47:27 2024 +0530
+
+    Update test script in package.json
+
+[33mcommit 6a82e25f08c2699b354afb3c1d7b28007481c179[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 01:44:29 2024 +0530
+
+    Update test script in package.json
+
+[33mcommit 3f68aab6d08067f214f5360a3ef91be8cc8b9253[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 01:37:04 2024 +0530
+
+    Update test script to prevent CI failure
+
+[33mcommit fe304289854c8485bc1446473b89748f3b824f26[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 01:28:36 2024 +0530
+
+    Add missing test script to package.json
+
+[33mcommit f9b15b60eda13e89c3c69d3a390d3470ecd5be38[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 01:23:42 2024 +0530
+
+    chnaged package.json client
+
+[33mcommit b8d4fbd4890b80b713aa7051230bebf135e10aa6[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 01:19:40 2024 +0530
+
+    update ci.yml
+
+[33mcommit fe6d1dd63d07a1dc85b0882338aa08e08fb6aa2c[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 01:09:24 2024 +0530
+
+    update ci.yml
+
+[33mcommit 8c6053121b675ad45ee01140020ee52e0e5a3217[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 01:04:45 2024 +0530
+
+    ci.yml added for CI intergration
+
+[33mcommit fffc9ddf52324acac8054c4aff9f9124f2127f7f[m[33m ([m[1;31morigin/admin[m[33m, [m[1;32madmin[m[33m)[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Wed Dec 18 00:39:32 2024 +0530
+
+    remove handler functions and remove consol.log data
+
+[33mcommit 0596f10e2e79d837ef65aa16c552211d1a36309c[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Mon Dec 16 13:09:31 2024 +0530
+
+    after payment success redirect function created
+
+[33mcommit 8f5b71f243265cac9775f2df9b98790231ec8e75[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sun Dec 15 14:26:08 2024 +0530
+
+    Remove .env file from tracking
+
+[33mcommit bbd356e0d31e6d1fe3d32fe273d961147ae8d0b5[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sun Dec 15 14:23:42 2024 +0530
+
+    paypal payment integration create
+
+[33mcommit 66caea9b95e879a1f7b3942984e5320dca78fcde[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sat Dec 14 16:51:59 2024 +0530
+
+    modify address page for fetch user address and call to updated api and create checkout page with fetch cart details and address
+
+[33mcommit dadbebdb168a8c3f5f904c30bf93cc79e44a3d32[m[33m ([m[1;31morigin/rajapaksha-client-main[m[33m)[m
+Merge: d26c939 332315b
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Thu Nov 28 17:15:16 2024 +0530
+
+    user sessions with JWT local storages
+
+[33mcommit 332315b5a302d42c7d9f30176b5cdfcdf5858477[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Thu Nov 28 16:40:59 2024 +0530
+
+    test commit
+
+[33mcommit d26c93909539536f56e511e5555cf45511ab3d36[m
+Merge: 7b24586 6842787
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Thu Nov 28 16:36:56 2024 +0530
+
+    fixed error 001-client
+
+[33mcommit 7b24586da795c91b353b4e8da58a5ac41831bec7[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Thu Nov 28 16:16:32 2024 +0530
+
+    added jwt sessions tarcking and
+
+[33mcommit 6842787b99302ff7f68d9a78ee0012d91c39abb7[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sun Nov 24 15:53:04 2024 +0530
+
+    create user address get api
+
+[33mcommit f2a356f61b8ac40d10682cc03c7cb62ca236b52f[m
+Merge: 31e6e74 4ef6b18
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sun Nov 24 09:52:58 2024 +0530
+
+    pull from vilochana branch and update app.js in frontend
+
+[33mcommit 31e6e742c974a9fa522bcb51dab92d5d531d3f6d[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sun Nov 24 09:26:33 2024 +0530
+
+    create Handler signup,signin and dashboard page in frontend
+
+[33mcommit 1bd72cbd54dc3fdcddfebe423125fb0f170d982d[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sun Nov 24 09:14:08 2024 +0530
+
+    build new function call Handler,create backend for approve admin signup request and update frontend of admin signup and signin page
+
+[33mcommit 4ef6b18a8def9eea6a9e42a9cb2c238c68501804[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Mon Nov 18 14:34:30 2024 +0530
+
+    bug fixed c-d--104
+
+[33mcommit bd38c7cacf3eb9f26eef45f63c6b8360d25226dc[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Nov 17 21:26:36 2024 +0530
+
+    remove test codes form editprofile,myprofile,orders loacted in navigation bar user dropdown
+
+[33mcommit ca7fe93e25ab90ee1b66d40781a373e2db32d879[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Nov 17 21:12:29 2024 +0530
+
+    test
+
+[33mcommit 9a84aa8a96a2279c590791dac77f18894c0566c0[m
+Merge: 854d1e3 9bf5904
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Nov 17 21:11:29 2024 +0530
+
+    test
+
+[33mcommit 854d1e3c08ce543f2dcb0c3982d6562ddf97fb77[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Nov 17 21:06:44 2024 +0530
+
+    git error fixed
+
+[33mcommit accd443e0fb0fa9f8b4bcb701302a69d8235fbda[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Nov 17 21:03:40 2024 +0530
+
+    added alert and notification to addtocart section for show specil alerts and warning to user
+
+[33mcommit 9bf5904476d7fdc5fecd869df76281b758368ce8[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Nov 17 17:04:29 2024 +0530
+
+    added alert and notification to product details list to avoid cart errors
+
+[33mcommit 7c9624d124c44fa95c6cd99440a41d0144e518b8[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Nov 17 14:20:57 2024 +0530
+
+     developed Order.jsx file for other developers' use. Also fixed some bugs nav-001 .
+
+[33mcommit a0be0221cb72b49ae3a515fc27305e2e811275b1[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Nov 17 14:11:45 2024 +0530
+
+    Added the User folder and developed EditProfile.jsx and MyProfile.jsx files  for other developers' use. Also fixed some bugs.
+
+[33mcommit f608368d0a441397ffbc2d2a0f96fa111a1721d1[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Nov 17 01:38:06 2024 +0530
+
+    added alerts for add to cart section
+
+[33mcommit 562db31b6f4bf2214acf711d13b64e090150a719[m
+Merge: 65d3e26 8f7b594
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sat Nov 16 23:30:06 2024 +0530
+
+    develop user sessionsand login logout options
+
+[33mcommit 4a70caeddd613dad496c33a17bc9f74fd556461d[m[33m ([m[1;31morigin/ranindu/order[m[33m)[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sat Nov 16 20:49:17 2024 +0530
+
+    get subcategory name based on category name and product get based on subcategory name API created
+
+[33mcommit 8f7b5946542fc35fef95e655b07d14e11e1f6ded[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sat Nov 16 20:07:53 2024 +0530
+
+    user name get api created
+
+[33mcommit 65d3e266eb56d6bdab5c8133597591c59ad7d272[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Wed Sep 11 01:35:16 2024 +0530
+
+    fixed bug code:nvbCc_navi01
+
+[33mcommit fcc3c0641db2dd4fcc457a4b7cd31a96f90e4510[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Fri Aug 9 02:05:32 2024 +0530
+
+    error fixed  0005-c-d / 0001-nav-b
+
+[33mcommit 8fac79d40da9de6dea9b7dd4ab7f9b915ac29677[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Fri Aug 9 01:26:28 2024 +0530
+
+    fixed navbr
+
+[33mcommit 76db0fab7881f7e06616ad5af02d80a79faca600[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Fri Aug 9 01:07:44 2024 +0530
+
+    clor change in nav and bg code ch-0001
+
+[33mcommit 7b240239e78b941bd849e7b5dfdcc862307585f2[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Thu Aug 8 23:51:31 2024 +0530
+
+    cart page ui fixed
+
+[33mcommit f8a7b920530da222ccf340e9dfc7f9af7f17eedb[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Wed Aug 7 22:43:45 2024 +0530
+
+    fixed bug err c/c-d-0002
+
+[33mcommit f61524b4457a7d04db2709f2c58776ce3ed5f1b3[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Wed Aug 7 21:38:59 2024 +0530
+
+    added user address edit and checkout options
+
+[33mcommit c19a2617d112dc5790339695efd9ad7ead9d50b1[m
+Merge: 59d4603 94b6694
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Wed Aug 7 18:26:57 2024 +0530
+
+     call category products according to the category -CategoryDetails.jsx
+
+[33mcommit 59d460360bdb91334980719c4a34f89784eef0f1[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Tue Aug 6 22:51:36 2024 +0530
+
+    call categort api to frontend and fix some ui bugs
+
+[33mcommit c6c1754a0e142c92fc0c2d4061b1bb3f2485a6cb[m[33m ([m[1;32mclienttest[m[33m)[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Mon Aug 5 00:02:12 2024 +0530
+
+     fixed bug: C-D-0001
+
+[33mcommit 0b48ec7e00015d755033eb10de1f12f87087253e[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Aug 4 23:08:12 2024 +0530
+
+    bug fixed c-d/p-i/c-c-i/f-001
+
+[33mcommit 7743e6e91089c2134d65d2a8eca5c6de2184043d[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Aug 4 19:15:50 2024 +0530
+
+    fixed image loading issue in productdetails page and cart
+
+[33mcommit 94b66944deec9e99d7facfcc736da5368ce4c465[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sun Aug 4 14:56:53 2024 +0530
+
+    product search api create base on category name and description
+
+[33mcommit 1daec5ed547b98f9ea5c00f7199d3710ebcfdff2[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Aug 4 00:00:55 2024 +0530
+
+    fixed bugs ref:0100x
+
+[33mcommit ac5b981f0537d2f00009b5b38dfaefc5153f6b1a[m
+Merge: 76006ed 9df0483
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sat Aug 3 16:36:22 2024 +0530
+
+    add hero banner
+
+[33mcommit 76006ed7fed3dcca0d5d662efe636745d8f75655[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sat Aug 3 14:42:48 2024 +0530
+
+    added terms and conditions and login,sign and some Ui changes
+
+[33mcommit 9df0483e4d9cab4f8f6804cf99c3e14172b776a8[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sat Aug 3 09:31:34 2024 +0530
+
+    get product for user interface backend bug fix(authorization removed)
+
+[33mcommit 515d686b80d091a818972fe7fcb4a692cc3a8212[m
+Merge: bd36ead bec9996
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Fri Aug 2 20:43:07 2024 +0530
+
+    called api to the signup and signin pages and allow user to register and log in to the page
+
+[33mcommit bd36eadcb84cdc510efefa610203228865bc8dd8[m
+Merge: 41323e8 de987f2
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Thu Aug 1 22:53:39 2024 +0530
+
+    api callings
+
+[33mcommit bec9996d46f645afa11dece316bad57477a294e9[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Mon Jul 29 15:14:10 2024 +0530
+
+    get all product for buyer interface backend api created
+
+[33mcommit 41323e8484a14f67e0feafab669c16da025a6ed6[m
+Merge: af1362a 38fc87e
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sat Jul 27 13:45:38 2024 +0530
+
+    test
+
+[33mcommit de987f277d79eafe1ddcbdd1e08d5e3fa8c550ab[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sat Jul 27 13:43:48 2024 +0530
+
+    default admin rout / change to signup
+
+[33mcommit af1362a80d8634699569a8ae9f52cdc99c5d6476[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sat Jul 27 00:54:53 2024 +0530
+
+    basic clientpage, product-details,cart pages are developed and create functions to manupilate that services
+
+[33mcommit 38fc87e4834ccc6942d518c6a0b1f4310a712006[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Fri Jul 26 23:32:42 2024 +0530
+
+    order section some bux fixed and sale summary page some bug fixed
+
+[33mcommit c64b7971359b98057c43fcaf2d99434205b6cf86[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Fri Jul 26 21:28:46 2024 +0530
+
+    sales summary page implement with backend,and sales growthchart,sales summary data implemented
+
+[33mcommit b5ad99adedf7814b30ca52b72e383570708d525a[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Fri Jul 26 14:37:55 2024 +0530
+
+    user address add backend function implemented and updated function implemented
+
+[33mcommit 89becb7526ae360031a1cbe8b5c6c19a5dc9cabe[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Fri Jul 26 09:13:44 2024 +0530
+
+    add new navigation bar to OrderView page for track process,packed and shiped orders
+
+[33mcommit e27f3f74caa790bcd97e08d3b16348c3da6cf5bb[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Thu Jul 25 23:08:48 2024 +0530
+
+    order status function added backend and frontend both
+
+[33mcommit c9ec6eeb709ea57b247137304cf84ab69df9ba1a[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Thu Jul 25 20:23:34 2024 +0530
+
+    cretae usecarthooh page
+
+[33mcommit 8e58935f374c68f31c32dc2c988192f6646c4ba5[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Thu Jul 25 15:33:36 2024 +0530
+
+    admin page(seller) create order view page and fetch order data from backend
+
+[33mcommit b650f217248df3e2fd4f4b9e007338c7f2799304[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Thu Jul 25 07:15:56 2024 +0530
+
+    create order and get order from seller function created in backend
+
+[33mcommit b0744b9603dc6ea83e5fff1b152698ba079a4662[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Wed Jul 24 00:17:44 2024 +0530
+
+    fixed prodctdeatils page image loading from temp dataset
+
+[33mcommit ac5a3ea0c10ca6ca3d3f103753a06af2655b45e1[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Tue Jul 23 23:08:00 2024 +0530
+
+    developed ClientProducts page Quantity increase and decrese options and AddtoCart button
+
+[33mcommit 81fabe1b689fa92ce398d368dcbf2ed327376af5[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Tue Jul 23 15:28:33 2024 +0530
+
+    user/buyer signup and signin backend created
+
+[33mcommit 4783ed2762c1d1f33f2e6809548ee939f08ab036[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Mon Jul 22 23:50:10 2024 +0530
+
+    fixed some bugs
+
+[33mcommit a9fee59d8ecf7488b68fa2632315b138fb49a8c8[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Mon Jul 22 23:30:43 2024 +0530
+
+    fixed some bugs
+
+[33mcommit 2a434a471fc3cff4b723115036046f46b7eb5adf[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Mon Jul 22 22:52:48 2024 +0530
+
+    added preduct deatils and linked using id
+
+[33mcommit e651bb8099170fceee5af47c4ebcb3f45a0812df[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Fri Jul 19 20:24:48 2024 +0530
+
+    delete function create on backend and ,backend delete API call from frontend
+
+[33mcommit 1f42411b4dc7b135a683b19cd46e70b5a512c0da[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Fri Jul 19 17:36:30 2024 +0530
+
+    product add form UI changed and Product update function created
+
+[33mcommit 4877b1b2c8da0e59990027f9ac1168d3d1af0fe3[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Fri Jul 19 10:46:44 2024 +0530
+
+    create new frontend file for update products and create function for auto fill product data to that page
+
+[33mcommit c67fbcddddd05909184353e08d8bce3bf8cb9f01[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Fri Jul 19 07:44:25 2024 +0530
+
+    stock status show in the dashboard
+
+[33mcommit f100fb8dcdfbe7a057e3f26a877bc4f7442c8360[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Fri Jul 19 07:38:23 2024 +0530
+
+    quantity entity added for product and show that data inside the product details page
+
+[33mcommit 52078b07878713d2dc823f1ce9d524a7866abca8[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Thu Jul 18 22:18:42 2024 +0530
+
+    dashboard card image slider button bug fixed
+
+[33mcommit d43038c044febdd9817086ef4381bed878cecc83[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Thu Jul 18 22:07:23 2024 +0530
+
+    dashboard price change method changed
+
+[33mcommit d4da067a996956a930446b455ff9f924230e8cad[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Thu Jul 18 22:04:11 2024 +0530
+
+    create product page add some validations and UI modified and product details page data show method changed
+
+[33mcommit d4af26f05183030a44cfd7d8ccadff42c95e432d[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Thu Jul 18 20:16:50 2024 +0530
+
+    admin can create category backend function created and category fetch to frontend function created and productDetails page modified
+
+[33mcommit c9d3700fad00bc36e1f667ffa8c1d93a83f987f4[m
+Author: Vilochana Rajapaksha <sadisi.rajapaksha218346@gmail.com>
+Date:   Sun Jul 14 22:59:11 2024 +0530
+
+    added random image array to dislpay products in client UI that products are loacted in ClientProduct.jsx file also added truncate to reduce description text length
+
+[33mcommit aea67f5ab915d6fa14025e895a685b94fdd23331[m
+Author: Vilochana Rajapaksha <you@example.com>
+Date:   Sun Jul 14 21:05:10 2024 +0530
+
+    client page dashboard bug fixied
+
+[33mcommit 503386bac6a21304934a0d91ed403744a75ea6a1[m
+Author: Vilochana Rajapaksha <you@example.com>
+Date:   Sun Jul 14 20:32:31 2024 +0530
+
+    added basic navbar,footer and home banner
+
+[33mcommit 7a946c9354e34fb9ed713fb048c2eba1b1ccf962[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sun Jul 14 11:05:50 2024 +0530
+
+    create product page UI created
+
+[33mcommit e623d1f7107ec173f2c91c7a4b422953411a45b9[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sat Jul 13 16:05:55 2024 +0530
+
+    adminDetails API created
+
+[33mcommit 926e5eb5538858e1bd6dbf951a4a06c4ba0aa31f[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Sat Jul 13 13:33:29 2024 +0530
+
+    craete signup and signin UI and product data fetch to admin dashboard function created and some UI changes on dashboard
+
+[33mcommit 6893fbe0267555be9c68bcc98436c8c17b1cbc28[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Fri Jul 12 22:41:04 2024 +0530
+
+    product details get api created
+
+[33mcommit 512ab45842fcc0d615e0b18cc4974e08b44de0fd[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Fri Jul 12 22:21:39 2024 +0530
+
+    backend file create and signin and signup / product add functions are created
+
+[33mcommit f0bc33f3439bae990719dc403e89f7673ab79bf7[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Mon Jul 8 22:37:05 2024 +0530
+
+    price information page created
+
+[33mcommit 171c4285548d5eb71d916f30c74590c056412f5c[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Mon Jul 8 19:43:13 2024 +0530
+
+    product add page created and dashboard and product add page make responsive
+
+[33mcommit 15bd461b464f3458f8724946217ecc98346a3917[m
+Author: bhathika <bhathikanileshkavindya@Gmail.com>
+Date:   Mon Jul 8 14:24:27 2024 +0530
+
+    react base file and client directory admin pages created

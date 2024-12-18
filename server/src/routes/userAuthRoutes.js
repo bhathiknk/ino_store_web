@@ -7,8 +7,4 @@ const router = express.Router();
 router.post('/signup', signup);
 router.post('/signin', signin);
 
-
-// Add the "Get User Profile" route
-router.get('/profile', protect, getUserProfile);
-
 module.exports = router;
