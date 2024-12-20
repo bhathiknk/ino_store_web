@@ -144,4 +144,49 @@ describe('Category Controller', () => {
         expect(products[1].name).toBe('Samsung Galaxy');
     });
 
+
+    // Test for retrieving products by subcategory
+    it('should retrieve products for a given subcategory', async () => {
+        const subcategory = 'Mobile';
+        const adminId = new mongoose.Types.ObjectId(); // Simulating an admin ID
+
+        await Product.create([
+            {
+                name: 'iPhone 13',
+                categoryDescription: subcategory,
+                basePrice: 999,
+                images: ['/uploads/products/iphone.jpg'],
+                quantity: 5,
+                admin: adminId, // Include required admin field
+            },
+            {
+                name: 'Samsung Galaxy',
+                categoryDescription: subcategory,
+                basePrice: 899,
+                images: ['/uploads/products/samsung.jpg'],
+                quantity: 10,
+                admin: adminId, // Include required admin field
+            },
+        ]);
+
+        const req = httpMocks.createRequest({
+            method: 'GET',
+            params: { subcategoryName: subcategory },
+        });
+        const res = httpMocks.createResponse();
+
+        await getProductsBySubcategory(req, res);
+
+        expect(res.statusCode).toBe(200);
+
+        // Sort products by name in test to match database order
+        const products = JSON.parse(res._getData());
+        const sortedProducts = products.sort((a, b) => a.name.localeCompare(b.name));
+
+        expect(sortedProducts.length).toBe(2);
+        expect(sortedProducts[0].name).toBe('iPhone 13');
+        expect(sortedProducts[1].name).toBe('Samsung Galaxy');
+    });
+
+
 });
