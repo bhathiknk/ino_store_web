@@ -21,7 +21,7 @@ FROM nginx:alpine
 COPY --from=0 /app/build /usr/share/nginx/html
 
 # Expose the port for the application
-EXPOSE 80
+EXPOSE 3000
 
 # Start NGINX
 CMD ["nginx", "-g", "daemon off;"]

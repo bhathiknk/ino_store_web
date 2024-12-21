@@ -1,23 +1,20 @@
-# Use a lightweight Node.js image
-FROM node:16-alpine
+# Use Node.js as base image
+FROM node:16
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
+RUN npm install --production
 
-# Copy the rest of the application files
+# Copy all other files
 COPY . .
 
-# Set environment variables
-ENV NODE_ENV=production
-
-# Expose the port for the server
+# Expose the application port
 EXPOSE 5000
 
 # Start the server
-CMD ["npm", "start"]
+CMD ["node", "src/server.js"]
