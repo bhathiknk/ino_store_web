@@ -19,7 +19,7 @@ describe('Product Controller', () => {
             useUnifiedTopology: true,
         });
 
-        adminId = new mongoose.Types.ObjectId(); // Simulating admin ID
+        adminId = new mongoose.Types.ObjectId(); // Simulate admin ID
     });
 
     beforeEach(async () => {
@@ -188,7 +188,6 @@ describe('Product Controller', () => {
 
         expect(res.statusCode).toBe(200);
         const products = JSON.parse(res._getData());
-        expect(products.length).toBe(2);
+        expect(products.length).toBe(2); // Fixed to match test scenario
     });
-
 });

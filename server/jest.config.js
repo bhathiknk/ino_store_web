@@ -5,4 +5,14 @@ module.exports = {
     coveragePathIgnorePatterns: ['/node_modules/'],
     coverageReporters: ['text', 'lcov'],
     testTimeout: 30000, // Increase timeout to 30 seconds
+
+    collectCoverage: true,
+    coverageDirectory: './coverage',
+    reporters: [
+        'default',
+        ['jest-html-reporter', {
+            pageTitle: 'Unit Tests and Integration Tests Coverage Report',
+            outputPath: './coverage/report.html',
+        }],
+    ],
 };

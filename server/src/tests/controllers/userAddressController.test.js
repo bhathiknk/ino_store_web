@@ -106,8 +106,13 @@ describe('User Address Controller', () => {
 
         expect(res.statusCode).toBe(200);
         const addresses = JSON.parse(res._getData());
-        expect(addresses.length).toBe(2);
-        expect(addresses[0].address).toBe('123 Test Street');
-        expect(addresses[1].address).toBe('456 Another Street');
+
+        // Sort addresses by 'address' to ensure consistent order
+        const sortedAddresses = addresses.sort((a, b) => a.address.localeCompare(b.address));
+
+        expect(sortedAddresses.length).toBe(2);
+        expect(sortedAddresses[0].address).toBe('123 Test Street');
+        expect(sortedAddresses[1].address).toBe('456 Another Street');
     });
+
 });

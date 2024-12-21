@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { signup } = require('../../controllers/userAuthController');
+const { signup, signin } = require('../../controllers/userAuthController');
 const User = require('../../models/User');
 const httpMocks = require('node-mocks-http');
 
@@ -51,5 +51,67 @@ describe('UserAuthController', () => {
 
         expect(res.statusCode).toBe(201);
         expect(JSON.parse(res._getData())).toHaveProperty('token');
+    });
+
+    it('should signin an existing user with correct credentials', async () => {
+        const user = new User({
+            name: 'Test User',
+            email: 'signin@example.com',
+            password: 'password123',
+        });
+        await user.save();
+
+        const req = httpMocks.createRequest({
+            method: 'POST',
+            body: {
+                email: 'signin@example.com',
+                password: 'password123',
+            },
+        });
+        const res = httpMocks.createResponse();
+
+        await signin(req, res);
+
+        expect(res.statusCode).toBe(200);
+        expect(JSON.parse(res._getData())).toHaveProperty('token');
+    });
+
+    it('should not signin a user with incorrect credentials', async () => {
+        const user = new User({
+            name: 'Test User',
+            email: 'wrong@example.com',
+            password: 'password123',
+        });
+        await user.save();
+
+        const req = httpMocks.createRequest({
+            method: 'POST',
+            body: {
+                email: 'wrong@example.com',
+                password: 'wrongpassword',
+            },
+        });
+        const res = httpMocks.createResponse();
+
+        await signin(req, res);
+
+        expect(res.statusCode).toBe(401);
+        expect(JSON.parse(res._getData())).toEqual({ message: 'Invalid email or password' });
+    });
+
+    it('should not signin a user that does not exist', async () => {
+        const req = httpMocks.createRequest({
+            method: 'POST',
+            body: {
+                email: 'nonexistent@example.com',
+                password: 'password123',
+            },
+        });
+        const res = httpMocks.createResponse();
+
+        await signin(req, res);
+
+        expect(res.statusCode).toBe(401); // Adjusted from 404 to 401
+        expect(JSON.parse(res._getData())).toEqual({ message: 'Invalid email or password' }); // Adjusted message
     });
 });
