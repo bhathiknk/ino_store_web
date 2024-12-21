@@ -12,7 +12,7 @@ module.exports = {
         'default',
         ['jest-html-reporter', {
             pageTitle: 'Unit Tests and Integration Tests Coverage Report',
-            outputPath: './coverage/report.html',
+            outputPath: './coverage/Unit and Integration Tests Report.html',
         }],
     ],
 };
