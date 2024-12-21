@@ -1,27 +1,18 @@
-# Use a lightweight Node.js image
-FROM node:16-alpine
+# Use Node.js base image
+FROM node:18-alpine
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
-
 # Install dependencies
+COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy the rest of the application files
+# Copy all source code
 COPY . .
 
-# Build the React application
-RUN npm run build
+# Expose React development server port
+EXPOSE 3000
 
-# Use a lightweight server to serve the React app
-FROM nginx:alpine
-COPY --from=0 /app/build /usr/share/nginx/html
-
-# Expose the port for the application
-EXPOSE 80
-
-# Start NGINX
-CMD ["nginx", "-g", "daemon off;"]
+# Start React development server
+CMD ["npm", "start"]
