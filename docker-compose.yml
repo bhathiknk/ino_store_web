@@ -6,7 +6,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - uploads-data:/app/uploads
+      - ./server/src/uploads/products:/app/uploads/products
     environment:
       - MONGO_URI=mongodb://host.docker.internal:27017/inoweb
     depends_on:
@@ -26,4 +26,3 @@ services:
 
 volumes:
   mongodb-data:
-  uploads-data:
