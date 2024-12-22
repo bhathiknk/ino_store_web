@@ -6,10 +6,27 @@ export default function Orders() {
     // Define the orders array
     const [orders, setOrders] = useState([]); // State to store orders
     const [loading, setLoading] = useState(true); // State to manage loading
-    const [error, setError] = useState(null);
-    const orders = [
+    const [error, setError] = useState(null); // State to manage errors
 
-    ];
+    // Fetch orders from backend API
+    useEffect(() => {
+        const fetchOrders = async () => {
+            try {
+                const response = await fetch(""); // Replace with your backend URL
+                if (!response.ok) {
+                    throw new Error("Failed to fetch orders");
+                }
+                const data = await response.json();
+                setOrders(data); // Update orders state
+            } catch (err) {
+                setError(err.message); // Handle errors
+            } finally {
+                setLoading(false); // Stop loading
+            }
+        };
+
+        fetchOrders();
+    }, []); // Empty dependency array ensures this runs only once
 
     return (
         <div>
