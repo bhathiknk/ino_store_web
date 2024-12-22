@@ -26,6 +26,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 
+
 // Use CORS middleware
 app.use(cors({
     origin: 'http://localhost:3000', // Replace with your frontend URL
