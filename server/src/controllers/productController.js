@@ -9,8 +9,8 @@ exports.addProduct = async (req, res) => {
     const adminId = req.admin._id;
 
     try {
-        // Handle file uploads
-        const images = req.files.map(file => `/uploads/products/${file.filename}`);
+        // Ensure the upload path matches the container's `/app/uploads/products`
+        const images = req.files.map(file => `/app/uploads/products/${file.filename}`);
 
         const product = new Product({
             name: title,
