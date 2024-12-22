@@ -38,6 +38,8 @@ jobs:
           echo "PAYPAL_MODE=${{ secrets.PAYPAL_MODE }}" >> $GITHUB_ENV
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
           echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> $GITHUB_ENV
+          echo "MONGO_URI=mongodb://host.docker.internal:27017/inoweb" >> $GITHUB_ENV
+          echo "MONGO_URI=mongodb://host.docker.internal:27017/inoweb_test" >> $GITHUB_ENV
 
 
       - name: Install dependencies in Client
