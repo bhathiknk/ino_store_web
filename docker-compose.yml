@@ -7,7 +7,7 @@ services:
       - "5000:5000"
     volumes:
       - uploads-data:/app/uploads
-      -
+
     environment:
       - MONGO_URI=mongodb://host.docker.internal:27017/inoweb
     depends_on:
