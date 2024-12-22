@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
@@ -10,9 +11,6 @@ const orderRoutes = require('./routes/orderRoutes');
 const addressRoutes = require('./routes/UserAddress');
 const salesRoutes = require('./routes/salesRoutes');
 const errorHandler = require('./utils/errorHandler');
-const path = require('path');
-
-
 
 // Initialize express
 const app = express();
@@ -25,6 +23,7 @@ app.use(express.json());
 
 // Serve static files for image uploads
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // Use CORS middleware
 app.use(cors({
@@ -42,8 +41,6 @@ app.use('/api/users', userAuthRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/address', addressRoutes);
 app.use('/api/sales', salesRoutes);
-
-
 
 // Error handling middleware
 app.use(errorHandler);

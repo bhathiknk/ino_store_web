@@ -5,10 +5,10 @@ services:
     image: bhathika/inoweb-server:latest
     ports:
       - "5000:5000"
-    volumes:
-      - ./uploads:/app/uploads # Map the container's uploads directory to your local ./uploads folder
     environment:
       - MONGO_URI=mongodb://host.docker.internal:27017/inoweb
+    volumes:
+      - ./server/uploads:/server/src/uploads/products
     depends_on:
       - mongodb
 
