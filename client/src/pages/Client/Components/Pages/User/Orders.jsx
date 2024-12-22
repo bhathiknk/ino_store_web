@@ -4,25 +4,11 @@ import ClientFooter from "../../Footer/ClientFooter";
 
 export default function Orders() {
     // Define the orders array
+    const [orders, setOrders] = useState([]); // State to store orders
+    const [loading, setLoading] = useState(true); // State to manage loading
+    const [error, setError] = useState(null);
     const orders = [
-        {
-            id: 1,
-            product: "Wireless Mouse",
-            status: "Shipped",
-            date: "2024-12-10",
-        },
-        {
-            id: 2,
-            product: "Bluetooth Headphones",
-            status: "Delivered",
-            date: "2024-12-12",
-        },
-        {
-            id: 3,
-            product: "Laptop Stand",
-            status: "Processing",
-            date: "2024-12-15",
-        },
+
     ];
 
     return (
