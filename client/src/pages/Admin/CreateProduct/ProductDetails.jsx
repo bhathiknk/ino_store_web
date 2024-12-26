@@ -24,4 +24,28 @@ const ProductDetails = () => {
 
         fetchProduct();
     }, [id]);
+
+    if (!product) {
+        return <div>Loading...</div>;
+    }
+
+    const handleUpdateClick = () => {
+        navigate(`/Admin/update-product/${id}`);
+    };
+
+    const handleDeleteClick = async () => {
+        const token = localStorage.getItem('token'); // Adjust this according to how you store your token
+        try {
+            await axios.delete(`http://localhost:5000/api/products/products/delete/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            alert('Product deleted successfully');
+            navigate('/Admin/ProductPage');
+        } catch (error) {
+            console.error('Error deleting product', error);
+            alert('Failed to delete product');
+        }
+    };
 };
