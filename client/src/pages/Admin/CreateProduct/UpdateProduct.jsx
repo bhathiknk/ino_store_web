@@ -29,4 +29,58 @@ const UpdateProduct = () => {
         quantity: '',
         images: [],
     });
+
+    useEffect(() => {
+        const fetchProductData = async () => {
+            if (!id) {
+                console.error('Product ID is undefined');
+                return;
+            }
+
+            try {
+                const response = await axios.get(`http://localhost:5000/api/products/products/${id}`);
+                const data = response.data;
+                setFormData({
+                    name: data.name,
+                    categoryDescription: data.categoryDescription,
+                    description: data.description,
+                    basePrice: data.basePrice,
+                    discountPrice: data.discountPrice,
+                    isDiscount: data.isDiscount,
+                    isFreeShipping: data.isFreeShipping,
+                    shippingCost: data.shippingCost,
+                    quantity: data.quantity,
+                });
+                setImages(data.images);
+                setIsDiscount(data.isDiscount);
+                setIsFreeShipping(data.isFreeShipping);
+            } catch (error) {
+                console.error('Error fetching product data:', error);
+            }
+        };
+
+        fetchProductData();
+    }, [id]);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        setNewImages([...newImages, ...files]); // Add new images
+    };
+
+    const handleDeleteImage = (index) => {
+        const imageToRemove = images[index];
+        setRemovedImages([...removedImages, imageToRemove]); // Track removed images
+        setImages(images.filter((_, i) => i !== index)); // Remove image from display
+    };
+
+    const handleClosePopup = () => {
+        setPopupVisible(false);
+    };
+
+
 }
