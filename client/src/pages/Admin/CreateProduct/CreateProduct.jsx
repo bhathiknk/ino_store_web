@@ -30,4 +30,29 @@ const CreateProduct = () => {
     quantity: '',
     images: []
   });
+
+  const basicRef = useRef(null);
+  const priceRef = useRef(null);
+  const shippingRef = useRef(null);
+  const stockRef = useRef(null);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleImageUpload = (event) => {
+    const files = Array.from(event.target.files);
+    if (files.length + images.length > 5) {
+      alert("You can only upload up to 5 images.");
+      return;
+    }
+    setImages([...images, ...files]);
+    setFormData({ ...formData, images: [...images, ...files] });
+  };
+
+  const handleRemoveImage = (index) => {
+    const newImages = images.filter((_, i) => i !== index);
+    setImages(newImages);
+    setFormData({ ...formData, images: newImages });
+  };
 };
