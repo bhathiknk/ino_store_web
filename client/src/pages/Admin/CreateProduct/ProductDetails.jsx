@@ -48,4 +48,16 @@ const ProductDetails = () => {
             alert('Failed to delete product');
         }
     };
+
+    const stockStatus = product.quantity > 0 ? 'In Stock' : 'Out of Stock';
+
+    const settingsMain = {
+        dots: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        asNavFor: nav2,
+        ref: (slider) => setNav1(slider),
+    };
 };
