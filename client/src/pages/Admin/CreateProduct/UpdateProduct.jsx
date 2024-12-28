@@ -82,5 +82,27 @@ const UpdateProduct = () => {
         setPopupVisible(false);
     };
 
+     // Retrieve the JWT token from local storage
+     const token = localStorage.getItem('token');
+
+     const handleUpdateProduct = async () => {
+         const updatedFormData = new FormData();
+         updatedFormData.append('name', formData.name);
+         updatedFormData.append('categoryDescription', formData.categoryDescription);
+         updatedFormData.append('description', formData.description);
+         updatedFormData.append('basePrice', formData.basePrice);
+         updatedFormData.append('discountPrice', formData.discountPrice);
+         updatedFormData.append('isDiscount', isDiscount);
+         updatedFormData.append('isFreeShipping', isFreeShipping);
+         updatedFormData.append('shippingCost', formData.shippingCost);
+         updatedFormData.append('quantity', formData.quantity);
+ 
+         (formData.images || []).forEach((image) => {
+             if (typeof image === 'string') {
+                 updatedFormData.append('existingImages', image);
+             }
+         });
+         
+        };
 
 }
