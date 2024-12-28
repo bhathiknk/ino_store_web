@@ -55,4 +55,41 @@ const CreateProduct = () => {
     setImages(newImages);
     setFormData({ ...formData, images: newImages });
   };
+
+  const handleNavClick = (section) => {
+    if (section === 'basic' && basicRef.current) {
+      basicRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else if (section === 'price' && priceRef.current) {
+      priceRef.current.scrollIntoView({ behavior: 'smooth' });
+    } else if (section === 'shipping' && shippingRef.current) {
+      shippingRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+    setActiveSection(section);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleNextClick = () => {
+    setConfirmationPopupVisible(true); // Show the product save confirmation popup
+  };
+
+  const handleClearInputs = () => {
+    setPopupVisible(false);
+    setFormData({
+      title: '',
+      categoryDescription: '',
+      description: '',
+      basePrice: '',
+      discountPrice: '',
+      isDiscount: false,
+      isFreeShipping: false,
+      shippingCost: '',
+      quantity: '',
+      images: []
+    });
+    setImages([]);
+  };
 };
