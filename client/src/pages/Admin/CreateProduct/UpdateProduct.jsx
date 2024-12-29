@@ -102,7 +102,34 @@ const UpdateProduct = () => {
                  updatedFormData.append('existingImages', image);
              }
          });
+
+         newImages.forEach((image) => {
+            if (typeof image === 'object') {
+                updatedFormData.append('images', image);
+            }
+        });
+
+        removedImages.forEach((image) => {
+            if (typeof image === 'string') {
+                updatedFormData.append('removedImages', image);
+            }
+        });
+
+        try {
+            await axios.put(`http://localhost:5000/api/products/products/update/${id}`, updatedFormData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            toast.success('Product updated successfully!');
+            navigate('/Admin/ProductPage');
+        } catch (error) {
+            console.error('Error updating product:', error);
+            toast.error('Failed to update product');
+        }
+    
          
-        };
+    };
 
 }
