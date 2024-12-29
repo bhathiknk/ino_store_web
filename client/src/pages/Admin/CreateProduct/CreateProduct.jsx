@@ -92,4 +92,57 @@ const CreateProduct = () => {
     });
     setImages([]);
   };
+
+
+
+  const handleSaveProduct = async () => {
+    try {
+      const productData = new FormData();
+      formData.images.forEach((image) => {
+        productData.append('images', image);
+      });
+      productData.append('title', formData.title);
+      productData.append('categoryDescription', formData.categoryDescription);
+      productData.append('description', formData.description);
+      productData.append('basePrice', formData.basePrice);
+      if (isDiscount) {
+        productData.append('discountPrice', formData.discountPrice);
+      }
+      productData.append('isDiscount', isDiscount);
+      productData.append('isFreeShipping', formData.isFreeShipping); // Add this line
+      if (!formData.isFreeShipping) {
+        productData.append('shippingCost', formData.shippingCost);
+      }
+      productData.append('quantity', formData.quantity);
+
+      // Retrieve the JWT token from local storage
+      const token = localStorage.getItem('token');
+
+      // Replace with your API endpoint
+      const response = await axios.post('http://localhost:5000/api/products/add', productData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}` // Include the token in the Authorization header
+        }
+      });
+
+      if (response.status === 201) {
+        toast.success('Product added successfully', {
+          onClose: () => {
+            handleClearInputs();
+            setPopupVisible(false);
+            navigate('/Admin/ProductPage'); // Redirect to dashboard after success
+          }
+        });
+      }
+    } catch (error) {
+      toast.error('Product addition failed', {
+        onClose: () => {
+          handleClearInputs();
+          setPopupVisible(false);
+          navigate('/dashboard'); // Redirect to dashboard after failure
+        }
+      });
+    }
+  };
 };
