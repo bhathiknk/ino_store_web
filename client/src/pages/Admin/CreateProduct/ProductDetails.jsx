@@ -60,4 +60,14 @@ const ProductDetails = () => {
         asNavFor: nav2,
         ref: (slider) => setNav1(slider),
     };
+
+    const settingsThumbs = {
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        asNavFor: nav1,
+        focusOnSelect: true,
+        vertical: false,
+        centerMode: true,
+        ref: (slider) => setNav2(slider),
+    };
 };
