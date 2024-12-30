@@ -11,6 +11,7 @@ const userAuthRoutes = require('./routes/userAuthRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const addressRoutes = require('./routes/UserAddress');
 const salesRoutes = require('./routes/salesRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
 const errorHandler = require('./utils/errorHandler');
 const path = require('path');
 
@@ -53,6 +54,7 @@ app.use('/api/users', userAuthRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/address', addressRoutes);
 app.use('/api/sales', salesRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // WebSocket connection handling
 io.on('connection', (socket) => {

@@ -1,6 +1,7 @@
 const Order = require('../models/Order');
 const Product = require('../models/Product');
 const paypal = require('paypal-rest-sdk');
+const Notification = require('../models/Notification');
 require('dotenv').config();
 
 
@@ -71,6 +72,13 @@ exports.createOrder = async (req, res) => {
 
             const savedOrder = await order.save();
             savedOrders.push(savedOrder);
+
+            // Save notification
+            await Notification.create({
+                message: 'A new order has been placed!',
+                recipient: sellerId,
+            });
+
         }
 
         // Emit WebSocket event to notify the seller

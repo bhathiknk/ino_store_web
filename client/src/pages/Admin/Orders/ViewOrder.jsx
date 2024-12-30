@@ -9,6 +9,7 @@ import { io } from 'socket.io-client'; // Import Socket.IO client
 
 const ViewOrder = () => {
     const [orders, setOrders] = useState([]);
+    const [notifications, setNotifications] = useState([]); // State for notifications
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
@@ -19,18 +20,22 @@ const ViewOrder = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch orders from the server
-        const fetchOrders = async () => {
+        // Fetch orders and notifications from the server
+        const fetchOrdersAndNotifications = async () => {
             try {
                 const token = localStorage.getItem('token');
                 const config = {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                    headers: { Authorization: `Bearer ${token}` },
                 };
 
-                const response = await axios.get('http://localhost:5000/api/orders/seller', config);
-                setOrders(response.data);
+                // Fetch orders
+                const ordersResponse = await axios.get('http://localhost:5000/api/orders/seller', config);
+                setOrders(ordersResponse.data);
+
+                // Fetch notifications
+                const notificationsResponse = await axios.get('http://localhost:5000/api/notifications', config);
+                setNotifications(notificationsResponse.data);
+
                 setLoading(false);
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
@@ -38,7 +43,7 @@ const ViewOrder = () => {
             }
         };
 
-        fetchOrders();
+        fetchOrdersAndNotifications();
 
         // Set up WebSocket connection
         const socket = io('http://localhost:5000'); // Connect to backend WebSocket server
@@ -55,7 +60,11 @@ const ViewOrder = () => {
                 progress: undefined,
             });
 
-            // Optionally update orders in real-time
+            // Update notifications and orders in real-time
+            setNotifications((prev) => [
+                ...prev,
+                { _id: Date.now(), message: data.message, timestamp: new Date() },
+            ]);
             setOrders((prevOrders) => [...prevOrders, ...data.orders]);
         });
 
@@ -70,9 +79,7 @@ const ViewOrder = () => {
         try {
             const token = localStorage.getItem('token');
             const config = {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                headers: { Authorization: `Bearer ${token}` },
             };
 
             await axios.put(
@@ -164,65 +171,84 @@ const ViewOrder = () => {
                         </button>
                     </div>
                 </div>
-                <div className="flex justify-center space-x-4 mb-6">
-                    {statusOptions.map((status) => (
-                        <button
-                            key={status}
-                            onClick={() => setSelectedTab(status)}
-                            className={`px-4 py-2 rounded ${
-                                selectedTab === status
-                                    ? 'bg-blue-500 text-white'
-                                    : 'bg-white text-blue-500'
-                            } border`}
-                        >
-                            {status}
-                        </button>
-                    ))}
-                </div>
-                <ul className="space-y-4">
-                    {filteredOrders.map((order) => (
-                        <li
-                            key={order._id}
-                            className="bg-white shadow-lg rounded-lg p-4 md:p-6"
-                        >
-                            <h3 className="text-xl font-semibold mb-2">
-                                Order ID: <span className="text-indigo-600">{order._id}</span>
-                            </h3>
-                            <p className="mb-2">Total Amount: LKR {order.totalAmount}</p>
-                            <p className="mb-2">Payment Method: {order.paymentMethod}</p>
-                            <p className="mb-4">Status: {order.orderStatus}</p>
-                            <div className="flex flex-col space-y-2">
-                                <select
-                                    value={
-                                        selectedStatuses[order._id] || order.orderStatus
-                                    }
-                                    onChange={(e) =>
-                                        handleDropdownChange(order._id, e.target.value)
-                                    }
-                                    className="p-2 border rounded"
-                                >
-                                    {statusOptions.map((status) => (
-                                        <option key={status} value={status}>
-                                            {status}
-                                        </option>
-                                    ))}
-                                </select>
+                <div className="flex flex-col md:flex-row">
+                    {/* Notifications Panel */}
+                    <div className="md:w-1/3 bg-white shadow-md rounded mb-6 md:mb-0 p-4">
+                        <h2 className="text-xl font-semibold mb-4">Notifications</h2>
+                        <ul>
+                            {notifications.map((notification) => (
+                                <li key={notification._id} className="border-b py-2">
+                                    <p>{notification.message}</p>
+                                    <p className="text-sm text-gray-500">
+                                        {new Date(notification.timestamp).toLocaleString()}
+                                    </p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    {/* Orders Panel */}
+                    <div className="md:w-2/3 md:ml-4">
+                        <div className="flex justify-center space-x-4 mb-6">
+                            {statusOptions.map((status) => (
                                 <button
-                                    onClick={() =>
-                                        handleStatusChange(
-                                            order._id,
-                                            selectedStatuses[order._id] ||
-                                            order.orderStatus
-                                        )
-                                    }
-                                    className="bg-blue-500 text-white p-2 rounded"
+                                    key={status}
+                                    onClick={() => setSelectedTab(status)}
+                                    className={`px-4 py-2 rounded ${
+                                        selectedTab === status
+                                            ? 'bg-blue-500 text-white'
+                                            : 'bg-white text-blue-500'
+                                    } border`}
                                 >
-                                    Update Status
+                                    {status}
                                 </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                            ))}
+                        </div>
+                        <ul className="space-y-4">
+                            {filteredOrders.map((order) => (
+                                <li
+                                    key={order._id}
+                                    className="bg-white shadow-lg rounded-lg p-4 md:p-6"
+                                >
+                                    <h3 className="text-xl font-semibold mb-2">
+                                        Order ID: <span className="text-indigo-600">{order._id}</span>
+                                    </h3>
+                                    <p className="mb-2">Total Amount: LKR {order.totalAmount}</p>
+                                    <p className="mb-2">Payment Method: {order.paymentMethod}</p>
+                                    <p className="mb-4">Status: {order.orderStatus}</p>
+                                    <div className="flex flex-col space-y-2">
+                                        <select
+                                            value={
+                                                selectedStatuses[order._id] || order.orderStatus
+                                            }
+                                            onChange={(e) =>
+                                                handleDropdownChange(order._id, e.target.value)
+                                            }
+                                            className="p-2 border rounded"
+                                        >
+                                            {statusOptions.map((status) => (
+                                                <option key={status} value={status}>
+                                                    {status}
+                                                </option>
+                                            ))}
+                                        </select>
+                                        <button
+                                            onClick={() =>
+                                                handleStatusChange(
+                                                    order._id,
+                                                    selectedStatuses[order._id] ||
+                                                    order.orderStatus
+                                                )
+                                            }
+                                            className="bg-blue-500 text-white p-2 rounded"
+                                        >
+                                            Update Status
+                                        </button>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
             </div>
             <Modal
                 isOpen={isModalOpen}
