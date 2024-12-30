@@ -9,10 +9,7 @@ describe('Order Controller', () => {
     let adminId, buyerId, productId;
 
     beforeAll(async () => {
-        await mongoose.connect(process.env.MONGO_URI_TEST, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(process.env.MONGO_URI_TEST, {});
 
         const admin = await Admin.create({
             name: 'Test Admin',
@@ -62,6 +59,7 @@ describe('Order Controller', () => {
                 payerId: 'PAYER123',
             },
             user: { _id: buyerId },
+            app: { get: jest.fn(() => ({ emit: jest.fn() })) }, // Mock WebSocket instance
         });
 
         const res = httpMocks.createResponse();
@@ -107,7 +105,6 @@ describe('Order Controller', () => {
         expect(orders.length).toBe(1);
         expect(orders[0].products[0].product._id.toString()).toBe(productId.toString()); // Compare _id
     });
-
 
     it('should update the status of an order successfully', async () => {
         const order = await Order.create({
