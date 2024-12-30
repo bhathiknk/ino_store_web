@@ -90,13 +90,13 @@ const ProductPage = () => {
                                     <div className="font-bold">{product.name}</div>
                                     {product.isDiscount ? (
                                         <p className="mb-4">
-                                            <span className="text-red-500 line-through ">LKR {product.basePrice}</span>
+                                            <span className="text-red-500 line-through ">USD {product.basePrice}</span>
                                             {' '}
                                             <div></div>
-                                            <span className="text-green-500 font-bold">Discounted Price: LKR {product.discountPrice}</span>
+                                            <span className="text-green-500 font-bold">Discounted Price: USD {product.discountPrice}</span>
                                         </p>
                                     ) : (
-                                        <p className="text-green-500 mb-4">LKR: {product.basePrice}</p>
+                                        <p className="text-green-500 mb-4">USD: {product.basePrice}</p>
                                     )}
                                     <p className={`mb-4 ${product.quantity > 0 ? 'text-green-500' : 'text-red-500'}`}>
                                         {product.quantity > 0 ? 'In Stock' : 'Out of Stock'}

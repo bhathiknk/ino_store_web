@@ -72,15 +72,20 @@ exports.createOrder = async (req, res) => {
             const savedOrder = await order.save();
             savedOrders.push(savedOrder);
         }
+
+        // Emit WebSocket event to notify the seller
+        const io = req.app.get('socketio');
+        io.emit('orderCreated', {
+            message: 'A new order has been placed!',
+            orders: savedOrders,
+        });
+
         res.status(201).json(savedOrders);
     } catch (error) {
         console.error("Order Creation Error:", error.message);
         res.status(500).json({ message: error.message });
     }
 };
-
-
-
 
 
 
