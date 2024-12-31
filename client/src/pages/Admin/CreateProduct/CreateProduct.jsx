@@ -145,4 +145,39 @@ const CreateProduct = () => {
       });
     }
   };
+
+  const handleFreeShippingChange = () => {
+    setIsFreeShipping(!isFreeShipping);
+    setFormData({ ...formData, isFreeShipping: !isFreeShipping });
+  };
+
+  useEffect(() => {
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observerOptions = { threshold: 0.5 };
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    const basicRefCurrent = basicRef.current;
+    const priceRefCurrent = priceRef.current;
+    const shippingRefCurrent = shippingRef.current;
+    const stockRefCurrent = stockRef.current;
+
+    if (basicRefCurrent) observer.observe(basicRefCurrent);
+    if (priceRefCurrent) observer.observe(priceRefCurrent);
+    if (shippingRefCurrent) observer.observe(shippingRefCurrent);
+    if (stockRefCurrent) observer.observe(stockRefCurrent);
+
+    return () => {
+      if (basicRefCurrent) observer.unobserve(basicRefCurrent);
+      if (priceRefCurrent) observer.unobserve(priceRefCurrent);
+      if (shippingRefCurrent) observer.unobserve(shippingRefCurrent);
+      if (stockRefCurrent) observer.unobserve(stockRefCurrent);
+    };
+  }, []);
 };
