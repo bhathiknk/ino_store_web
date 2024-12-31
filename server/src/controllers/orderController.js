@@ -137,3 +137,21 @@ exports.updateOrderStatus = async (req, res) => {
 };
 
 
+exports.getOrdersByUser = async (req, res) => {
+    try {
+
+        const userId = req.user?._id;
+        if (!userId) {
+            return res.status(401).json({ message: 'Not authorized, user not found' });
+        }
+
+        const orders = await Order.find({ buyer: userId }).populate('products.product');
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error('Error fetching orders by user:', error.message);
+        res.status(500).json({ message: 'Server Error' });
+    }
+};
+
+
+

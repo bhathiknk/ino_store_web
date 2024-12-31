@@ -3,7 +3,7 @@ const httpMocks = require('node-mocks-http');
 const Order = require('../../models/Order');
 const Product = require('../../models/Product');
 const Admin = require('../../models/Admin');
-const { createOrder, getOrdersBySeller, updateOrderStatus } = require('../../controllers/orderController');
+const { createOrder, getOrdersBySeller, updateOrderStatus, getOrdersByUser } = require('../../controllers/orderController');
 
 describe('Order Controller', () => {
     let adminId, buyerId, productId;
@@ -142,5 +142,53 @@ describe('Order Controller', () => {
 
         const updatedOrder = await Order.findById(order._id);
         expect(updatedOrder.orderStatus).toBe('Shipped');
+    });
+
+    it('should retrieve orders for a specific user', async () => {
+        await Order.create({
+            buyer: buyerId,
+            products: [{ product: productId, quantity: 2 }],
+            totalAmount: 200,
+            paymentMethod: 'PayPal',
+            isPaid: true,
+            paymentId: 'PAY123456',
+            payerId: 'PAYER123',
+            orderStatus: 'Processing',
+            shippingDetails: {
+                address: '123 Test Street',
+                province: 'Test Province',
+                zipcode: '12345',
+                contactNumber: '1234567890',
+            },
+        });
+
+        const req = httpMocks.createRequest({
+            method: 'GET',
+            user: { _id: buyerId },
+        });
+
+        const res = httpMocks.createResponse();
+
+        await getOrdersByUser(req, res);
+
+        expect(res.statusCode).toBe(200);
+        const orders = JSON.parse(res._getData());
+        expect(orders.length).toBe(1);
+        expect(orders[0].buyer.toString()).toBe(buyerId.toString());
+        expect(orders[0].products[0].product._id.toString()).toBe(productId.toString());
+    });
+
+    it('should return unauthorized error if user is not logged in', async () => {
+        const req = httpMocks.createRequest({
+            method: 'GET',
+        });
+
+        const res = httpMocks.createResponse();
+
+        await getOrdersByUser(req, res);
+
+        expect(res.statusCode).toBe(401);
+        const response = JSON.parse(res._getData());
+        expect(response.message).toBe('Not authorized, user not found');
     });
 });
