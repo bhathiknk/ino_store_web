@@ -70,4 +70,28 @@ const ProductDetails = () => {
         centerMode: true,
         ref: (slider) => setNav2(slider),
     };
+
+    return (
+        <div className="flex flex-col md:flex-row p-5 bg-gray-200 min-h-screen">
+            <div className="flex flex-col w-full md:w-1/2 md:mr-4">
+                <div className="w-full mb-2">
+                    {product.images && product.images.length > 0 && (
+                        <div className="w-full h-72 md:h-96 bg-white border border-gray-300 rounded-lg">
+                            <Slider {...settingsMain}>
+                                {product.images.map((image, index) => (
+                                    <div key={index} className="h-72 md:h-96">
+                                        <img
+                                            src={`http://localhost:5000${image}`}
+                                            alt={product.name}
+                                            className="w-full h-full object-contain"
+                                        />
+                                    </div>
+                                ))}
+                            </Slider>
+                        </div>
+                    )}
+                </div>
+            </div> 
+        </div>
+    );       
 };
