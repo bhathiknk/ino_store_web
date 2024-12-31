@@ -131,5 +131,30 @@ const UpdateProduct = () => {
     
          
     };
+    useEffect(() => {
+        // Fetch categories from backend when component mounts
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/categories/get');
+                setCategories(response.data);
+            } catch (error) {
+                console.error('Error fetching categories:', error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
+
+    const handleCategoryClick = (category) => {
+        const descriptions = category.description.split(', ');
+        setIndividualDescriptions(descriptions);
+        setPopupVisible(false); // Close the main category popup
+        setIndividualPopupVisible(true); // Open the individual description popup
+    };
+
+    const handleDescriptionClick = (description) => {
+        setFormData({ ...formData, categoryDescription: description });
+        setIndividualPopupVisible(false); // Close the individual description popup
+    };
 
 }
