@@ -5,7 +5,12 @@ import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 
 const SalesSummary = () => {
-    const [summary, setSummary] = useState({});
+    const [summary, setSummary] = useState({
+        totalSales: 0,
+        totalOrders: 0,
+        averageOrderValue: 0,
+        salesGrowth: {}, // Initialize to an empty object
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -20,7 +25,7 @@ const SalesSummary = () => {
                 };
 
                 const { data } = await axios.get('http://localhost:5000/api/sales/sales-summary', config);
-                setSummary(data);
+                setSummary(data || {});
                 setLoading(false);
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
@@ -36,7 +41,7 @@ const SalesSummary = () => {
 
     // Prepare data for the chart
     const salesGrowthLabels = Object.keys(summary.salesGrowth || {});
-    const salesGrowthData = salesGrowthLabels.map(label => summary.salesGrowth[label] || 0);
+    const salesGrowthData = salesGrowthLabels.map((label) => summary.salesGrowth[label] || 0);
 
     return (
         <div className="bg-gray-100 min-h-screen p-4">
@@ -50,7 +55,7 @@ const SalesSummary = () => {
                 </div>
                 <div className="bg-white shadow-md rounded-lg p-6">
                     <h2 className="text-2xl font-bold mb-4">Sales Growth</h2>
-                    <div className="w-full max-w-xl mx-auto"> {/* Adjust the max-width to control the size */}
+                    <div className="w-full max-w-xl mx-auto">
                         <Bar
                             data={{
                                 labels: salesGrowthLabels,
@@ -64,8 +69,6 @@ const SalesSummary = () => {
                                     },
                                 ],
                             }}
-                            width={600} // Set the width
-                            height={400} // Set the height
                             options={{
                                 responsive: true,
                                 maintainAspectRatio: false,
@@ -84,14 +87,14 @@ const SalesSummary = () => {
                                     },
                                     tooltip: {
                                         callbacks: {
-                                            label: function(context) {
+                                            label: (context) => {
                                                 const label = context.dataset.label || '';
                                                 const value = context.raw;
                                                 return `${label}: LKR ${value}`;
-                                            }
-                                        }
-                                    }
-                                }
+                                            },
+                                        },
+                                    },
+                                },
                             }}
                         />
                     </div>

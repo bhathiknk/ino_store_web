@@ -9,14 +9,15 @@ const UpdateProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
-    const [newImages, setNewImages] = useState([]); // For tracking newly added images
-    const [removedImages, setRemovedImages] = useState([]); // For tracking removed images
+    const [newImages, setNewImages] = useState([]);
+    const [removedImages, setRemovedImages] = useState([]);
     const [isDiscount, setIsDiscount] = useState(false);
     const [isFreeShipping, setIsFreeShipping] = useState(false);
     const [categories, setCategories] = useState([]);
     const [individualDescriptions, setIndividualDescriptions] = useState([]);
     const [individualPopupVisible, setIndividualPopupVisible] = useState(false);
     const [popupVisible, setPopupVisible] = useState(false);
+
     const [formData, setFormData] = useState({
         name: '',
         categoryDescription: '',
@@ -50,6 +51,7 @@ const UpdateProduct = () => {
                     isFreeShipping: data.isFreeShipping,
                     shippingCost: data.shippingCost,
                     quantity: data.quantity,
+                    images: [], // This key won't actually matter if we handle images with setImages below
                 });
                 setImages(data.images);
                 setIsDiscount(data.isDiscount);
@@ -69,20 +71,19 @@ const UpdateProduct = () => {
 
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
-        setNewImages([...newImages, ...files]); // Add new images
+        setNewImages([...newImages, ...files]);
     };
 
     const handleDeleteImage = (index) => {
         const imageToRemove = images[index];
-        setRemovedImages([...removedImages, imageToRemove]); // Track removed images
-        setImages(images.filter((_, i) => i !== index)); // Remove image from display
+        setRemovedImages([...removedImages, imageToRemove]);
+        setImages(images.filter((_, i) => i !== index));
     };
 
     const handleClosePopup = () => {
         setPopupVisible(false);
     };
 
-    // Retrieve the JWT token from local storage
     const token = localStorage.getItem('token');
 
     const handleUpdateProduct = async () => {
@@ -97,18 +98,21 @@ const UpdateProduct = () => {
         updatedFormData.append('shippingCost', formData.shippingCost);
         updatedFormData.append('quantity', formData.quantity);
 
+        // Add existing images
         (formData.images || []).forEach((image) => {
             if (typeof image === 'string') {
                 updatedFormData.append('existingImages', image);
             }
         });
 
+        // Add newly uploaded images
         newImages.forEach((image) => {
             if (typeof image === 'object') {
                 updatedFormData.append('images', image);
             }
         });
 
+        // Track removed images
         removedImages.forEach((image) => {
             if (typeof image === 'string') {
                 updatedFormData.append('removedImages', image);
@@ -119,19 +123,29 @@ const UpdateProduct = () => {
             await axios.put(`http://localhost:5000/api/products/products/update/${id}`, updatedFormData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
-            toast.success('Product updated successfully!');
+
+            // Provide a second argument to match the test expecting `expect.any(Object)`
+            toast.success('Product updated successfully!', {
+                position: 'top-right',
+                autoClose: 3000,
+            });
+
             navigate('/Admin/ProductPage');
         } catch (error) {
             console.error('Error updating product:', error);
-            toast.error('Failed to update product');
+
+            // Also pass a second argument to satisfy the test
+            toast.error('Failed to update product', {
+                position: 'top-right',
+                autoClose: 3000,
+            });
         }
     };
 
     useEffect(() => {
-        // Fetch categories from backend when component mounts
         const fetchCategories = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/api/categories/get');
@@ -140,31 +154,30 @@ const UpdateProduct = () => {
                 console.error('Error fetching categories:', error);
             }
         };
-
         fetchCategories();
     }, []);
 
     const handleCategoryClick = (category) => {
         const descriptions = category.description.split(', ');
         setIndividualDescriptions(descriptions);
-        setPopupVisible(false); // Close the main category popup
-        setIndividualPopupVisible(true); // Open the individual description popup
+        setPopupVisible(false);
+        setIndividualPopupVisible(true);
     };
 
     const handleDescriptionClick = (description) => {
         setFormData({ ...formData, categoryDescription: description });
-        setIndividualPopupVisible(false); // Close the individual description popup
+        setIndividualPopupVisible(false);
     };
 
     return (
         <div className="flex flex-col min-h-screen bg-gray-100">
-
-            {/* Navigation Bar */}
             {!popupVisible && (
                 <div className="fixed top-0 left-0 right-0 bg-white shadow-md p-4 flex items-center justify-between z-50">
                     <div className="flex items-center">
                         <FaArrowLeft className="mr-2 text-gray-700" />
-                        <Link to="/Admin/ProductPage" className="text-gray-700 hover:underline">Back to product listing</Link>
+                        <Link to="/Admin/ProductPage" className="text-gray-700 hover:underline">
+                            Back to product listing
+                        </Link>
                     </div>
                 </div>
             )}
@@ -173,6 +186,7 @@ const UpdateProduct = () => {
                 <div className="w-full max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
                     <h2 className="text-2xl font-semibold text-gray-800 mb-6">Update Product</h2>
 
+                    {/* Basic Information */}
                     <div id="basic" className="mb-6">
                         <h3 className="text-xl font-semibold mb-4">Basic Information</h3>
                         <div className="mb-4">
@@ -215,10 +229,14 @@ const UpdateProduct = () => {
                                 className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                             />
                             <div className="mt-4 flex flex-wrap">
-                                {images.concat(newImages).map((image, index) => (
+                                {(images || []).concat(newImages).map((image, index) => (
                                     <div key={index} className="relative m-2">
                                         <img
-                                            src={typeof image === 'string' ? `http://localhost:5000${image}` : URL.createObjectURL(image)}
+                                            src={
+                                                typeof image === 'string'
+                                                    ? `http://localhost:5000${image}`
+                                                    : URL.createObjectURL(image)
+                                            }
                                             alt={`preview ${index}`}
                                             className="w-24 h-24 object-cover rounded-md"
                                         />
@@ -235,6 +253,7 @@ const UpdateProduct = () => {
                         </div>
                     </div>
 
+                    {/* Price Details */}
                     <div id="price" className="mb-6">
                         <h3 className="text-xl font-semibold mb-4">Price Details</h3>
                         <div className="mb-4">
@@ -270,6 +289,7 @@ const UpdateProduct = () => {
                         </div>
                     </div>
 
+                    {/* Shipping Information */}
                     <div id="shipping" className="mb-6">
                         <h3 className="text-xl font-semibold mb-4">Shipping Information</h3>
                         <div className="mb-4">
@@ -295,6 +315,7 @@ const UpdateProduct = () => {
                         </div>
                     </div>
 
+                    {/* Product Quantity */}
                     <div id="quantity" className="mb-6">
                         <h3 className="text-xl font-semibold mb-4">Product Quantity</h3>
                         <div className="mb-4">
@@ -342,13 +363,13 @@ const UpdateProduct = () => {
                             <div className="bg-white p-6 rounded-lg shadow-md w-11/12 max-w-3xl">
                                 <h2 className="text-lg font-semibold mb-4">Select Category Description</h2>
                                 <div className="grid grid-cols-2 gap-4">
-                                    {individualDescriptions.map((description) => (
+                                    {individualDescriptions.map((desc) => (
                                         <div
-                                            key={description}
+                                            key={desc}
                                             className="p-4 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-100 transition"
-                                            onClick={() => handleDescriptionClick(description)}
+                                            onClick={() => handleDescriptionClick(desc)}
                                         >
-                                            <p>{description}</p>
+                                            <p>{desc}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -371,6 +392,7 @@ const UpdateProduct = () => {
                     </button>
                 </div>
             </div>
+
             <ToastContainer />
         </div>
     );
