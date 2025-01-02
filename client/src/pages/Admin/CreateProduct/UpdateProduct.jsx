@@ -157,4 +157,87 @@ const UpdateProduct = () => {
         setIndividualPopupVisible(false); // Close the individual description popup
     };
 
-}
+    return (
+        <div className="flex flex-col min-h-screen bg-gray-100">
+
+            {/* Navigation Bar */}
+            {!popupVisible && (
+                <div className="fixed top-0 left-0 right-0 bg-white shadow-md p-4 flex items-center justify-between z-50">
+                    <div className="flex items-center">
+                        <FaArrowLeft className="mr-2 text-gray-700" />
+                        <Link to="/Admin/ProductPage" className="text-gray-700 hover:underline">Back to product listing</Link>
+                    </div>
+                </div>
+            )}
+
+            <div className="flex flex-grow mt-16 p-6 lg:p-12 bg-gray-100">
+                <div className="w-full max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+                    <h2 className="text-2xl font-semibold text-gray-800 mb-6">Update Product</h2>
+
+                    <div id="basic" className="mb-6">
+                        <h3 className="text-xl font-semibold mb-4">Basic Information</h3>
+                        <div className="mb-4">
+                            <label className="block mb-2 font-medium">Product Title</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleInputChange}
+                                className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block mb-2 font-medium">Product Category</label>
+                            <input
+                                type="text"
+                                name="categoryDescription"
+                                value={formData.categoryDescription}
+                                onClick={() => setPopupVisible(true)}
+                                readOnly
+                                className="w-full p-3 border border-gray-300 rounded-md cursor-pointer focus:ring focus:ring-blue-300"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block mb-2 font-medium">Product Description</label>
+                            <textarea
+                                name="description"
+                                value={formData.description}
+                                onChange={handleInputChange}
+                                className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block mb-2 font-medium">Product Images</label>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                multiple
+                                onChange={handleImageChange}
+                                className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                            />
+                            <div className="mt-4 flex flex-wrap">
+                                {images.concat(newImages).map((image, index) => (
+                                    <div key={index} className="relative m-2">
+                                        <img
+                                            src={typeof image === 'string' ? `http://localhost:5000${image}` : URL.createObjectURL(image)}
+                                            alt={`preview ${index}`}
+                                            className="w-24 h-24 object-cover rounded-md"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => handleDeleteImage(index)}
+                                            className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full focus:outline-none"
+                                        >
+                                            <FaTrashAlt />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );    
+                
+};
