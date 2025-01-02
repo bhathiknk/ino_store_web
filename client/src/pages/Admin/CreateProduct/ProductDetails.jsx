@@ -91,6 +91,32 @@ const ProductDetails = () => {
                         </div>
                     )}
                 </div>
+                <div className="w-full flex flex-col items-center">
+                    {product.images && product.images.length > 0 && (
+                        <div className="w-full md:w-2/3 bg-black rounded-lg mb-4">
+                            <Slider {...settingsThumbs}>
+                                {product.images.map((image, index) => (
+                                    <div key={index} className="p-1">
+                                        <img
+                                            src={`http://localhost:5000${image}`}
+                                            alt={product.name}
+                                            className="object-cover w-full h-16 md:h-24 rounded-lg"
+                                            style={{ width: '4rem', height: '4rem' }} // Ensuring square size
+                                        />
+                                    </div>
+                                ))}
+                            </Slider>
+                        </div>
+                    )}
+                    <div className="flex justify-around w-full mt-4">
+                        <button onClick={handleUpdateClick} className="bg-blue-500 text-white py-2 px-4 rounded">
+                            Update Product
+                        </button>
+                        <button onClick={handleDeleteClick} className="bg-red-500 text-white py-2 px-4 rounded">
+                            Delete Product
+                        </button>
+                    </div>
+                </div>
             </div> 
         </div>
     );       
