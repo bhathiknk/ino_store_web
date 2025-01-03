@@ -16,7 +16,7 @@ const Signup = () => {
             await axios.post('http://localhost:5000/api/admin/signup', { name, email, password });
 
             toast.success('Signup successful! You can now signin.', {
-                position: "top-right",
+                position: 'top-right',
                 autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -24,10 +24,11 @@ const Signup = () => {
                 draggable: true,
             });
 
+            // Delayed navigation
             setTimeout(() => navigate('/signin'), 3000);
         } catch (error) {
             toast.error('Signup failed! Email may already exist.', {
-                position: "top-right",
+                position: 'top-right',
                 autoClose: 5000,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -43,8 +44,9 @@ const Signup = () => {
                 <h2 className="text-2xl font-bold text-center">Signup</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block mb-1">Name:</label>
+                        <label htmlFor="name" className="block mb-1">Name:</label>
                         <input
+                            id="name"
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
@@ -53,8 +55,9 @@ const Signup = () => {
                         />
                     </div>
                     <div>
-                        <label className="block mb-1">Email:</label>
+                        <label htmlFor="email" className="block mb-1">Email:</label>
                         <input
+                            id="email"
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -63,8 +66,9 @@ const Signup = () => {
                         />
                     </div>
                     <div>
-                        <label className="block mb-1">Password:</label>
+                        <label htmlFor="password" className="block mb-1">Password:</label>
                         <input
+                            id="password"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -72,8 +76,10 @@ const Signup = () => {
                             className="w-full px-4 py-2 border rounded"
                         />
                     </div>
-                    <button type="submit"
-                            className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600">
+                    <button
+                        type="submit"
+                        className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600"
+                    >
                         Signup
                     </button>
                 </form>

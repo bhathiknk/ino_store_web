@@ -12,65 +12,64 @@ const Signin = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/admin/signin', { email, password });
+            const response = await axios.post('http://localhost:5000/api/admin/signin', {
+                email,
+                password,
+            });
 
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('adminId', response.data._id);
 
             toast.success('Signin successful!', {
-                position: "top-right",
+                position: 'top-right',
                 autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
             });
 
             setTimeout(() => navigate('/Admin/ProductPage'), 2000);
         } catch (error) {
             toast.error('Signin failed! Invalid credentials.', {
-                position: "top-right",
+                position: 'top-right',
                 autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
             });
         }
     };
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-lg">
-                <h2 className="text-3xl font-bold text-center text-gray-800">Admin Sign In</h2>
-                <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
+                <h2 className="text-2xl font-bold text-center">Signin</h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block mb-1 font-semibold text-gray-700">Email</label>
+                        <label htmlFor="email" className="block mb-1">
+                            Email:
+                        </label>
                         <input
+                            id="email"
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="w-full px-4 py-2 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                            placeholder="Enter your email"
+                            className="w-full px-4 py-2 border rounded"
                         />
                     </div>
                     <div>
-                        <label className="block mb-1 font-semibold text-gray-700">Password</label>
+                        <label htmlFor="password" className="block mb-1">
+                            Password:
+                        </label>
                         <input
+                            id="password"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
-                            className="w-full px-4 py-2 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                            placeholder="Enter your password"
+                            className="w-full px-4 py-2 border rounded"
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full px-4 py-2 font-bold text-white bg-indigo-500 rounded hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all duration-300"
+                        className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600"
                     >
-                        Sign In
+                        Signin
                     </button>
                 </form>
                 <ToastContainer />
