@@ -1,5 +1,3 @@
-// src/pages/Client/Components/Pages/Checkout/CheckoutForm.jsx
-
 import React, { useEffect, useState } from 'react';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import { useNavigate } from 'react-router-dom';
@@ -19,11 +17,12 @@ function CheckoutForm() {
   const [addressDetails, setAddressDetails] = useState({
     address: '',
     province: '',
-    zip: '',
-    mobile: '',
+    zipcode: '',
+    contactNumber: '',
   });
   const [orderTotal, setOrderTotal] = useState(0);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // To track loading state
   const navigate = useNavigate();
 
   // Fetch address details on component mount
@@ -43,14 +42,19 @@ function CheckoutForm() {
         if (response.data && response.data.length > 0) {
           const address = response.data[0];
           setAddressDetails({
-            address: address.address,
-            province: address.province,
-            zip: address.zipcode,
-            mobile: address.contactNumber,
+            address: address.address || '',
+            province: address.province || '',
+            zipcode: address.zipcode || '',
+            contactNumber: address.contactNumber || '',
           });
+        } else {
+          toast.error('No address found. Please add an address.');
         }
       } catch (err) {
+        console.error('Fetch Address Error:', err);
         toast.error('Failed to fetch address details');
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -70,22 +74,30 @@ function CheckoutForm() {
   // Handle order creation after successful PayPal payment
   const handleOrderCreation = async (paymentId, payerId) => {
     try {
+      // Validate shipping details before sending
+      const { address, province, zipcode, contactNumber } = addressDetails;
+      if (!address || !province || !zipcode || !contactNumber) {
+        throw new Error('Incomplete shipping details.');
+      }
+
       const token = localStorage.getItem('userToken');
       const orderData = {
         products: cart.map((item) => ({
-          product: item.id,
+          product: item.id, // Ensure this matches your backend's expected field
           quantity: item.quantity,
         })),
         paymentMethod: 'PayPal',
         shippingDetails: {
-          address: addressDetails.address,
-          province: addressDetails.province,
-          zipcode: addressDetails.zip,
-          contactNumber: addressDetails.mobile,
+          address,
+          province,
+          zipcode,
+          contactNumber,
         },
         paymentId,
         payerId,
       };
+
+      console.log('Order Data to be sent:', orderData); // Debugging
 
       const response = await axios.post(
         'http://localhost:5000/api/orders',
@@ -104,7 +116,11 @@ function CheckoutForm() {
       }
     } catch (err) {
       console.error('Order Creation Error:', err);
-      toast.error('Payment successful, but order saving failed.');
+      if (err.response && err.response.data && err.response.data.message) {
+        toast.error(`Order saving failed: ${err.response.data.message}`);
+      } else {
+        toast.error('Payment successful, but order saving failed.');
+      }
     }
   };
 
@@ -112,6 +128,21 @@ function CheckoutForm() {
     setShowSuccessModal(false);
     navigate('/');
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="text-xl text-gray-700">Loading address details...</div>
+      </div>
+    );
+  }
+
+  // Optional: Disable PayPal buttons if address details are incomplete
+  const isShippingDetailsComplete =
+    addressDetails.address &&
+    addressDetails.province &&
+    addressDetails.zipcode &&
+    addressDetails.contactNumber;
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -137,6 +168,8 @@ function CheckoutForm() {
               }}
             >
               <PayPalButtons
+                disabled={!isShippingDetailsComplete || cart.length === 0}
+                style={{ layout: 'vertical' }}
                 createOrder={(data, actions) => {
                   const formattedOrderTotal = parseFloat(orderTotal).toFixed(2);
                   return actions.order.create({
@@ -167,6 +200,12 @@ function CheckoutForm() {
                 }}
               />
             </PayPalScriptProvider>
+            {!isShippingDetailsComplete && (
+              <div className="mt-4 text-red-500">
+                Please ensure all shipping details are complete before
+                proceeding.
+              </div>
+            )}
           </div>
 
           {/* Cart Items and Address Section */}
@@ -190,14 +229,14 @@ function CheckoutForm() {
               <div className="flex items-center space-x-6">
                 <span className="text-blue-500">📮</span>
                 <p className="text-xl text-gray-800">
-                  <strong>ZIP Code:</strong> {addressDetails.zip || 'N/A'}
+                  <strong>ZIP Code:</strong> {addressDetails.zipcode || 'N/A'}
                 </p>
               </div>
               <div className="flex items-center space-x-6">
                 <PhoneIcon className="h-8 w-8 text-blue-500" />
                 <p className="text-xl text-gray-800">
                   <strong>Mobile Number:</strong>{' '}
-                  {addressDetails.mobile || 'N/A'}
+                  {addressDetails.contactNumber || 'N/A'}
                 </p>
               </div>
             </div>
@@ -207,23 +246,27 @@ function CheckoutForm() {
             <h2 className="text-3xl font-semibold text-gray-900 mb-8">
               Cart Items
             </h2>
-            <ul className="space-y-8">
-              {cart.map((item, index) => (
-                <li key={index} className="flex justify-between items-center">
-                  <div>
-                    <p className="text-xl text-gray-900 font-medium">
-                      {item.title}
+            {cart.length === 0 ? (
+              <p className="text-lg text-gray-600">Your cart is empty.</p>
+            ) : (
+              <ul className="space-y-8">
+                {cart.map((item, index) => (
+                  <li key={index} className="flex justify-between items-center">
+                    <div>
+                      <p className="text-xl text-gray-900 font-medium">
+                        {item.title}
+                      </p>
+                      <p className="text-lg text-gray-600">
+                        Quantity: {item.quantity}
+                      </p>
+                    </div>
+                    <p className="text-xl text-gray-900">
+                      Rs.{(item.price * item.quantity).toFixed(2)}
                     </p>
-                    <p className="text-lg text-gray-600">
-                      Quantity: {item.quantity}
-                    </p>
-                  </div>
-                  <p className="text-xl text-gray-900">
-                    Rs.{(item.price * item.quantity).toFixed(2)}
-                  </p>
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            )}
 
             <div className="flex justify-between items-center mt-12">
               <p className="text-2xl font-semibold text-gray-900">Total:</p>

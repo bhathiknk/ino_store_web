@@ -16,7 +16,7 @@ export default function Orders() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const token = localStorage.getItem('userToken'); // Use the correct key
+        const token = localStorage.getItem('userToken');
         if (!token) {
           throw new Error('No token found. Please log in again.');
         }
@@ -45,45 +45,53 @@ export default function Orders() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        Loading...
+      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-blue-50 to-gray-100">
+        <div className="text-3xl font-bold text-blue-600 animate-pulse">
+          Loading...
+        </div>
       </div>
     );
   }
 
   if (error) {
-    return <div className="text-red-500 text-center mt-4">Error: {error}</div>;
+    return (
+      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-blue-50 to-gray-100">
+        <div className="text-red-500 text-center text-xl bg-white p-6 rounded-lg shadow-lg">
+          Error: {error}
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gradient-to-br from-blue-50 to-gray-100 min-h-screen">
       <div className="flex flex-col min-h-screen">
         <ClientNavBar />
         <main className="flex-grow">
           <ToastContainer />
 
-          <div className="container mx-auto p-6">
-            <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          <div className="container mx-auto px-6 py-12">
+            <h1 className="text-5xl font-bold text-center text-gray-900 mb-12">
               My Orders
             </h1>
 
             {orders.length === 0 ? (
-              <div className="text-center text-gray-600">
+              <div className="text-center text-gray-600 text-lg bg-white p-6 rounded-lg shadow-lg">
                 <p>You have no orders yet.</p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {orders.map((order) => (
                   <div
                     key={order._id}
-                    className="bg-white shadow-lg rounded-lg p-6"
+                    className="bg-white shadow-xl rounded-lg p-8 hover:shadow-2xl transition-transform transform hover:scale-105"
                   >
-                    <h3 className="text-xl font-semibold mb-2 text-indigo-600">
+                    <h3 className="text-xl font-semibold text-indigo-600 mb-4">
                       Order ID: {order._id}
                     </h3>
                     <p className="text-gray-800 mb-2">
                       <span className="font-semibold">Total Amount:</span> LKR{' '}
-                      {order.totalAmount}
+                      {order.totalAmount.toFixed(2)}
                     </p>
                     <p className="text-gray-800 mb-2">
                       <span className="font-semibold">Payment Method:</span>{' '}
@@ -97,23 +105,26 @@ export default function Orders() {
                       <span className="font-semibold">Placed On:</span>{' '}
                       {new Date(order.createdAt).toLocaleDateString()}
                     </p>
-                    <h4 className="text-lg font-medium mb-2">Products:</h4>
-                    <ul className="space-y-2">
+
+                    <h4 className="text-lg font-medium text-gray-900 mb-4">
+                      Products:
+                    </h4>
+                    <ul className="space-y-4">
                       {order.products.map((item) => (
                         <li
                           key={item.product._id}
-                          className="flex items-center space-x-4"
+                          className="flex items-center bg-gray-100 p-4 rounded-lg shadow-sm"
                         >
                           {item.product.images &&
                             item.product.images.length > 0 && (
                               <img
                                 src={`http://localhost:5000${item.product.images[0]}`}
                                 alt={item.product.name}
-                                className="w-16 h-16 object-cover rounded-lg shadow-md"
+                                className="w-16 h-16 object-cover rounded-lg shadow-md mr-4"
                               />
                             )}
                           <div>
-                            <p className="text-gray-800 font-semibold">
+                            <p className="text-gray-800 font-semibold text-lg">
                               {item.product.name}
                             </p>
                             <p className="text-gray-600">
