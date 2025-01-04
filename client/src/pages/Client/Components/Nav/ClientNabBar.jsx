@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useRef, act } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { RiLoginCircleFill } from "react-icons/ri";
+// src/pages/Client/Components/Nav/ClientNavBar.jsx
+
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { RiLoginCircleFill } from 'react-icons/ri';
 import {
   FaShoppingCart,
   FaUser,
@@ -15,7 +17,7 @@ import {
   FaGamepad,
   FaPencilAlt,
   FaGift,
-} from "react-icons/fa";
+} from 'react-icons/fa';
 import {
   ChevronDownIcon,
   UserCircleIcon,
@@ -23,36 +25,44 @@ import {
   DocumentTextIcon,
   ShoppingBagIcon,
   PowerIcon,
-} from "@heroicons/react/24/solid";
+} from '@heroicons/react/24/solid';
 
-import Container from "./Container";
-import inoWebLogo from "../../Images/NavBar/inoweb.png";
+import Container from './Container';
+import inoWebLogo from '../../Images/NavBar/inoweb.png';
 
 // Helper function to truncate text
 const truncateText = (text, maxLength) =>
-  text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 
 // Define the profile menu items with labels, icons, and paths
 const profileMenuItems = [
-  { label: "My Profile", icon: UserCircleIcon, path: "/client-user-profile" },
-  { label: "Edit Profile", icon: Cog6ToothIcon, path: "/client-user-profile-edit" },
-  { label: "Orders", icon: ShoppingBagIcon, path: "/client-user-orders" },
-  { label: "Terms & Conditions", icon: DocumentTextIcon, path: "/client-terms-and-conditions" },
-  { label: "Logout", icon: PowerIcon, path: "/sign-out", action: "logout" },
+  { label: 'My Profile', icon: UserCircleIcon, path: '/client-user-profile' },
+  {
+    label: 'Edit Profile',
+    icon: Cog6ToothIcon,
+    path: '/client-user-profile-edit',
+  },
+  { label: 'Orders', icon: ShoppingBagIcon, path: '/client-user-orders' },
+  {
+    label: 'Terms & Conditions',
+    icon: DocumentTextIcon,
+    path: '/client-terms-and-conditions',
+  },
+  { label: 'Logout', icon: PowerIcon, path: '/sign-out', action: 'logout' },
 ];
 
 // Mapping of category names to icons
 const categoryIcons = {
-  "Textiles & Apparel": FaTshirt,
-  "Traditional Handicrafts": FaPaintBrush,
-  "Jewelry & Accessories": FaGem,
-  "Home Decor": FaHome,
-  "Kitchen & Dining": FaUtensils,
-  "Beauty & Personal Care": FaHeart,
-  "Toys & Games": FaGamepad,
+  'Textiles & Apparel': FaTshirt,
+  'Traditional Handicrafts': FaPaintBrush,
+  'Jewelry & Accessories': FaGem,
+  'Home Decor': FaHome,
+  'Kitchen & Dining': FaUtensils,
+  'Beauty & Personal Care': FaHeart,
+  'Toys & Games': FaGamepad,
   Stationery: FaPencilAlt,
-  "Gift and Souvenirs": FaGift,
-  "Art and Collectibles": FaPaintBrush,
+  'Gift and Souvenirs': FaGift,
+  'Art and Collectibles': FaPaintBrush,
 };
 
 export default function ClientNavBar() {
@@ -61,19 +71,17 @@ export default function ClientNavBar() {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
   const [categories, setCategories] = useState([]);
-  const user = JSON.parse(localStorage.getItem("user")); // Retrieve user data from localStorage
-  
+  const user = JSON.parse(localStorage.getItem('user')); // Retrieve user data from localStorage
+
+  // Removed 'userToken' to fix 'no-unused-vars' warning
   useEffect(() => {
-    // Log the JWT token only once after component mounts
-    const userToken = localStorage.getItem('userToken');
+    // You can use userToken here if needed
   }, []); // Empty dependency array means this effect runs once after initial render
 
-
-
   const logout = () => {
-    localStorage.removeItem("user"); // Clear user data on logout
-    localStorage.removeItem("userToken"); // Clear user token
-    navigate("/client-login"); // Redirect to login page
+    localStorage.removeItem('user'); // Clear user data on logout
+    localStorage.removeItem('userToken'); // Clear user token
+    navigate('/client-login'); // Redirect to login page
   };
 
   // Refs for dropdowns
@@ -97,8 +105,8 @@ export default function ClientNavBar() {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   // Effect to fetch categories from API
@@ -106,12 +114,12 @@ export default function ClientNavBar() {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/categories/get"
+          'http://localhost:5000/api/categories/get',
         );
         const data = await response.json();
         setCategories(data);
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error('Error fetching categories:', error);
       }
     };
 
@@ -132,7 +140,7 @@ export default function ClientNavBar() {
 
   return (
     <div className="sticky top-0 w-full bg-gray-100 z-30 shadow-sm">
-      {/*bg-white default -search bar and navbar*/}
+      {/* Navbar */}
       <div className="py-4 border-b-[1px] border-gray-200">
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">
@@ -149,7 +157,6 @@ export default function ClientNavBar() {
             </Link>
 
             {/* Search Bar */}
-
             <div className="hidden md:flex items-center w-full lg:w-2/3 mr-4">
               <div className="relative flex items-center w-full h-12 rounded-full border border-gray-300 bg-gray-100 overflow-hidden transition-shadow duration-300 ease-in-out hover:shadow-lg">
                 <div className="grid place-items-center h-full w-12 text-gray-300">
@@ -172,7 +179,7 @@ export default function ClientNavBar() {
                   className="peer h-full w-full outline-none text-sm text-gray-950 bg-gray-100 pl-4 pr-2"
                   type="text"
                   id="search"
-                  placeholder="Search here.."
+                  placeholder="Search here..."
                 />
               </div>
             </div>
@@ -205,7 +212,7 @@ export default function ClientNavBar() {
                         <Link
                           key={category._id} // Assuming categories have _id
                           to={`/client-category/${encodeURIComponent(
-                            category.name
+                            category.name,
                           )}`} // Link to category details page with category ID
                           className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
                         >
@@ -233,12 +240,15 @@ export default function ClientNavBar() {
                   className="flex items-center text-gray-700 hover:text-gray-900 transition-transform duration-300 ease-in-out transform hover:scale-105"
                 >
                   <RiLoginCircleFill className="mr-2" />
-                  <span> Login</span>
+                  <span>Login</span>
                 </Link>
               ) : (
                 <>
                   {/* Display the logged user's name */}
-                  <Link className="flex items-center text-gray-700 hover:text-gray-900 hover:underline underline-offset-4 transition-transform duration-300 ease-in-out transform hover:scale-105">
+                  <Link
+                    to="/client-user-profile"
+                    className="flex items-center text-gray-700 hover:text-gray-900 hover:underline underline-offset-4 transition-transform duration-300 ease-in-out transform hover:scale-105"
+                  >
                     <FaUser className="mr-2" />@{user.name}
                   </Link>
 
@@ -261,7 +271,7 @@ export default function ClientNavBar() {
                       <ChevronDownIcon
                         strokeWidth={2}
                         className={`h-4 w-4 ml-2 transition-transform ${
-                          userDropdownOpen ? "rotate-180" : ""
+                          userDropdownOpen ? 'rotate-180' : ''
                         }`}
                       />
                     </button>
@@ -271,18 +281,20 @@ export default function ClientNavBar() {
                           ({ label, icon, path, action }, index) => (
                             <button
                               key={index}
-                              onClick={action === "logout" ? logout : undefined}
+                              onClick={action === 'logout' ? logout : undefined}
                               className={`flex items-center w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md ${
-                                action === "logout" ? "text-red-500" : ""
+                                action === 'logout' ? 'text-red-500' : ''
                               }`}
                             >
                               {React.createElement(icon, {
                                 className: `h-4 w-4 mr-2 ${
-                                  action === "logout" ? "text-red-500 hover:text-blue-500 transition duration-300 ease-in-out" : ""
+                                  action === 'logout'
+                                    ? 'text-red-500 hover:text-blue-500 transition duration-300 ease-in-out'
+                                    : ''
                                 }`,
                                 strokeWidth: 2,
                               })}
-                              {action === "logout" ? (
+                              {action === 'logout' ? (
                                 <span className="font-normal text-red-500 hover:text-blue-500 transition duration-300 ease-in-out">
                                   {label}
                                 </span>
@@ -295,13 +307,11 @@ export default function ClientNavBar() {
                                 </Link>
                               )}
                             </button>
-                          )
+                          ),
                         )}
                       </div>
                     )}
                   </div>
-
-                  {/* User Dropdown end */}
                 </>
               )}
             </div>

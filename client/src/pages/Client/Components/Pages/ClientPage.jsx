@@ -11,7 +11,9 @@ export default function ClientPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/products/user/products');
+        const response = await fetch(
+          'http://localhost:5000/api/products/user/products',
+        );
         if (!response.ok) {
           throw new Error('Failed to fetch products');
         }
@@ -34,7 +36,7 @@ export default function ClientPage() {
       </div>
     );
   }
-  
+
   if (error) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -46,7 +48,9 @@ export default function ClientPage() {
   }
 
   return (
-    <div className="p-8 bg-gray-100"> {/* white default */}
+    <div className="p-8 bg-gray-100">
+      {' '}
+      {/* white default */}
       <Container>
         <div>
           <Banner />

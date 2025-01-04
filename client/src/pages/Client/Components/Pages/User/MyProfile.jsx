@@ -1,7 +1,6 @@
-import React from 'react'
-import ClientNavBar from '../../Nav/ClientNabBar'
-import ClientFooter from '../../Footer/ClientFooter'
-
+import React from 'react';
+import ClientNavBar from '../../Nav/ClientNabBar';
+import ClientFooter from '../../Footer/ClientFooter';
 
 export default function MyProfile() {
   return (
@@ -10,11 +9,10 @@ export default function MyProfile() {
       <div className="flex flex-col min-h-screen">
         <ClientNavBar />
         <main className="flex-grow  ">
-          {/*-------####---------- Warning !---------------####------------*/}
+          {/* -------####---------- Warning !---------------####------------*/}
           {/* Do not edit other code in this file. You can only add, edit, or delete code within this 'Editable area' section. */}
           {/* Editable area start */}
 
-          
           {/* Editable area end  */}
         </main>
 

@@ -1,33 +1,36 @@
 import React from 'react';
-import { useCart } from '../Cart/CartContext';
-import ClientNavBar from '../../Nav/ClientNabBar';
-import ClientFooter from '../../Footer/ClientFooter';
-import { FaCcMastercard } from "react-icons/fa";
+import { FaCcMastercard } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import {  FaXmark } from 'react-icons/fa6';
-import { MdDelete } from "react-icons/md";
+import { FaXmark } from 'react-icons/fa6';
+import { MdDelete } from 'react-icons/md';
+import ClientFooter from '../../Footer/ClientFooter';
+import ClientNavBar from '../../Nav/ClientNabBar';
+import { useCart } from './CartContext';
 
-const Cart = () => {
+function Cart() {
   const { cart, dispatch } = useCart();
   const navigate = useNavigate();
 
   // Calculate the total price of the cart, including shipping costs
-  const calculateTotal = () => {
-    return cart.reduce((total, item) => total + (item.price * item.quantity) + (item.shippingCost || 0), 0);
-  };
+  const calculateTotal = () =>
+    cart.reduce(
+      (total, item) =>
+        total + item.price * item.quantity + (item.shippingCost || 0),
+      0,
+    );
 
   // Calculate the subtotal (excluding shipping costs)
-  const calculateSubtotal = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
+  const calculateSubtotal = () =>
+    cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
   // Calculate the total shipping cost
-  const calculateShippingCost = () => {
-    return cart.reduce((total, item) => total + (item.shippingCost || 0), 0);
-  };
+  const calculateShippingCost = () =>
+    cart.reduce((total, item) => total + (item.shippingCost || 0), 0);
 
   // Determine if any item has a shipping cost
-  const hasShippingCost = cart.some(item => item.shippingCost && item.shippingCost > 0);
+  const hasShippingCost = cart.some(
+    (item) => item.shippingCost && item.shippingCost > 0,
+  );
 
   // Handle clearing the entire cart
   const handleClearCart = () => {
@@ -41,28 +44,33 @@ const Cart = () => {
 
   // Handle increasing the quantity of a specific item
   const handleQuantityIncrease = (item) => {
-    dispatch({ type: 'UPDATE_CART_ITEM', payload: { ...item, quantity: item.quantity + 1 } });
+    dispatch({
+      type: 'UPDATE_CART_ITEM',
+      payload: { ...item, quantity: item.quantity + 1 },
+    });
   };
 
   // Handle decreasing the quantity of a specific item
   const handleQuantityDecrease = (item) => {
     if (item.quantity > 1) {
-      dispatch({ type: 'UPDATE_CART_ITEM', payload: { ...item, quantity: item.quantity - 1 } });
+      dispatch({
+        type: 'UPDATE_CART_ITEM',
+        payload: { ...item, quantity: item.quantity - 1 },
+      });
     }
   };
 
   // Round to two decimal places for display
-  const roundToTwoDecimalPlaces = (num) => {
-    return Math.round((num + Number.EPSILON) * 100) / 100;
-  };
-   
-   // Horizontal Line
-  const HorizontalLine = () => {
-    return <hr className="w-[200%] border-gray-300 " />; 
-  };
+  const roundToTwoDecimalPlaces = (num) =>
+    Math.round((num + Number.EPSILON) * 100) / 100;
+
+  // Horizontal Line
+  function HorizontalLine() {
+    return <hr className="w-[200%] border-gray-300 " />;
+  }
   // Handle checkout button click Navigate to the client-address page
   const handleCheckoutBtn = () => {
-    navigate('/client-address'); 
+    navigate('/client-address');
   };
 
   return (
@@ -142,15 +150,15 @@ const Cart = () => {
                 <div className="justify-self-center text-gray-800 font-kanit">
                   {item.shippingCost > 0
                     ? `Rs. ${roundToTwoDecimalPlaces(item.shippingCost).toFixed(
-                        2
+                        2,
                       )}`
-                    : "Rs. 0.00"}
+                    : 'Rs. 0.00'}
                 </div>
                 {/* Total price for the item */}
                 <div className="justify-self-center text-gray-800 font-kanit">
                   Rs.
                   {roundToTwoDecimalPlaces(
-                    item.price * item.quantity + (item.shippingCost || 0)
+                    item.price * item.quantity + (item.shippingCost || 0),
                   ).toFixed(2)}
                 </div>
               </React.Fragment>
@@ -187,9 +195,9 @@ const Cart = () => {
                     <td className="text-center font-kanit text-base ">
                       {hasShippingCost
                         ? `Rs. ${roundToTwoDecimalPlaces(
-                            calculateShippingCost()
+                            calculateShippingCost(),
                           ).toFixed(2)}`
-                        : "Rs. 0.00"}
+                        : 'Rs. 0.00'}
                     </td>
                   </tr>
                   <HorizontalLine />
@@ -198,7 +206,7 @@ const Cart = () => {
                       className="text-gray-600 col-span-2 text-center"
                       colSpan="2"
                     >
-                      {/*aditional*/}
+                      {/* aditional */}
                     </td>
                   </tr>
 
@@ -225,6 +233,6 @@ const Cart = () => {
       <ClientFooter />
     </div>
   );
-};
+}
 
 export default Cart;

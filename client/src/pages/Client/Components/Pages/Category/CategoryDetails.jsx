@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import ProductCard from '../../Products/ProductCard';
 import { useParams } from 'react-router-dom'; // Import useParams hook to get URL parameters
+import ProductCard from '../../Products/ProductCard';
 
 export default function CategoryDetails() {
   const { categoryName } = useParams(); // Get the categoryName from URL parameters
@@ -16,8 +16,10 @@ export default function CategoryDetails() {
       setLoading(true);
       try {
         // Use the decoded category name for the API request
-        const response = await fetch(`http://localhost:5000/api/products/products/category/${decodedCategoryName}`);
-        
+        const response = await fetch(
+          `http://localhost:5000/api/products/products/category/${decodedCategoryName}`,
+        );
+
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -34,17 +36,19 @@ export default function CategoryDetails() {
     fetchProducts();
   }, [decodedCategoryName]); // Fetch products whenever the decodedCategoryName changes
 
-  if (loading) return (
-    <div className='flex items-center justify-center h-screen'>
-      <p className='text-lg font-semibold text-gray-700'>Loading...</p>
-    </div>
-  );
-  
-  if (error) return (
-    <div className='flex items-center justify-center h-screen'>
-      <p className='text-lg font-semibold text-red-600'>Error: {error}</p>
-    </div>
-  );
+  if (loading)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-lg font-semibold text-gray-700">Loading...</p>
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-lg font-semibold text-red-600">Error: {error}</p>
+      </div>
+    );
 
   return (
     <div className="container mx-auto px-6 py-8">
@@ -52,7 +56,8 @@ export default function CategoryDetails() {
       <div className="relative bg-gradient-to-r from-blue-700 to-indigo-600 text-white text-center py-16 px-8 rounded-lg shadow-lg mb-12">
         <h1 className="text-4xl font-extrabold mb-4">{decodedCategoryName}</h1>
         <p className="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-6">
-          Explore our collection of {decodedCategoryName} products, carefully curated to meet your needs.
+          Explore our collection of {decodedCategoryName} products, carefully
+          curated to meet your needs.
         </p>
         <a
           href="#products"
@@ -72,7 +77,9 @@ export default function CategoryDetails() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8 bg-gray-100">
         {/* Sub-Categories */}
         <div className="md:col-span-1 bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-semibold mb-6 border-b border-gray-300 pb-3">Sub-Categories</h2>
+          <h2 className="text-2xl font-semibold mb-6 border-b border-gray-300 pb-3">
+            Sub-Categories
+          </h2>
           <ul className="space-y-4">
             {/* Example sub-categories */}
             <li className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md transition-shadow duration-300 shadow-sm hover:shadow-md cursor-pointer">
@@ -113,7 +120,9 @@ export default function CategoryDetails() {
 
           {/* Product Cards */}
           {products.length === 0 ? (
-            <p className="text-center text-lg font-semibold text-gray-600">No products available in this category.</p>
+            <p className="text-center text-lg font-semibold text-gray-600">
+              No products available in this category.
+            </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
               {products.map((product) => (

@@ -1,16 +1,18 @@
-import React, { useState } from "react";
-import ClientFooter from "../Footer/ClientFooter";
-import ClientNavBar from "../Nav/ClientNabBar";
-import GoogleIcon from "../../Images/Login/google.svg";
-import coverimg from "../../Images/Login/coverimg.jpg";
-import { useNavigate } from "react-router-dom";
+// src/pages/Client/Components/Signup/ClientLogin.jsx
+
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ClientFooter from '../Footer/ClientFooter';
+import ClientNavBar from '../Nav/ClientNabBar';
+import GoogleIcon from '../../Images/Login/google.svg';
+import coverimg from '../../Images/Login/coverimg.jpg';
 
 export default function ClientLogin() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
   const [userType, setUserType] = useState('buyer'); // State for user type
   const [error, setError] = useState(null);
@@ -18,7 +20,7 @@ export default function ClientLogin() {
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -31,39 +33,28 @@ export default function ClientLogin() {
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (userType === 'buyer') {
-  //     try {
-  //       const response = await axios.post('http://localhost:5000/api/users/signin', formData);
-  //       // Handle success, e.g., navigate to client dashboard
-  //       localStorage.setItem('userToken', response.data.token); // Save token to local storage
-  //       navigate('/'); // Navigate to client dashboard after successful login
-  //     } catch (err) {
-  //       setError(err.response.data.message || 'An error occurred');
-  //     }
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (userType === 'buyer') {
-        try {
-            const response = await axios.post('http://localhost:5000/api/users/signin', formData);
-            
-            const userData = response.data; // User data returned from the server
-            localStorage.setItem("userToken", userData.token);  // Save token to local storage
-            localStorage.setItem('user', JSON.stringify(userData)); // Save the entire user object in local storage
-            
-            navigate('/'); // Redirect after successful login
-        } catch (err) {
-            setError(err.response.data.message || 'An error occurred');
-        }
+      try {
+        const response = await axios.post(
+          'http://localhost:5000/api/users/signin',
+          formData,
+        );
+
+        const userData = response.data; // User data returned from the server
+        localStorage.setItem('userToken', userData.token); // Save token to local storage
+        localStorage.setItem('user', JSON.stringify(userData)); // Save the entire user object in local storage
+
+        navigate('/'); // Redirect after successful login
+      } catch (err) {
+        setError(err.response?.data?.message || 'An error occurred');
+      }
     }
-};
+  };
 
   const navigateToSignUpPage = () => {
-    navigate("/client-signup");
+    navigate('/client-signup');
   };
 
   return (
@@ -99,7 +90,7 @@ export default function ClientLogin() {
                 onChange={handleUserTypeChange}
                 className="ml-10 w-24 py-1 px-2 border border-gray-300 rounded-md shadow-sm bg-white text-gray-700 focus:outline-none focus:border-blue-500 transition duration-300"
               >
-                <option value="buyer" className="">Buyer</option>
+                <option value="buyer">Buyer</option>
                 <option value="seller">Seller</option>
               </select>
             </div>
@@ -114,6 +105,7 @@ export default function ClientLogin() {
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 transition duration-300"
+                required
               />
               <input
                 type="password"
@@ -122,19 +114,21 @@ export default function ClientLogin() {
                 value={formData.password}
                 onChange={handleChange}
                 className="w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 transition duration-300"
+                required
               />
               {error && <p className="text-red-500 text-sm">{error}</p>}
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-500"
-                  />
+                  <input type="checkbox" className="w-4 h-4 text-blue-500" />
                   <p className="text-sm ml-2 text-gray-700">Remember me</p>
                 </div>
-                <a href="#" className="text-sm font-medium text-blue-600 hover:underline">
+                <button
+                  type="button"
+                  onClick={() => navigate('/forgot-password')}
+                  className="text-sm font-medium text-blue-600 hover:underline"
+                >
                   Forgot Password
-                </a>
+                </button>
               </div>
               {userType === 'buyer' && (
                 <button
@@ -146,19 +140,29 @@ export default function ClientLogin() {
               )}
               <div className="relative flex items-center justify-center mt-4">
                 <div className="absolute inset-x-0 h-[1px] bg-gray-300" />
-                <p className="relative text-sm bg-white px-2 text-gray-600">Or</p>
+                <p className="relative text-sm bg-white px-2 text-gray-600">
+                  Or
+                </p>
               </div>
-              <button className="w-full py-2 px-3 bg-white border border-gray-300 text-[#060606] font-semibold rounded-md hover:shadow-md flex items-center justify-center mt-2 hover:bg-gray-100 transition duration-300">
+              <button
+                type="button"
+                className="w-full py-2 px-3 bg-white border border-gray-300 text-[#060606] font-semibold rounded-md hover:shadow-md flex items-center justify-center mt-2 hover:bg-gray-100 transition duration-300"
+                onClick={() => navigate('/auth/google')}
+              >
                 <img src={GoogleIcon} alt="Google Icon" className="h-5 mr-2" />
                 Continue with Google
               </button>
             </form>
             <div className="text-center mt-4">
               <p className="text-sm text-gray-600">
-                Don't have an account?{" "}
-                <a href="#" className="font-semibold text-blue-600 hover:underline" onClick={navigateToSignUpPage}>
+                Don&apos;t have an account?{' '}
+                <button
+                  type="button"
+                  onClick={navigateToSignUpPage}
+                  className="font-semibold text-blue-600 hover:underline"
+                >
                   Sign Up
-                </a>
+                </button>
               </p>
             </div>
           </div>

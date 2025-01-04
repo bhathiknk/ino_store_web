@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { TruncateText } from "../Utils/truncate";
-import Rating from "@mui/material/Rating";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import Rating from '@mui/material/Rating';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import { TruncateText } from '../Utils/truncate';
 
 // AddToCartButton Component
-const AddToCartButton = ({ label, onClick }) => {
+function AddToCartButton({ label, onClick }) {
   return (
     <button
       onClick={onClick}
@@ -16,11 +15,10 @@ const AddToCartButton = ({ label, onClick }) => {
       {label}
     </button>
   );
-};
+}
 
 // ProductCard Component
-const ProductCard = ({ data }) => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+function ProductCard({ data }) {
   const navigate = useNavigate();
 
   // Calculate average rating from reviews
@@ -52,7 +50,7 @@ const ProductCard = ({ data }) => {
         <div className="aspect-square overflow-hidden relative w-full rounded-sm">
           {data.images && data.images.length > 0 ? (
             <img
-              src={`http://localhost:5000${data.images[currentImageIndex]}`}
+              src={`http://localhost:5000${data.images[0]}`}
               className="w-full h-full object-contain"
               alt={data.name}
             />
@@ -62,23 +60,18 @@ const ProductCard = ({ data }) => {
             </div>
           )}
         </div>
-        {data.images && data.images.length > 1 && (
-          <div className="flex space-x-1 mt-2">
-            {data.images.map((_, index) => (
-              <span
-                key={index}
-                className={`h-2 w-2 rounded-full ${index === currentImageIndex ? 'bg-blue-600' : 'bg-gray-400'}`}
-              ></span>
-            ))}
-          </div>
-        )}
-        <div className="mt-1 font-semibold text-md">{TruncateText(data.name, 25)}</div>
-        <div className="text-xs text-gray-600 mb-1">{TruncateText(data.categoryDescription, 40)}</div>
+        <div className="mt-1 font-semibold text-md">
+          {TruncateText(data.name, 25)}
+        </div>
+        <div className="text-xs text-gray-600 mb-1">
+          {TruncateText(data.categoryDescription, 40)}
+        </div>
         <div className="text-sm text-gray-600 mb-1">
           <Rating value={averageRating} readOnly size="small" />
         </div>
         <div className="text-xs text-gray-500 mb-1">
-          {data.reviews?.length || 0} review{data.reviews?.length !== 1 ? "s" : ""}
+          {data.reviews?.length || 0} review
+          {data.reviews?.length !== 1 ? 's' : ''}
         </div>
         <div className="text-md font-semibold mb-1">
           {data.isDiscount ? (
@@ -91,21 +84,22 @@ const ProductCard = ({ data }) => {
               </span>
             </div>
           ) : (
-            <span>${data.basePrice.toFixed(2)}</span>
+            <span>Rs.{data.basePrice.toFixed(2)}</span>
           )}
         </div>
-        <div className={`text-xs ${data.quantity > 0 ? "text-green-600" : "text-red-600"}`}>
-          {data.quantity > 0 ? "In Stock" : "Out of Stock"}
+        <div
+          className={`text-xs ${
+            data.quantity > 0 ? 'text-green-600' : 'text-red-600'
+          }`}
+        >
+          {data.quantity > 0 ? 'In Stock' : 'Out of Stock'}
         </div>
         <div className="mt-1 w-full">
-          <AddToCartButton 
-            label="Add to Cart"
-            onClick={handleAddToCart}
-          />
+          <AddToCartButton label="Add to Cart" onClick={handleAddToCart} />
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default ProductCard;

@@ -1,7 +1,7 @@
-import React from "react";
-import Container from "../Nav/Container";
-import ClientNavBar from "../Nav/ClientNabBar";
-import ClientFooter from "../Footer/ClientFooter";
+import React from 'react';
+import Container from '../Nav/Container';
+import ClientNavBar from '../Nav/ClientNabBar';
+import ClientFooter from '../Footer/ClientFooter';
 
 export default function TermsAndConditions() {
   return (
@@ -89,9 +89,13 @@ export default function TermsAndConditions() {
               <p className="text-gray-700 mb-4">
                 If you have any questions or concerns about these Terms and
                 Conditions, please contact us at :
-                <a href=" mailto:support@enoweb.com" className="text-blue-600 hover:underline ml-2">
-                support@enoweb.com
-                </a>.
+                <a
+                  href=" mailto:support@enoweb.com"
+                  className="text-blue-600 hover:underline ml-2"
+                >
+                  support@enoweb.com
+                </a>
+                .
               </p>
             </div>
           </Container>

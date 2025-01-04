@@ -1,40 +1,40 @@
 import React, { useState } from 'react';
-import ClientNavBar from "../Nav/ClientNabBar";
-import ClientFooter from "../Footer/ClientFooter";
-import GoogleIcon from "../../Images/Login/google.svg";
-import coverimg from "../../Images/Login/coverimg.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ClientNavBar from '../Nav/ClientNabBar';
+import ClientFooter from '../Footer/ClientFooter';
+import GoogleIcon from '../../Images/Login/google.svg';
+import coverimg from '../../Images/Login/coverimg.jpg';
 
 export default function ClientSignup() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: ''
+    password: '',
   });
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/users/signup', formData);
-      // Handle success, e.g., navigate to another page or show a success message
-      navigate('/client-login'); // Navigate to login page after successful signup
+      await axios.post('http://localhost:5000/api/users/signup', formData);
+      // Navigate to login page after successful signup
+      navigate('/client-login');
     } catch (err) {
-      setError(err.response.data.message || 'An error occurred');
+      setError(err.response?.data?.message || 'An error occurred');
     }
   };
 
   const navigateToLoginPage = () => {
-    navigate("/client-login");
+    navigate('/client-login');
   };
 
   return (
@@ -95,13 +95,17 @@ export default function ClientSignup() {
               {error && <p className="text-red-500 text-sm">{error}</p>}
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 text-blue-500"
-                  />
-                  <p className="text-sm ml-2 text-gray-700">Agrree terms and conditions.</p>
+                  <input type="checkbox" className="w-4 h-4 text-blue-500" />
+                  <p className="text-sm ml-2 text-gray-700">
+                    Agree to terms and conditions.
+                  </p>
                 </div>
-                <Link to="/client-terms-and-conditions" className="text-sm font-medium text-blue-600 hover:underline">Terms & Conditions</Link>
+                <Link
+                  to="/client-terms-and-conditions"
+                  className="text-sm font-medium text-blue-600 hover:underline"
+                >
+                  Terms & Conditions
+                </Link>
               </div>
               <button
                 type="submit"
@@ -111,7 +115,9 @@ export default function ClientSignup() {
               </button>
               <div className="relative flex items-center justify-center mt-4">
                 <div className="absolute inset-x-0 h-[1px] bg-gray-300" />
-                <p className="relative text-sm bg-white px-2 text-gray-600">Or</p>
+                <p className="relative text-sm bg-white px-2 text-gray-600">
+                  Or
+                </p>
               </div>
               <button className="w-full py-2 px-3 bg-white border border-gray-300 text-[#060606] font-semibold rounded-md hover:shadow-md flex items-center justify-center mt-2 hover:bg-gray-100 transition duration-300">
                 <img src={GoogleIcon} alt="Google Icon" className="h-5 mr-2" />
@@ -120,10 +126,14 @@ export default function ClientSignup() {
             </form>
             <div className="text-center mt-4">
               <p className="text-sm text-gray-600">
-                Already have an account?{" "}
-                <a href="#" className="font-semibold text-blue-600 hover:underline" onClick={navigateToLoginPage}>
+                Already have an account?{' '}
+                <button
+                  type="button"
+                  onClick={navigateToLoginPage}
+                  className="font-semibold text-blue-600 hover:underline"
+                >
                   Login
-                </a>
+                </button>
               </p>
             </div>
           </div>

@@ -39,42 +39,56 @@ jobs:
           echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
           echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> $GITHUB_ENV
           echo "MONGO_URI=mongodb://host.docker.internal:27017/inoweb" >> $GITHUB_ENV
-          echo "MONGO_URI=mongodb://host.docker.internal:27017/inoweb_test" >> $GITHUB_ENV
+          echo "MONGO_URI_TEST=mongodb://host.docker.internal:27017/inoweb_test" >> $GITHUB_ENV
+
 
       - name: Install dependencies in Client
         run: |
           cd client
           npm install
 
+
+      - name: Run ESLint in Client
+        run: |
+          cd client
+          npm run lint
+
+
       - name: Run tests in Client
         run: |
           cd client
           npm test
+
 
       - name: Install dependencies in Server
         run: |
           cd server
           npm install
 
+
       - name: Set environment variables for Server
         run: |
           echo "MONGO_URI_TEST=mongodb://localhost:27017/inoweb_test" >> $GITHUB_ENV
+
 
       - name: Fix permissions for Jest
         run: |
           cd server
           chmod +x ./node_modules/.bin/jest
 
+
       - name: Run tests in Server
         run: |
           cd server
           npm test
+
 
       - name: Install Docker Compose
         run: |
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose version
+
 
       - name: Build Docker Image for Client
         run: |
@@ -84,11 +98,13 @@ jobs:
         run: |
           docker build -t $DOCKER_USERNAME/inoweb-server:1.1 ./server
 
+
       - name: Push Docker Images
         run: |
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
           docker push $DOCKER_USERNAME/inoweb-client:1.1
           docker push $DOCKER_USERNAME/inoweb-server:1.1
+
 
       - name: Validate Docker Compose
         run: |
