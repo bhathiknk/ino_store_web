@@ -1,3 +1,5 @@
+// src/pages/Admin/Dashboard.test.js
+
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -74,6 +76,12 @@ beforeEach(() => {
         ],
       });
     }
+    if (url === 'http://localhost:5000/api/admin/details') {
+      // Mock response for fetching admin details
+      return Promise.resolve({
+        data: { name: 'Admin User' },
+      });
+    }
     return Promise.reject(new Error('Not Found'));
   });
 
@@ -114,7 +122,7 @@ test('renders products and handles image navigation', async () => {
   );
 
   // Navigate to the next image for the first product
-  const nextButton = screen.getAllByRole('button', { name: '>' })[0];
+  const nextButton = screen.getByRole('button', { name: 'Next >' });
   fireEvent.click(nextButton);
 
   // Check that the image changes
@@ -126,7 +134,7 @@ test('renders products and handles image navigation', async () => {
   });
 
   // Navigate back to the previous image
-  const prevButton = screen.getAllByRole('button', { name: '<' })[0];
+  const prevButton = screen.getByRole('button', { name: '< Prev' });
   fireEvent.click(prevButton);
 
   // Check that the image reverts to the first one
@@ -154,10 +162,10 @@ test('displays correct product information', async () => {
   });
 
   // Check discounted price
-  expect(screen.getByText('Discounted Price: USD 800')).toBeInTheDocument();
+  expect(screen.getByText('Discounted: USD 800')).toBeInTheDocument();
   expect(screen.getByText('USD 1000')).toHaveClass('line-through');
 
   // Check stock status for both products
-  expect(screen.getByText('In Stock')).toHaveClass('text-green-500');
+  expect(screen.getByText('In Stock')).toHaveClass('text-green-600');
   expect(screen.getByText('Out of Stock')).toHaveClass('text-red-500');
 });

@@ -1,3 +1,5 @@
+// src/pages/Admin/SalesSummary.jsx
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
@@ -37,7 +39,7 @@ function SalesSummary() {
   if (loading)
     return (
       <div className="flex justify-center items-center h-screen bg-gray-100">
-        <div className="loader" />
+        <div className="loader" data-testid="loader" />
       </div>
     );
 
