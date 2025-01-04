@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 
 import CreateProduct from './CreateProduct';
 
+// Mock axios and react-toastify
 jest.mock('axios');
 jest.mock('react-toastify', () => ({
   toast: {
@@ -18,12 +19,13 @@ jest.mock('react-toastify', () => ({
   ToastContainer: () => <div>ToastContainer Mock</div>,
 }));
 
-// 1) Mock IntersectionObserver here
+// ✅ Fix: Mock IntersectionObserver with observe and disconnect methods
 beforeAll(() => {
   class MockIntersectionObserver {
-    constructor(callback, options) {
-      // You can store these if needed for tests
-      this.options = options;
+    constructor() {
+      this.observe = jest.fn();
+      this.unobserve = jest.fn();
+      this.disconnect = jest.fn();
     }
   }
   Object.defineProperty(window, 'IntersectionObserver', {
