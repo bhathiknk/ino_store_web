@@ -39,7 +39,7 @@ export default function ClientLogin() {
       try {
         const response = await axios.post(
           'http://localhost:5000/api/users/signin',
-          formData,
+          formData
         );
 
         const userData = response.data; // User data returned from the server

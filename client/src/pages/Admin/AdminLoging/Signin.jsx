@@ -9,6 +9,7 @@ function Signin() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -17,7 +18,7 @@ function Signin() {
         {
           email,
           password,
-        },
+        }
       );
 
       localStorage.setItem('token', response.data.token);
@@ -38,13 +39,19 @@ function Signin() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
-        <h2 className="text-2xl font-bold text-center">Signin</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-blue-200">
+      <div className="w-full max-w-2xl bg-white p-12 rounded-2xl shadow-2xl">
+        <h2 className="text-4xl font-extrabold text-center text-blue-600 mb-10">
+          Admin Signin
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Email Input */}
           <div>
-            <label htmlFor="email" className="block mb-1">
-              Email:
+            <label
+              htmlFor="email"
+              className="block text-lg font-medium text-gray-700"
+            >
+              Email Address
             </label>
             <input
               id="email"
@@ -52,12 +59,18 @@ function Signin() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2 border rounded"
+              placeholder="Enter your email"
+              className="mt-3 w-full px-5 py-4 text-lg border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+
+          {/* Password Input */}
           <div>
-            <label htmlFor="password" className="block mb-1">
-              Password:
+            <label
+              htmlFor="password"
+              className="block text-lg font-medium text-gray-700"
+            >
+              Password
             </label>
             <input
               id="password"
@@ -65,17 +78,35 @@ function Signin() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-4 py-2 border rounded"
+              placeholder="Enter your password"
+              className="mt-3 w-full px-5 py-4 text-lg border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600"
+            className="w-full bg-blue-500 text-white py-4 rounded-lg text-xl font-bold hover:bg-blue-600 transition duration-300"
           >
-            Signin
+            Sign In
           </button>
         </form>
+
+        {/* Toast Notification */}
         <ToastContainer />
+
+        {/* Additional Info */}
+        <div className="mt-10 text-center">
+          <p className="text-lg text-gray-600">
+            Forgot your password?{' '}
+            <a
+              href="/forgot-password"
+              className="text-blue-500 hover:underline"
+            >
+              Reset it here
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );

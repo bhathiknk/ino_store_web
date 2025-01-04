@@ -114,7 +114,7 @@ export default function ClientNavBar() {
     const fetchCategories = async () => {
       try {
         const response = await fetch(
-          'http://localhost:5000/api/categories/get',
+          'http://localhost:5000/api/categories/get'
         );
         const data = await response.json();
         setCategories(data);
@@ -212,7 +212,7 @@ export default function ClientNavBar() {
                         <Link
                           key={category._id} // Assuming categories have _id
                           to={`/client-category/${encodeURIComponent(
-                            category.name,
+                            category.name
                           )}`} // Link to category details page with category ID
                           className="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"
                         >
@@ -307,7 +307,7 @@ export default function ClientNavBar() {
                                 </Link>
                               )}
                             </button>
-                          ),
+                          )
                         )}
                       </div>
                     )}

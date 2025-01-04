@@ -37,7 +37,7 @@ describe('Signup Component', () => {
 
     // Check form fields
     expect(
-      screen.getByRole('heading', { name: /signup/i }),
+      screen.getByRole('heading', { name: /signup/i })
     ).toBeInTheDocument();
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
@@ -76,12 +76,12 @@ describe('Signup Component', () => {
           name: 'John Doe',
           email: 'john@example.com',
           password: '123456',
-        },
+        }
       );
       // Check success toast
       expect(toast.success).toHaveBeenCalledWith(
         'Signup successful! You can now signin.',
-        expect.any(Object),
+        expect.any(Object)
       );
     });
 
@@ -117,7 +117,7 @@ describe('Signup Component', () => {
       // Check error toast
       expect(toast.error).toHaveBeenCalledWith(
         'Signup failed! Email may already exist.',
-        expect.any(Object),
+        expect.any(Object)
       );
       // Ensure no navigation happened
       expect(mockNavigate).not.toHaveBeenCalled();

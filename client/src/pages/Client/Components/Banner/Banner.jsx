@@ -47,7 +47,7 @@ export default function Banner() {
 
   const handlePrev = () => {
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + banners.length) % banners.length,
+      (prevIndex) => (prevIndex - 1 + banners.length) % banners.length
     );
   };
 

@@ -16,7 +16,7 @@ function Cart() {
     cart.reduce(
       (total, item) =>
         total + item.price * item.quantity + (item.shippingCost || 0),
-      0,
+      0
     );
 
   // Calculate the subtotal (excluding shipping costs)
@@ -29,7 +29,7 @@ function Cart() {
 
   // Determine if any item has a shipping cost
   const hasShippingCost = cart.some(
-    (item) => item.shippingCost && item.shippingCost > 0,
+    (item) => item.shippingCost && item.shippingCost > 0
   );
 
   // Handle clearing the entire cart
@@ -150,7 +150,7 @@ function Cart() {
                 <div className="justify-self-center text-gray-800 font-kanit">
                   {item.shippingCost > 0
                     ? `Rs. ${roundToTwoDecimalPlaces(item.shippingCost).toFixed(
-                        2,
+                        2
                       )}`
                     : 'Rs. 0.00'}
                 </div>
@@ -158,7 +158,7 @@ function Cart() {
                 <div className="justify-self-center text-gray-800 font-kanit">
                   Rs.
                   {roundToTwoDecimalPlaces(
-                    item.price * item.quantity + (item.shippingCost || 0),
+                    item.price * item.quantity + (item.shippingCost || 0)
                   ).toFixed(2)}
                 </div>
               </React.Fragment>
@@ -195,7 +195,7 @@ function Cart() {
                     <td className="text-center font-kanit text-base ">
                       {hasShippingCost
                         ? `Rs. ${roundToTwoDecimalPlaces(
-                            calculateShippingCost(),
+                            calculateShippingCost()
                           ).toFixed(2)}`
                         : 'Rs. 0.00'}
                     </td>

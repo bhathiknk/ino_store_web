@@ -46,7 +46,7 @@ describe('CreateProduct Component', () => {
     render(
       <BrowserRouter>
         <CreateProduct />
-      </BrowserRouter>,
+      </BrowserRouter>
     );
 
   test('renders the form and navigational buttons', () => {
@@ -85,7 +85,7 @@ describe('CreateProduct Component', () => {
 
     // Confirmation popup should appear
     expect(
-      screen.getByRole('heading', { name: /confirm save/i }),
+      screen.getByRole('heading', { name: /confirm save/i })
     ).toBeInTheDocument();
 
     // Click "Cancel"
@@ -93,7 +93,7 @@ describe('CreateProduct Component', () => {
 
     // Popup should disappear
     expect(
-      screen.queryByRole('heading', { name: /confirm save/i }),
+      screen.queryByRole('heading', { name: /confirm save/i })
     ).not.toBeInTheDocument();
   });
 
@@ -118,7 +118,7 @@ describe('CreateProduct Component', () => {
 
     // "Confirm Save" popup
     expect(
-      screen.getByRole('heading', { name: /confirm save/i }),
+      screen.getByRole('heading', { name: /confirm save/i })
     ).toBeInTheDocument();
 
     // Click Save
@@ -135,12 +135,12 @@ describe('CreateProduct Component', () => {
             'Content-Type': 'multipart/form-data',
             Authorization: 'Bearer mock-token',
           },
-        },
+        }
       );
       // Check success toast
       expect(toast.success).toHaveBeenCalledWith(
         'Product added successfully',
-        expect.any(Object),
+        expect.any(Object)
       );
     });
   });
@@ -168,7 +168,7 @@ describe('CreateProduct Component', () => {
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith(
         'Product addition failed',
-        expect.any(Object),
+        expect.any(Object)
       );
     });
   });

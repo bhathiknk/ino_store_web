@@ -17,7 +17,7 @@ jest.mock(
   () =>
     function () {
       return <div>Slider Mock</div>;
-    },
+    }
 );
 jest.mock('axios');
 jest.mock('react-router-dom', () => ({

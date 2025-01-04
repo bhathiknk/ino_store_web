@@ -58,9 +58,14 @@ export default function ClientFooter() {
           <div className="w-full md:w-1/3 mb-6 md:mb-0">
             <h3 className="text-base font-bold mb-2">About Us</h3>
             <p className="mb-2">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni
-              repellendus eius illum tempore libero, iste dolor? Harum, labore?
-              Suscipit, praesentium?
+              Welcome to InoWeb, your one-stop destination for authentic Sri
+              Lankan handcrafted products. We take pride in connecting you with
+              local artisans who create timeless pieces inspired by tradition,
+              culture, and heritage. At InoWeb, we believe in promoting
+              sustainable craftsmanship while empowering communities by bringing
+              their creations to a global audience. Our curated collection
+              showcases the beauty of handmade artistry, ensuring each product
+              tells a unique story of Sri Lanka&apos;s rich cultural roots.
             </p>
             <p>&copy; 2024 E-Com-Innovation. All rights reserved.</p>
           </div>

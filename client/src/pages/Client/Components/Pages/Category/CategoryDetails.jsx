@@ -17,7 +17,7 @@ export default function CategoryDetails() {
       try {
         // Use the decoded category name for the API request
         const response = await fetch(
-          `http://localhost:5000/api/products/products/category/${decodedCategoryName}`,
+          `http://localhost:5000/api/products/products/category/${decodedCategoryName}`
         );
 
         if (!response.ok) {

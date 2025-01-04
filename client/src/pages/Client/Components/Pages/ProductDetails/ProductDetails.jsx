@@ -22,7 +22,7 @@ function ProductDetails() {
     const fetchProduct = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/products/products/${id}`,
+          `http://localhost:5000/api/products/products/${id}`
         );
         if (!response.ok) {
           throw new Error('Failed to fetch product');
@@ -77,7 +77,7 @@ function ProductDetails() {
     if (!selectedImage) {
       // If no image is selected, show a popup or toast message
       toast.error(
-        'Please select an image from the image set above before adding to the cart.',
+        'Please select an image from the image set above before adding to the cart.'
       );
       return; // Prevent adding to the cart if no image is selected
     }
@@ -163,7 +163,7 @@ function ProductDetails() {
                       <span className="ml-1 text-green-600">
                         Rs.
                         {roundToTwoDecimalPlaces(product.shippingCost).toFixed(
-                          2,
+                          2
                         )}
                       </span>
                     </span>
@@ -177,7 +177,7 @@ function ProductDetails() {
                       Rs.
                       {product.isDiscount
                         ? roundToTwoDecimalPlaces(
-                            product.discountPrice,
+                            product.discountPrice
                           ).toFixed(2)
                         : roundToTwoDecimalPlaces(product.basePrice).toFixed(2)}
                     </span>

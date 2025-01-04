@@ -97,7 +97,7 @@ test('renders products and handles image navigation', async () => {
       <Routes>
         <Route path="/" element={<ProductPage />} />
       </Routes>
-    </MemoryRouter>,
+    </MemoryRouter>
   );
 
   // Wait for products to load
@@ -110,7 +110,7 @@ test('renders products and handles image navigation', async () => {
   const firstProductImage = screen.getByAltText('Sample Product');
   expect(firstProductImage).toHaveAttribute(
     'src',
-    'http://localhost:5000/images/sample1.jpg',
+    'http://localhost:5000/images/sample1.jpg'
   );
 
   // Navigate to the next image for the first product
@@ -121,7 +121,7 @@ test('renders products and handles image navigation', async () => {
   await waitFor(() => {
     expect(firstProductImage).toHaveAttribute(
       'src',
-      'http://localhost:5000/images/sample2.jpg',
+      'http://localhost:5000/images/sample2.jpg'
     );
   });
 
@@ -133,7 +133,7 @@ test('renders products and handles image navigation', async () => {
   await waitFor(() => {
     expect(firstProductImage).toHaveAttribute(
       'src',
-      'http://localhost:5000/images/sample1.jpg',
+      'http://localhost:5000/images/sample1.jpg'
     );
   });
 });
@@ -144,7 +144,7 @@ test('displays correct product information', async () => {
       <Routes>
         <Route path="/" element={<ProductPage />} />
       </Routes>
-    </MemoryRouter>,
+    </MemoryRouter>
   );
 
   // Wait for products to load

@@ -11,7 +11,7 @@ jest.mock(
   () =>
     function () {
       return <div>Mock Navbar</div>;
-    },
+    }
 );
 jest.mock('react-chartjs-2', () => ({
   Bar: (props) => (
@@ -31,13 +31,13 @@ describe('SalesSummary Component', () => {
       () =>
         new Promise((resolve) => {
           resolvePromise = resolve;
-        }),
+        })
     );
 
     render(
       <MemoryRouter>
         <SalesSummary />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     // Ensure the loading state is shown
@@ -52,12 +52,12 @@ describe('SalesSummary Component', () => {
     render(
       <MemoryRouter>
         <SalesSummary />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     await waitFor(() => {
       expect(
-        screen.getByText(/Error: Failed to fetch sales summary/i),
+        screen.getByText(/Error: Failed to fetch sales summary/i)
       ).toBeInTheDocument();
     });
   });
@@ -79,7 +79,7 @@ describe('SalesSummary Component', () => {
     render(
       <MemoryRouter>
         <SalesSummary />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     // Wait for the data to load
@@ -107,7 +107,7 @@ describe('SalesSummary Component', () => {
       ],
     };
     expect(screen.getByTestId('mock-bar-chart')).toHaveTextContent(
-      JSON.stringify(chartData),
+      JSON.stringify(chartData)
     );
   });
 });

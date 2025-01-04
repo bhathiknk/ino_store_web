@@ -45,7 +45,7 @@ describe('Signin Component', () => {
     render(<Signin />);
 
     expect(
-      screen.getByRole('heading', { name: /signin/i }),
+      screen.getByRole('heading', { name: /signin/i })
     ).toBeInTheDocument();
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
@@ -74,17 +74,17 @@ describe('Signin Component', () => {
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledWith(
         'http://localhost:5000/api/admin/signin',
-        { email: 'test@example.com', password: 'password' },
+        { email: 'test@example.com', password: 'password' }
       );
       expect(localStorage.setItem).toHaveBeenCalledWith('token', 'mockToken');
       expect(localStorage.setItem).toHaveBeenCalledWith(
         'adminId',
-        'mockAdminId',
+        'mockAdminId'
       );
 
       expect(toast.success).toHaveBeenCalledWith(
         'Signin successful!',
-        expect.any(Object),
+        expect.any(Object)
       );
     });
 
@@ -111,7 +111,7 @@ describe('Signin Component', () => {
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith(
         'Signin failed! Invalid credentials.',
-        expect.any(Object),
+        expect.any(Object)
       );
       expect(mockNavigate).not.toHaveBeenCalled();
     });

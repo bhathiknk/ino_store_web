@@ -53,7 +53,7 @@ describe('UpdateProduct Component', () => {
             element={<div>Mock ProductPage</div>}
           />
         </Routes>
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     // Wait for the product data
@@ -96,7 +96,7 @@ describe('UpdateProduct Component', () => {
             element={<div>Mock ProductPage</div>}
           />
         </Routes>
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     // Wait for product data
@@ -119,11 +119,11 @@ describe('UpdateProduct Component', () => {
           headers: expect.objectContaining({
             Authorization: 'Bearer mock-token',
           }),
-        }),
+        })
       );
       expect(toast.success).toHaveBeenCalledWith(
         'Product updated successfully!',
-        expect.any(Object),
+        expect.any(Object)
       );
     });
   });
@@ -160,7 +160,7 @@ describe('UpdateProduct Component', () => {
             element={<div>Mock ProductPage</div>}
           />
         </Routes>
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     // Wait for product data
@@ -178,7 +178,7 @@ describe('UpdateProduct Component', () => {
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith(
         'Failed to update product',
-        expect.any(Object),
+        expect.any(Object)
       );
     });
   });

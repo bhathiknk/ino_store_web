@@ -29,7 +29,7 @@ export default function Orders() {
 
         const response = await axios.get(
           'http://localhost:5000/api/orders/user',
-          config,
+          config
         );
         setOrders(response.data);
         setLoading(false);

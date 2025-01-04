@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import 'tailwindcss/tailwind.css';
-import Modal from 'react-modal'; // Ensure you have react-modal installed
-import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-modal';
 import { toast, ToastContainer } from 'react-toastify';
-import { io } from 'socket.io-client'; // Import Socket.IO client
+import 'react-toastify/dist/ReactToastify.css';
+import { io } from 'socket.io-client';
 
 function ViewOrder() {
   const [orders, setOrders] = useState([]);
-  const [notifications, setNotifications] = useState([]); // State for notifications
+  const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -20,7 +20,6 @@ function ViewOrder() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch orders and notifications from the server
     const fetchOrdersAndNotifications = async () => {
       try {
         const token = localStorage.getItem('token');
@@ -28,17 +27,15 @@ function ViewOrder() {
           headers: { Authorization: `Bearer ${token}` },
         };
 
-        // Fetch orders
         const ordersResponse = await axios.get(
           'http://localhost:5000/api/orders/seller',
-          config,
+          config
         );
         setOrders(ordersResponse.data);
 
-        // Fetch notifications
         const notificationsResponse = await axios.get(
           'http://localhost:5000/api/notifications',
-          config,
+          config
         );
         setNotifications(notificationsResponse.data);
 
@@ -51,22 +48,14 @@ function ViewOrder() {
 
     fetchOrdersAndNotifications();
 
-    // Set up WebSocket connection
-    const socket = io('http://localhost:5000'); // Connect to backend WebSocket server
+    const socket = io('http://localhost:5000');
 
-    // Listen for orderCreated event
     socket.on('orderCreated', (data) => {
       toast.info(data.message, {
         position: 'top-right',
         autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
       });
 
-      // Update notifications and orders in real-time
       setNotifications((prev) => [
         ...prev,
         { _id: Date.now(), message: data.message, timestamp: new Date() },
@@ -75,7 +64,7 @@ function ViewOrder() {
     });
 
     return () => {
-      socket.disconnect(); // Cleanup WebSocket connection on component unmount
+      socket.disconnect();
     };
   }, []);
 
@@ -91,18 +80,16 @@ function ViewOrder() {
       await axios.put(
         'http://localhost:5000/api/orders/update-status',
         { orderId, status: newStatus },
-        config,
+        config
       );
 
-      // Update the local state with the new status
       setOrders(
         orders.map((order) =>
-          order._id === orderId ? { ...order, orderStatus: newStatus } : order,
-        ),
+          order._id === orderId ? { ...order, orderStatus: newStatus } : order
+        )
       );
 
-      // Show success toast message
-      toast.success('Order status updated successfully!', {});
+      toast.success('Order status updated successfully!');
     } catch (error) {
       setError(error.response?.data?.message || error.message);
     }
@@ -132,29 +119,33 @@ function ViewOrder() {
   };
 
   const filteredOrders = orders.filter(
-    (order) => order.orderStatus === selectedTab,
+    (order) => order.orderStatus === selectedTab
   );
 
   if (loading)
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen text-lg font-bold text-blue-600">
         Loading...
       </div>
     );
   if (error)
-    return <div className="text-red-500 text-center mt-4">Error: {error}</div>;
+    return (
+      <div className="text-red-500 text-center mt-4 text-xl">
+        Error: {error}
+      </div>
+    );
 
   return (
-    <div className="bg-gray-100 min-h-screen p-4">
+    <div className="bg-gradient-to-br from-blue-100 to-blue-300 min-h-screen p-8">
       <ToastContainer />
-      <div className="container mx-auto p-4">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-6">
+      <div className="container mx-auto p-8 bg-white rounded-xl shadow-lg">
+        <div className="flex justify-between items-center mb-8">
           <button
             onClick={() => navigate('/Admin/ProductPage')}
-            className="flex items-center text-blue-500"
+            className="flex items-center text-blue-600 font-bold text-lg"
           >
             <svg
-              className="w-6 h-6 mr-1"
+              className="w-6 h-6 mr-2"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -173,26 +164,28 @@ function ViewOrder() {
             <input
               type="text"
               placeholder="Search by Order ID"
-              className="border p-2 rounded"
+              className="border p-4 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-600 text-lg"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <button
               onClick={handleSearch}
-              className="ml-2 bg-blue-500 text-white p-2 rounded"
+              className="ml-4 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 text-lg font-bold"
             >
               Search
             </button>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row">
-          {/* Notifications Panel */}
-          <div className="md:w-1/3 bg-white shadow-md rounded mb-6 md:mb-0 p-4">
-            <h2 className="text-xl font-semibold mb-4">Notifications</h2>
-            <ul>
+
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="bg-gray-200 shadow-md rounded-xl p-8 w-full md:w-1/3">
+            <h2 className="text-2xl font-bold text-blue-700 mb-6">
+              Notifications
+            </h2>
+            <ul className="space-y-6">
               {notifications.map((notification) => (
-                <li key={notification._id} className="border-b py-2">
-                  <p>{notification.message}</p>
+                <li key={notification._id} className="border-b pb-4">
+                  <p className="text-lg">{notification.message}</p>
                   <p className="text-sm text-gray-500">
                     {new Date(notification.timestamp).toLocaleString()}
                   </p>
@@ -200,43 +193,48 @@ function ViewOrder() {
               ))}
             </ul>
           </div>
-          {/* Orders Panel */}
-          <div className="md:w-2/3 md:ml-4">
-            <div className="flex justify-center space-x-4 mb-6">
+
+          <div className="bg-gray-50 shadow-md rounded-xl p-8 w-full md:w-2/3">
+            <div className="flex justify-center space-x-4 mb-8">
               {statusOptions.map((status) => (
                 <button
                   key={status}
                   onClick={() => setSelectedTab(status)}
-                  className={`px-4 py-2 rounded ${
+                  className={`px-6 py-3 rounded-lg text-lg font-bold ${
                     selectedTab === status
-                      ? 'bg-blue-500 text-white'
-                      : 'bg-white text-blue-500'
-                  } border`}
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-white text-blue-600 border'
+                  } hover:bg-blue-700 hover:text-white transition duration-300`}
                 >
                   {status}
                 </button>
               ))}
             </div>
-            <ul className="space-y-4">
+
+            <ul className="space-y-8">
               {filteredOrders.map((order) => (
                 <li
                   key={order._id}
-                  className="bg-white shadow-lg rounded-lg p-4 md:p-6"
+                  className="bg-white p-8 rounded-xl shadow-md"
                 >
-                  <h3 className="text-xl font-semibold mb-2">
+                  <h3 className="text-2xl font-semibold mb-4">
                     Order ID:{' '}
                     <span className="text-indigo-600">{order._id}</span>
                   </h3>
-                  <p className="mb-2">Total Amount: LKR {order.totalAmount}</p>
-                  <p className="mb-2">Payment Method: {order.paymentMethod}</p>
-                  <p className="mb-4">Status: {order.orderStatus}</p>
-                  <div className="flex flex-col space-y-2">
+                  <p className="mb-4 text-lg">
+                    Total Amount: LKR {order.totalAmount}
+                  </p>
+                  <p className="mb-4 text-lg">
+                    Payment Method: {order.paymentMethod}
+                  </p>
+                  <p className="mb-6 text-lg">Status: {order.orderStatus}</p>
+                  <div className="flex items-center gap-6">
                     <select
                       value={selectedStatuses[order._id] || order.orderStatus}
                       onChange={(e) =>
                         handleDropdownChange(order._id, e.target.value)
                       }
-                      className="p-2 border rounded"
+                      className="p-4 border rounded-lg text-lg"
                     >
                       {statusOptions.map((status) => (
                         <option key={status} value={status}>
@@ -248,10 +246,10 @@ function ViewOrder() {
                       onClick={() =>
                         handleStatusChange(
                           order._id,
-                          selectedStatuses[order._id] || order.orderStatus,
+                          selectedStatuses[order._id] || order.orderStatus
                         )
                       }
-                      className="bg-blue-500 text-white p-2 rounded"
+                      className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 text-lg font-bold"
                     >
                       Update Status
                     </button>
@@ -262,17 +260,30 @@ function ViewOrder() {
           </div>
         </div>
       </div>
+
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Order Details Modal"
+        className="bg-white p-10 rounded-lg shadow-xl max-w-md mx-auto"
       >
         {filteredOrder && (
           <div>
-            <h2>Order ID: {filteredOrder._id}</h2>
-            <p>Total Amount: {filteredOrder.totalAmount}</p>
-            <p>Payment Method: {filteredOrder.paymentMethod}</p>
-            <button onClick={closeModal}>Close</button>
+            <h2 className="text-2xl font-bold mb-6">
+              Order ID: {filteredOrder._id}
+            </h2>
+            <p className="mb-4 text-lg">
+              Total Amount: {filteredOrder.totalAmount}
+            </p>
+            <p className="mb-6 text-lg">
+              Payment Method: {filteredOrder.paymentMethod}
+            </p>
+            <button
+              onClick={closeModal}
+              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 text-lg font-bold"
+            >
+              Close
+            </button>
           </div>
         )}
       </Modal>

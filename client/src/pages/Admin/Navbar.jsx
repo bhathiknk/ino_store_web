@@ -20,7 +20,7 @@ function Navbar() {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
-            },
+            }
           );
           setAdminName(response.data.name);
         }

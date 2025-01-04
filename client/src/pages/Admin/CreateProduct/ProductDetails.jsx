@@ -14,7 +14,7 @@ function ProductDetails() {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/products/products/${id}`,
+          `http://localhost:5000/api/products/products/${id}`
         );
         setProduct(response.data);
       } catch (error) {
@@ -26,7 +26,11 @@ function ProductDetails() {
   }, [id]);
 
   if (!product) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen text-lg font-bold text-blue-600">
+        Loading...
+      </div>
+    );
   }
 
   const handleUpdateClick = () => {
@@ -34,7 +38,7 @@ function ProductDetails() {
   };
 
   const handleDeleteClick = async () => {
-    const token = localStorage.getItem('token'); // Retrieve token from localStorage
+    const token = localStorage.getItem('token');
     try {
       await axios.delete(
         `http://localhost:5000/api/products/products/delete/${id}`,
@@ -42,7 +46,7 @@ function ProductDetails() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        },
+        }
       );
       alert('Product deleted successfully');
       navigate('/Admin/ProductPage');
@@ -63,71 +67,94 @@ function ProductDetails() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row p-5 bg-gray-200 min-h-screen">
-      <div className="flex flex-col w-full md:w-1/2 md:mr-4">
-        <div className="w-full mb-2">
-          {product.images && product.images.length > 0 && (
-            <div className="w-full h-72 md:h-96 bg-white border border-gray-300 rounded-lg">
-              <Slider {...sliderSettings}>
-                {product.images.map((image, index) => (
-                  <div key={index} className="h-72 md:h-96">
-                    <img
-                      src={`http://localhost:5000${image}`}
-                      alt={product.name}
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                ))}
-              </Slider>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 flex items-center justify-center">
+      <div className="w-full max-w-5xl bg-white rounded-2xl shadow-lg p-10">
+        <div className="flex flex-col md:flex-row gap-10">
+          {/* Left Section: Product Images Slider */}
+          <div className="w-full md:w-1/2">
+            {product.images && product.images.length > 0 && (
+              <div className="bg-gray-100 rounded-lg shadow-md overflow-hidden">
+                <Slider {...sliderSettings}>
+                  {product.images.map((image, index) => (
+                    <div key={index}>
+                      <img
+                        src={`http://localhost:5000${image}`}
+                        alt={product.name}
+                        className="w-full h-96 object-contain"
+                      />
+                    </div>
+                  ))}
+                </Slider>
+              </div>
+            )}
+
+            {/* Action Buttons */}
+            <div className="flex justify-around mt-8">
+              <button
+                onClick={handleUpdateClick}
+                className="bg-blue-600 text-white py-3 px-8 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 text-lg"
+              >
+                Update Product
+              </button>
+              <button
+                onClick={handleDeleteClick}
+                className="bg-red-600 text-white py-3 px-8 rounded-lg font-semibold hover:bg-red-700 transition duration-300 text-lg"
+              >
+                Delete Product
+              </button>
             </div>
-          )}
+          </div>
+
+          {/* Right Section: Product Details */}
+          <div className="w-full md:w-1/2 bg-gray-50 rounded-lg shadow-md p-10">
+            <h1 className="text-4xl font-bold text-blue-800 mb-8">
+              {product.name}
+            </h1>
+            <p className="text-lg text-gray-700 mb-6">
+              <strong>Description:</strong> {product.description}
+            </p>
+            <p className="text-lg text-gray-700 mb-6">
+              <strong>Category:</strong> {product.categoryDescription}
+            </p>
+
+            {product.isDiscount ? (
+              <p className="text-2xl font-bold text-red-500 mb-6">
+                <span className="line-through text-gray-500">
+                  LKR {product.basePrice}
+                </span>{' '}
+                Discounted Price:{' '}
+                <span className="text-green-600">
+                  LKR {product.discountPrice}
+                </span>
+              </p>
+            ) : (
+              <p className="text-2xl font-bold text-green-600 mb-6">
+                LKR {product.basePrice}
+              </p>
+            )}
+
+            <p className="text-lg text-gray-700 mb-6">
+              {product.isFreeShipping ? (
+                <strong className="text-green-500">Free Shipping</strong>
+              ) : (
+                <span>
+                  <strong>Shipping Cost:</strong> LKR {product.shippingCost}
+                </span>
+              )}
+            </p>
+
+            <p className="text-lg text-gray-700 mb-6">
+              <strong>Quantity:</strong> {product.quantity}
+            </p>
+            <p
+              className={`text-2xl font-bold ${
+                stockStatus === 'In Stock' ? 'text-green-500' : 'text-red-500'
+              }`}
+            >
+              {stockStatus}
+            </p>
+          </div>
         </div>
-        <div className="flex justify-around w-full mt-4">
-          <button
-            onClick={handleUpdateClick}
-            className="bg-blue-500 text-white py-2 px-4 rounded"
-          >
-            Update Product
-          </button>
-          <button
-            onClick={handleDeleteClick}
-            className="bg-red-500 text-white py-2 px-4 rounded"
-          >
-            Delete Product
-          </button>
-        </div>
-      </div>
-      <div className="flex-1 p-4 bg-white border border-gray-300 rounded-lg mt-4 md:mt-0 md:ml-4 overflow-y-auto">
-        <h1 className="text-xl md:text-2xl font-bold mb-4">{product.name}</h1>
-        <p className="text-gray-700 mb-4">Description: {product.description}</p>
-        <p className="text-gray-700 mb-4">
-          Category: {product.categoryDescription}
-        </p>
-        {product.isDiscount ? (
-          <p className="mb-4">
-            <span className="text-red-500 line-through">
-              LKR {product.basePrice}
-            </span>{' '}
-            <span className="text-green-500 font-bold">
-              Discounted Price: LKR {product.discountPrice}
-            </span>
-          </p>
-        ) : (
-          <p className="text-green-500 mb-4">LKR: {product.basePrice}</p>
-        )}
-        <p className="text-gray-700 mb-4">
-          {product.isFreeShipping
-            ? 'Free Shipping'
-            : `Shipping Cost: LKR ${product.shippingCost}`}
-        </p>
-        <p className="text-gray-700 mb-4">Quantity: {product.quantity}</p>
-        <p
-          className={`mb-4 ${
-            stockStatus === 'In Stock' ? 'text-green-500' : 'text-red-500'
-          }`}
-        >
-          {stockStatus}
-        </p>
       </div>
     </div>
   );
