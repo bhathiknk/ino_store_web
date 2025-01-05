@@ -1,0 +1,260 @@
+<html><head><meta charset="utf-8"/><title>Test Report</title><style type="text/css">html,
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+body {
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+}
+.jesthtml-content {
+  margin: 0 auto;
+  max-width: 70rem;
+}
+header {
+  display: flex;
+  align-items: center;
+}
+#title {
+  margin: 0;
+  flex-grow: 1;
+}
+#logo {
+  height: 4rem;
+}
+#timestamp {
+  color: #777;
+  margin-top: 0.5rem;
+}
+
+/** SUMMARY */
+#summary {
+  color: #333;
+  margin: 2rem 0;
+  display: flex;
+  font-family: monospace;
+  font-size: 1rem;
+}
+#summary > div {
+  margin-right: 2rem;
+  background: #eee;
+  padding: 1rem;
+  min-width: 15rem;
+}
+#summary > div:last-child {
+  margin-right: 0;
+}
+@media only screen and (max-width: 720px) {
+  #summary {
+    flex-direction: column;
+  }
+  #summary > div {
+    margin-right: 0;
+    margin-top: 2rem;
+  }
+  #summary > div:first-child {
+    margin-top: 0;
+  }
+}
+
+.summary-total {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.summary-passed {
+  color: #4f8a10;
+  border-left: 0.4rem solid #4f8a10;
+  padding-left: 0.5rem;
+}
+.summary-failed,
+.summary-obsolete-snapshots {
+  color: #d8000c;
+  border-left: 0.4rem solid #d8000c;
+  padding-left: 0.5rem;
+}
+.summary-pending {
+  color: #9f6000;
+  border-left: 0.4rem solid #9f6000;
+  padding-left: 0.5rem;
+}
+.summary-empty {
+  color: #999;
+  border-left: 0.4rem solid #999;
+}
+
+.test-result {
+  padding: 1rem;
+  margin-bottom: 0.25rem;
+}
+.test-result:last-child {
+  border: 0;
+}
+.test-result.passed {
+  background-color: #dff2bf;
+  color: #4f8a10;
+}
+.test-result.failed {
+  background-color: #ffbaba;
+  color: #d8000c;
+}
+.test-result.pending {
+  background-color: #ffdf61;
+  color: #9f6000;
+}
+
+.test-info {
+  display: flex;
+  justify-content: space-between;
+}
+.test-suitename {
+  width: 20%;
+  text-align: left;
+  font-weight: bold;
+  word-break: break-word;
+}
+.test-title {
+  width: 40%;
+  text-align: left;
+  font-style: italic;
+}
+.test-status {
+  width: 20%;
+  text-align: right;
+}
+.test-duration {
+  width: 10%;
+  text-align: right;
+  font-size: 0.75rem;
+}
+
+.failureMessages {
+  padding: 0 1rem;
+  margin-top: 1rem;
+  border-top: 1px dashed #d8000c;
+}
+.failureMessages.suiteFailure {
+  border-top: none;
+}
+.failureMsg {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+
+.suite-container {
+  margin-bottom: 2rem;
+}
+.suite-container > input[type="checkbox"] {
+  position: absolute;
+  left: -100vw;
+}
+.suite-container label {
+  display: block;
+}
+.suite-container .suite-tests {
+  overflow-y: hidden;
+  height: 0;
+}
+.suite-container > input[type="checkbox"]:checked ~ .suite-tests {
+  height: auto;
+  overflow: visible;
+}
+.suite-info {
+  padding: 1rem;
+  background-color: #eee;
+  color: #777;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+.suite-info:hover {
+  background-color: #ddd;
+  cursor: pointer;
+}
+.suite-info .suite-path {
+  word-break: break-all;
+  flex-grow: 1;
+  font-family: monospace;
+  font-size: 1rem;
+}
+.suite-info .suite-time {
+  margin-left: 0.5rem;
+  padding: 0.2rem 0.3rem;
+  font-size: 0.75rem;
+}
+.suite-info .suite-time.warn {
+  background-color: #d8000c;
+  color: #fff;
+}
+.suite-info:before {
+  content: "\2303";
+  display: inline-block;
+  margin-right: 0.5rem;
+  transform: rotate(0deg);
+}
+.suite-container > input[type="checkbox"]:checked ~ label .suite-info:before {
+  transform: rotate(180deg);
+}
+
+/* CONSOLE LOGS */
+.suite-consolelog {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: #efefef;
+}
+.suite-consolelog-header {
+  font-weight: bold;
+}
+.suite-consolelog-item {
+  padding: 0.5rem;
+}
+.suite-consolelog-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-consolelog-item-origin {
+  color: #777;
+  font-weight: bold;
+}
+.suite-consolelog-item-message {
+  color: #000;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+
+/* OBSOLETE SNAPSHOTS */
+.suite-obsolete-snapshots {
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  background-color: #ffbaba;
+  color: #d8000c;
+}
+.suite-obsolete-snapshots-header {
+  font-weight: bold;
+}
+.suite-obsolete-snapshots-item {
+  padding: 0.5rem;
+}
+.suite-obsolete-snapshots-item pre {
+  margin: 0.5rem 0;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+}
+.suite-obsolete-snapshots-item-message {
+  color: #000;
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+</style></head><body><div class="jesthtml-content"><header><h1 id="title">Test Report</h1></header><div id="metadata-container"><div id="timestamp">Started: 2025-01-05 09:50:47</div><div id="summary"><div id="suite-summary"><div class="summary-total">Suites (10)</div><div class="summary-passed ">10 passed</div><div class="summary-failed  summary-empty">0 failed</div><div class="summary-pending  summary-empty">0 pending</div></div><div id="test-summary"><div class="summary-total">Tests (36)</div><div class="summary-passed ">36 passed</div><div class="summary-failed  summary-empty">0 failed</div><div class="summary-pending  summary-empty">0 pending</div></div></div></div><div id="suite-1" class="suite-container"><input id="collapsible-0" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-0"><div class="suite-info"><div class="suite-path">C:\Projects\Full Stack Module Project\ino_store\client\src\pages\Admin\CreateProduct\ProductDetails.test.js</div><div class="suite-time">3.732s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">ProductDetails Component</div><div class="test-title">shows loading while fetching product</div><div class="test-status">passed</div><div class="test-duration">0.092s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ProductDetails Component</div><div class="test-title">fetches and displays product details</div><div class="test-status">passed</div><div class="test-duration">0.026s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ProductDetails Component</div><div class="test-title">handles delete product success</div><div class="test-status">passed</div><div class="test-duration">0.075s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">ProductDetails Component</div><div class="test-title">handles delete product failure</div><div class="test-status">passed</div><div class="test-duration">0.108s</div></div></div></div></div><div id="suite-2" class="suite-container"><input id="collapsible-1" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-1"><div class="suite-info"><div class="suite-path">C:\Projects\Full Stack Module Project\ino_store\client\src\pages\Admin\AdminLoging\Signin.test.js</div><div class="suite-time">3.754s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Signin Component</div><div class="test-title">renders the Signin form</div><div class="test-status">passed</div><div class="test-duration">0.153s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Signin Component</div><div class="test-title">submits the form and handles successful login (with setTimeout)</div><div class="test-status">passed</div><div class="test-duration">0.067s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Signin Component</div><div class="test-title">handles login failure</div><div class="test-status">passed</div><div class="test-duration">0.113s</div></div></div></div></div><div id="suite-3" class="suite-container"><input id="collapsible-2" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-2"><div class="suite-info"><div class="suite-path">C:\Projects\Full Stack Module Project\ino_store\client\src\pages\Admin\Dashboard.test.js</div><div class="suite-time">3.779s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename"> </div><div class="test-title">renders products and handles image navigation</div><div class="test-status">passed</div><div class="test-duration">0.291s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename"> </div><div class="test-title">displays correct product information</div><div class="test-status">passed</div><div class="test-duration">0.047s</div></div></div></div></div><div id="suite-4" class="suite-container"><input id="collapsible-3" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-3"><div class="suite-info"><div class="suite-path">C:\Projects\Full Stack Module Project\ino_store\client\src\pages\Admin\SalesSummary.test.js</div><div class="suite-time">3.743s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">SalesSummary Component</div><div class="test-title">renders loading state</div><div class="test-status">passed</div><div class="test-duration">0.065s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">SalesSummary Component</div><div class="test-title">renders error state</div><div class="test-status">passed</div><div class="test-duration">0.041s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">SalesSummary Component</div><div class="test-title">renders sales summary and chart data correctly</div><div class="test-status">passed</div><div class="test-duration">0.051s</div></div></div></div></div><div id="suite-5" class="suite-container"><input id="collapsible-4" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-4"><div class="suite-info"><div class="suite-path">C:\Projects\Full Stack Module Project\ino_store\client\src\pages\Admin\CreateProduct\UpdateProduct.test.js</div><div class="suite-time">4.046s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">UpdateProduct Component</div><div class="test-title">fetches existing product data and displays it</div><div class="test-status">passed</div><div class="test-duration">0.133s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UpdateProduct Component</div><div class="test-title">handles update product success</div><div class="test-status">passed</div><div class="test-duration">0.203s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">UpdateProduct Component</div><div class="test-title">handles update product failure</div><div class="test-status">passed</div><div class="test-duration">0.151s</div></div></div></div></div><div id="suite-6" class="suite-container"><input id="collapsible-5" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-5"><div class="suite-info"><div class="suite-path">C:\Projects\Full Stack Module Project\ino_store\client\src\App.test.js</div><div class="suite-time">0.219s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename"> </div><div class="test-title">adds 1 + 2 to equal 3</div><div class="test-status">passed</div><div class="test-duration">0.002s</div></div></div></div></div><div id="suite-7" class="suite-container"><input id="collapsible-6" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-6"><div class="suite-info"><div class="suite-path">C:\Projects\Full Stack Module Project\ino_store\client\src\pages\Client\Components\Pages\Checkout\CheckoutForm.test.js</div><div class="suite-time">4.159s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">CheckoutForm Component</div><div class="test-title">fetches and displays address details on mount</div><div class="test-status">passed</div><div class="test-duration">0.115s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CheckoutForm Component</div><div class="test-title">handleOrderCreation successfully creates order and shows success modal</div><div class="test-status">passed</div><div class="test-duration">0.134s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CheckoutForm Component</div><div class="test-title">handleOrderCreation fails to create order and shows error toast</div><div class="test-status">passed</div><div class="test-duration">0.157s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CheckoutForm Component</div><div class="test-title">handleModalClose closes modal and navigates to home</div><div class="test-status">passed</div><div class="test-duration">0.12s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CheckoutForm Component</div><div class="test-title">shows error toast if no address is found</div><div class="test-status">passed</div><div class="test-duration">0.029s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CheckoutForm Component</div><div class="test-title">disables PayPal buttons if shipping details are incomplete</div><div class="test-status">passed</div><div class="test-duration">0.017s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CheckoutForm Component</div><div class="test-title">disables PayPal buttons if cart is empty</div><div class="test-status">passed</div><div class="test-duration">0.014s</div></div></div></div></div><div id="suite-8" class="suite-container"><input id="collapsible-7" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-7"><div class="suite-info"><div class="suite-path">C:\Projects\Full Stack Module Project\ino_store\client\src\pages\Admin\CreateProduct\CreateProduct.test.js</div><div class="suite-time">4.27s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">CreateProduct Component</div><div class="test-title">renders the form and navigational buttons</div><div class="test-status">passed</div><div class="test-duration">0.236s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CreateProduct Component</div><div class="test-title">fills out form, opens confirmation popup, and cancels</div><div class="test-status">passed</div><div class="test-duration">0.152s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CreateProduct Component</div><div class="test-title">handles product creation success</div><div class="test-status">passed</div><div class="test-duration">0.213s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">CreateProduct Component</div><div class="test-title">handles product creation failure</div><div class="test-status">passed</div><div class="test-duration">0.154s</div></div></div></div></div><div id="suite-9" class="suite-container"><input id="collapsible-8" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-8"><div class="suite-info"><div class="suite-path">C:\Projects\Full Stack Module Project\ino_store\client\src\pages\Admin\AdminLoging\Signup.test.js</div><div class="suite-time">0.924s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">Signup Component</div><div class="test-title">renders the Signup form</div><div class="test-status">passed</div><div class="test-duration">0.09s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Signup Component</div><div class="test-title">submits form and handles successful signup</div><div class="test-status">passed</div><div class="test-duration">0.037s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">Signup Component</div><div class="test-title">handles signup failure</div><div class="test-status">passed</div><div class="test-duration">0.019s</div></div></div></div></div><div id="suite-10" class="suite-container"><input id="collapsible-9" type="checkbox" class="toggle" checked="checked"/><label for="collapsible-9"><div class="suite-info"><div class="suite-path">C:\Projects\Full Stack Module Project\ino_store\client\src\pages\Client\Components\Pages\Address\AddressContent.test.js</div><div class="suite-time">1.42s</div></div></label><div class="suite-tests"><div class="test-result passed"><div class="test-info"><div class="test-suitename">AddressContent Component</div><div class="test-title">fetches and displays address details on mount</div><div class="test-status">passed</div><div class="test-duration">0.047s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AddressContent Component</div><div class="test-title">handleEditClick toggles editing mode</div><div class="test-status">passed</div><div class="test-duration">0.052s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AddressContent Component</div><div class="test-title">handleCancelClick exits editing mode</div><div class="test-status">passed</div><div class="test-duration">0.04s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AddressContent Component</div><div class="test-title">handleCheckoutClick navigates to checkout with address details</div><div class="test-status">passed</div><div class="test-duration">0.041s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AddressContent Component</div><div class="test-title">handleSaveClick successfully updates address and shows success toast</div><div class="test-status">passed</div><div class="test-duration">0.068s</div></div></div><div class="test-result passed"><div class="test-info"><div class="test-suitename">AddressContent Component</div><div class="test-title">handleSaveClick fails to update address and shows error toast</div><div class="test-status">passed</div><div class="test-duration">0.123s</div></div></div></div></div></div></body></html>

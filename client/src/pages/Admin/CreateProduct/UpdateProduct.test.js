@@ -1,3 +1,5 @@
+// UpdateProduct.test.js
+
 import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -6,6 +8,7 @@ import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import UpdateProduct from './UpdateProduct';
 
+// Mock dependencies
 jest.mock('axios');
 jest.mock('react-toastify', () => ({
   toast: {
@@ -16,6 +19,28 @@ jest.mock('react-toastify', () => ({
 }));
 
 describe('UpdateProduct Component', () => {
+  // Mock functions
+  let originalConsoleWarn;
+  let originalConsoleError;
+
+  beforeAll(() => {
+    // Preserve the original console.warn and console.error
+    originalConsoleWarn = console.warn;
+    originalConsoleError = console.error;
+
+    // Mock console.warn to suppress React Router warnings
+    console.warn = jest.fn();
+
+    // Mock console.error to suppress expected error logs
+    console.error = jest.fn();
+  });
+
+  afterAll(() => {
+    // Restore the original console methods after all tests
+    console.warn = originalConsoleWarn;
+    console.error = originalConsoleError;
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
     localStorage.setItem('token', 'mock-token');
@@ -56,7 +81,7 @@ describe('UpdateProduct Component', () => {
       </MemoryRouter>
     );
 
-    // Wait for the product data
+    // Wait for the product data to be displayed
     await waitFor(() => {
       expect(screen.getByDisplayValue('Old Product Name')).toBeInTheDocument();
       expect(screen.getByDisplayValue('Old Category')).toBeInTheDocument();
@@ -99,7 +124,7 @@ describe('UpdateProduct Component', () => {
       </MemoryRouter>
     );
 
-    // Wait for product data
+    // Wait for product data to be displayed
     await waitFor(() => {
       expect(screen.getByDisplayValue('Old Product Name')).toBeInTheDocument();
     });
@@ -163,7 +188,7 @@ describe('UpdateProduct Component', () => {
       </MemoryRouter>
     );
 
-    // Wait for product data
+    // Wait for product data to be displayed
     await waitFor(() => {
       expect(screen.getByDisplayValue('Fail Product')).toBeInTheDocument();
     });
@@ -181,5 +206,11 @@ describe('UpdateProduct Component', () => {
         expect.any(Object)
       );
     });
+
+    // Optionally, you can verify that console.error was called
+    expect(console.error).toHaveBeenCalledWith(
+      'Error updating product:',
+      expect.any(Error)
+    );
   });
 });

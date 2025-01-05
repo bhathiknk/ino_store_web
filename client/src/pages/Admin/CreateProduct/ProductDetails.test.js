@@ -1,3 +1,5 @@
+// ProductDetails.test.js
+
 import React from 'react';
 import {
   render,
@@ -30,6 +32,16 @@ global.alert = jest.fn();
 
 describe('ProductDetails Component', () => {
   const mockNavigate = jest.fn();
+
+  beforeAll(() => {
+    // Mock console.error to suppress error messages in test output
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterAll(() => {
+    // Restore console.error after tests complete
+    console.error.mockRestore();
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();

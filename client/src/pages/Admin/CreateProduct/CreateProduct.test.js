@@ -1,4 +1,4 @@
-// CreateProduct.test.js
+// src/pages/Admin/CreateProduct/CreateProduct.test.js
 
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
@@ -19,7 +19,7 @@ jest.mock('react-toastify', () => ({
   ToastContainer: () => <div>ToastContainer Mock</div>,
 }));
 
-// ✅ Fix: Mock IntersectionObserver with observe and disconnect methods
+// Mock IntersectionObserver to prevent errors during tests
 beforeAll(() => {
   class MockIntersectionObserver {
     constructor() {
@@ -36,10 +36,60 @@ beforeAll(() => {
 });
 
 describe('CreateProduct Component', () => {
+  const mockCategories = [
+    { _id: '1', name: 'Electronics' },
+    { _id: '2', name: 'Books' },
+  ];
+
+  let originalConsoleWarn;
+  let originalConsoleError;
+
+  beforeAll(() => {
+    // Preserve the original console.warn and console.error
+    originalConsoleWarn = console.warn;
+    originalConsoleError = console.error;
+
+    // Mock console.warn to suppress specific React Router warnings
+    console.warn = jest.fn((message, ...args) => {
+      if (
+        message.includes('React Router Future Flag Warning') &&
+        (message.includes('v7_startTransition') ||
+          message.includes('v7_relativeSplatPath'))
+      ) {
+        // Suppress these specific warnings
+        return;
+      }
+      // Otherwise, call the original console.warn
+      originalConsoleWarn(message, ...args);
+    });
+
+    // Mock console.error to suppress act warnings (if necessary)
+    console.error = jest.fn((message, ...args) => {
+      if (
+        message.includes(
+          'Warning: An update to CreateProduct inside a test was not wrapped in act(...)'
+        )
+      ) {
+        // Suppress act warnings
+        return;
+      }
+      // Otherwise, call the original console.error
+      originalConsoleError(message, ...args);
+    });
+  });
+
+  afterAll(() => {
+    // Restore the original console methods after all tests
+    console.warn = originalConsoleWarn;
+    console.error = originalConsoleError;
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
     // Mock localStorage token
     localStorage.setItem('token', 'mock-token');
+    // Mock axios.get for fetching categories
+    axios.get.mockResolvedValueOnce({ data: mockCategories });
   });
 
   const renderComponent = () =>
@@ -49,8 +99,17 @@ describe('CreateProduct Component', () => {
       </BrowserRouter>
     );
 
-  test('renders the form and navigational buttons', () => {
+  test('renders the form and navigational buttons', async () => {
     renderComponent();
+
+    // Wait for the categories to be fetched and state to be updated
+    await waitFor(() => {
+      // Since the categories are fetched but not directly rendered,
+      // waiting ensures that the state update from setCategories is processed.
+      expect(axios.get).toHaveBeenCalledWith(
+        'http://localhost:5000/api/categories/get'
+      );
+    });
 
     // Basic fields
     expect(screen.getByLabelText(/product title/i)).toBeInTheDocument();
@@ -72,8 +131,15 @@ describe('CreateProduct Component', () => {
     expect(screen.getByRole('button', { name: /next/i })).toBeInTheDocument();
   });
 
-  test('fills out form, opens confirmation popup, and cancels', () => {
+  test('fills out form, opens confirmation popup, and cancels', async () => {
     renderComponent();
+
+    // Wait for categories to be fetched
+    await waitFor(() => {
+      expect(axios.get).toHaveBeenCalledWith(
+        'http://localhost:5000/api/categories/get'
+      );
+    });
 
     // Fill out some fields
     fireEvent.change(screen.getByLabelText(/product title/i), {
@@ -102,6 +168,13 @@ describe('CreateProduct Component', () => {
 
     renderComponent();
 
+    // Wait for categories to be fetched
+    await waitFor(() => {
+      expect(axios.get).toHaveBeenCalledWith(
+        'http://localhost:5000/api/categories/get'
+      );
+    });
+
     // Fill out required fields
     fireEvent.change(screen.getByLabelText(/product title/i), {
       target: { value: 'New Awesome Product' },
@@ -124,7 +197,7 @@ describe('CreateProduct Component', () => {
     // Click Save
     fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
-    // Wait for axios post to finish
+    // Wait for axios post to finish and toast to be called
     await waitFor(() => {
       // Check axios was called
       expect(axios.post).toHaveBeenCalledWith(
@@ -150,6 +223,13 @@ describe('CreateProduct Component', () => {
 
     renderComponent();
 
+    // Wait for categories to be fetched
+    await waitFor(() => {
+      expect(axios.get).toHaveBeenCalledWith(
+        'http://localhost:5000/api/categories/get'
+      );
+    });
+
     // Fill out required fields
     fireEvent.change(screen.getByLabelText(/product title/i), {
       target: { value: 'Fail Product' },
@@ -165,6 +245,7 @@ describe('CreateProduct Component', () => {
     fireEvent.click(screen.getByRole('button', { name: /next/i }));
     fireEvent.click(screen.getByRole('button', { name: /save/i }));
 
+    // Wait for the error toast
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalledWith(
         'Product addition failed',

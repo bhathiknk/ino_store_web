@@ -168,6 +168,7 @@ function CheckoutForm() {
               }}
             >
               <PayPalButtons
+                data-testid="paypal-button"
                 disabled={!isShippingDetailsComplete || cart.length === 0}
                 style={{ layout: 'vertical' }}
                 createOrder={(data, actions) => {
