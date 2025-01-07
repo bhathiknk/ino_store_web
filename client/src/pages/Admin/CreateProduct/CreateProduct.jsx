@@ -206,4 +206,66 @@ const CreateProduct = () => {
     setFormData({ ...formData, categoryDescription: description });
     setIndividualPopupVisible(false); // Close the individual description popup
   };
+
+  return (
+    <div className="flex flex-col min-h-screen bg-gray-300">
+      {/* Navigation Bar */}
+      {!popupVisible && (
+          <div className="fixed top-0 left-0 right-0 bg-white shadow-md p-4 flex flex-col lg:flex-row items-start lg:items-center justify-between z-50">
+            <div className="flex items-center mb-4 lg:mb-0">
+              <FaArrowLeft className="mr-2 text-gray-700" />
+              <Link to="/Admin/ProductPage" className="text-gray-700">Back to product listing</Link>
+            </div>
+            <div className="lg:hidden self-end">
+              <button onClick={toggleMenu} className="text-gray-700 focus:outline-none">
+                {isOpen ? <FaTimes /> : <FaBars />}
+              </button>
+            </div>
+            <div className={`flex-grow lg:flex lg:items-center lg:justify-end lg:ml-4 ${isOpen ? '' : 'hidden lg:flex'}`}>
+              <button className={`px-4 py-2 lg:mx-2 focus:outline-none ${activeSection === 'basic' ? 'text-blue-500' : 'text-gray-700'}`} onClick={() => handleNavClick('basic')}>Basic Information</button>
+              <button className={`px-4 py-2 lg:mx-2 focus:outline-none ${activeSection === 'price' ? 'text-blue-500' : 'text-gray-700'}`} onClick={() => handleNavClick('price')}>Price Details</button>
+              <button className={`px-4 py-2 lg:mx-2 focus:outline-none ${activeSection === 'shipping' ? 'text-blue-500' : 'text-gray-700'}`} onClick={() => handleNavClick('shipping')}>Shipping Information</button>
+            </div>
+          </div>
+      )}
+
+      {/* Content */}
+      <div className="flex flex-grow mt-24">
+        {/* Main Content */}
+        <div className="flex-grow container mx-auto p-4">
+          {/* Basic Information Section */}
+          <section id="basic" ref={basicRef} className="bg-white p-4 rounded-lg shadow-md mb-4">
+            <h2 className="text-xl font-semibold mb-4">Basic Information</h2>
+            <div className="mb-4">
+              <label htmlFor="title" className="block text-sm font-medium text-gray-700">Product Title</label>
+              <input type="text" id="title" name="title" value={formData.title} onChange={handleInputChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category Description</label>
+              <input type="text" id="categoryDescription" name="categoryDescription" value={formData.categoryDescription} onChange={handleInputChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" readOnly onClick={() => setPopupVisible(true)} />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700">Product Description</label>
+              <textarea id="description" name="description" value={formData.description} onChange={handleInputChange} rows="4" className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="images" className="block text-sm font-medium text-gray-700">Product Images (up to 5)</label>
+              <input type="file" id="images" name="images" onChange={handleImageUpload} multiple className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+              <div className="mt-2 flex flex-wrap">
+                {images.map((image, index) => (
+                    <div key={index} className="relative m-2">
+                      <img src={URL.createObjectURL(image)} alt="" className="w-20 h-20 object-cover rounded-md"/>
+                      <button type="button" onClick={() => handleRemoveImage(index)}
+                              className="absolute top-0 right-0 p-1 bg-red-500 text-white rounded-full">
+                        <FaTrashAlt/>
+                      </button>
+                    </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  );      
 };
