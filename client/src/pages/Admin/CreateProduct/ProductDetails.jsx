@@ -117,7 +117,30 @@ const ProductDetails = () => {
                         </button>
                     </div>
                 </div>
-            </div> 
+            </div>
+            <div className="flex-1 p-4 bg-white border border-gray-300 rounded-lg mt-4 md:mt-0 md:ml-4 overflow-y-auto">
+                <h1 className="text-xl md:text-2xl font-bold mb-4">{product.name}</h1>
+                <p className="text-gray-700 mb-4">Description: {product.description}</p>
+                <p className="text-gray-700 mb-4">Category: {product.categoryDescription}</p>
+                {product.isDiscount ? (
+                    <p className="mb-4">
+                        <span className="text-red-500 line-through">LKR {product.basePrice}</span>
+                        {' '}
+                        <span className="text-green-500 font-bold">Discounted Price: LKR {product.discountPrice}</span>
+                    </p>
+                ) : (
+                    <p className="text-green-500 mb-4">LKR: {product.basePrice}</p>
+                )}
+                <p className="text-gray-700 mb-4">
+                    {product.isFreeShipping ? 'Free Shipping' : `Shipping Cost: LKR ${product.shippingCost}`}
+                </p>
+                <p className="text-gray-700 mb-4">Quantity: {product.quantity}</p>
+                <p className={`mb-4 ${stockStatus === 'In Stock' ? 'text-green-500' : 'text-red-500'}`}>
+                    {stockStatus}
+                </p>
+            </div>
         </div>
-    );       
+    );
 };
+
+export default ProductDetails;
