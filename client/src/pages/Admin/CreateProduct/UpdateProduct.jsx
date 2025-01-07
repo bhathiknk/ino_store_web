@@ -235,6 +235,81 @@ const UpdateProduct = () => {
                             </div>
                         </div>
                     </div>
+
+                    <div id="price" className="mb-6">
+                        <h3 className="text-xl font-semibold mb-4">Price Details</h3>
+                        <div className="mb-4">
+                            <label className="block mb-2 font-medium">Base Price</label>
+                            <input
+                                type="number"
+                                name="basePrice"
+                                value={formData.basePrice}
+                                onChange={handleInputChange}
+                                className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block mb-2 font-medium">Discounted Price</label>
+                            <input
+                                type="number"
+                                name="discountPrice"
+                                value={formData.discountPrice}
+                                onChange={handleInputChange}
+                                disabled={!isDiscount}
+                                className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            />
+                        </div>
+                        <div className="flex items-center mb-4">
+                            <input
+                                type="checkbox"
+                                name="isDiscount"
+                                checked={isDiscount}
+                                onChange={() => setIsDiscount(!isDiscount)}
+                                className="mr-2 focus:ring focus:ring-blue-300"
+                            />
+                            <label className="font-medium">Apply Discount</label>
+                        </div>
+                    </div>
+
+                    <div id="shipping" className="mb-6">
+                        <h3 className="text-xl font-semibold mb-4">Shipping Information</h3>
+                        <div className="mb-4">
+                            <label className="block mb-2 font-medium">Shipping Cost</label>
+                            <input
+                                type="number"
+                                name="shippingCost"
+                                value={formData.shippingCost}
+                                onChange={handleInputChange}
+                                disabled={isFreeShipping}
+                                className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            />
+                        </div>
+                        <div className="flex items-center mb-4">
+                            <input
+                                type="checkbox"
+                                name="isFreeShipping"
+                                checked={isFreeShipping}
+                                onChange={() => setIsFreeShipping(!isFreeShipping)}
+                                className="mr-2 focus:ring focus:ring-blue-300"
+                            />
+                            <label className="font-medium">Free Shipping</label>
+                        </div>
+                    </div>
+
+                    <div id="quantity" className="mb-6">
+                        <h3 className="text-xl font-semibold mb-4">Product Quantity</h3>
+                        <div className="mb-4">
+                            <label className="block mb-2 font-medium">Quantity</label>
+                            <input
+                                type="number"
+                                name="quantity"
+                                value={formData.quantity}
+                                onChange={handleInputChange}
+                                className="w-full p-3 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+                            />
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
