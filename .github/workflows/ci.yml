@@ -21,13 +21,16 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    env:
-      MONGO_URI: mongodb://host.docker.internal:27017/inoweb
-      MONGO_URI_TEST: mongodb://host.docker.internal:27017/inoweb_test
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+
+      - name: Set up Node.js for Client
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          cache: 'npm'
+          cache-dependency-path: client/package-lock.json
 
       - name: Set environment variables from secrets
         run: |
@@ -39,23 +42,20 @@ jobs:
           echo "MONGO_URI=mongodb://host.docker.internal:27017/inoweb" >> $GITHUB_ENV
           echo "MONGO_URI_TEST=mongodb://host.docker.internal:27017/inoweb_test" >> $GITHUB_ENV
 
-      - name: Set up Node.js for Client
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
-          cache: 'npm'
-          cache-dependency-path: client/package-lock.json
 
       - name: Install dependencies in Client
         run: |
           cd client
           npm install
 
-      - name: Run tests in Client
+
+      - name: Run ESLint in Client
         run: |
           cd client
-          npm test
-
+          npm run lint
+          
+          
+          
       - name: Set up Node.js for Server
         uses: actions/setup-node@v2
         with:
@@ -63,15 +63,35 @@ jobs:
           cache: 'npm'
           cache-dependency-path: server/package-lock.json
 
+
+      - name: Run tests in Client
+        run: |
+          cd client
+          npm test
+
+
       - name: Install dependencies in Server
         run: |
           cd server
           npm install
 
+
+      - name: Set environment variables for Server
+        run: |
+          echo "MONGO_URI_TEST=mongodb://localhost:27017/inoweb_test" >> $GITHUB_ENV
+
+
+      - name: Fix permissions for Jest
+        run: |
+          cd server
+          chmod +x ./node_modules/.bin/jest
+
+
       - name: Run tests in Server
         run: |
           cd server
           npm test
+
 
       - name: Install Docker Compose
         run: |
@@ -79,11 +99,15 @@ jobs:
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose version
 
+
       - name: Build Docker Image for Client
-        run: docker build -t $DOCKER_USERNAME/inoweb-client:1.4 ./client
+        run: |
+          docker build -t $DOCKER_USERNAME/inoweb-client:1.4 ./client
 
       - name: Build Docker Image for Server
-        run: docker build -t $DOCKER_USERNAME/inoweb-server:1.4 ./server
+        run: |
+          docker build -t $DOCKER_USERNAME/inoweb-server:1.4 ./server
+
 
       - name: Push Docker Images
         run: |
@@ -91,5 +115,7 @@ jobs:
           docker push $DOCKER_USERNAME/inoweb-client:1.4
           docker push $DOCKER_USERNAME/inoweb-server:1.4
 
+
       - name: Validate Docker Compose
-        run: docker-compose -f docker-compose.yml config
+        run: |
+          docker-compose -f docker-compose.yml config
