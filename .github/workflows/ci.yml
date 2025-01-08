@@ -34,7 +34,18 @@ jobs:
           cache: 'npm'
           cache-dependency-path: client/package-lock.json
 
-      # Install dependencies in Client
+      - name: Set environment variables from secrets
+        run: |
+          echo "PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "PAYPAL_MODE=${{ secrets.PAYPAL_MODE }}" >> $GITHUB_ENV
+          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
+          echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> $GITHUB_ENV
+          echo "MONGO_URI=mongodb://host.docker.internal:27017/inoweb" >> $GITHUB_ENV
+          echo "MONGO_URI_TEST=mongodb://host.docker.internal:27017/inoweb_test" >> $GITHUB_ENV
+          
+          
+          # Install dependencies in Client
       - name: Install dependencies in Client
         run: |
           cd client
