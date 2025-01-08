@@ -102,18 +102,18 @@ jobs:
 
       - name: Build Docker Image for Client
         run: |
-          docker build -t $DOCKER_USERNAME/inoweb-client:1.4 ./client
+          docker build -t $DOCKER_USERNAME/inoweb-client:1.5 ./client
 
       - name: Build Docker Image for Server
         run: |
-          docker build -t $DOCKER_USERNAME/inoweb-server:1.4 ./server
+          docker build -t $DOCKER_USERNAME/inoweb-server:1.5 ./server
 
 
       - name: Push Docker Images
         run: |
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-          docker push $DOCKER_USERNAME/inoweb-client:1.4
-          docker push $DOCKER_USERNAME/inoweb-server:1.4
+          docker push $DOCKER_USERNAME/inoweb-client:1.5
+          docker push $DOCKER_USERNAME/inoweb-server:1.5
 
 
       - name: Validate Docker Compose
