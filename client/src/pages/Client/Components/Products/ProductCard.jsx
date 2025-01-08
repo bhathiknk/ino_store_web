@@ -84,7 +84,7 @@ function ProductCard({ data }) {
               </span>
             </div>
           ) : (
-            <span>Rs.{data.basePrice.toFixed(2)}</span>
+            <span>USD.{data.basePrice.toFixed(2)}</span>
           )}
         </div>
         <div

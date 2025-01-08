@@ -126,7 +126,7 @@ function Cart() {
                 </div>
                 {/* Product price */}
                 <div className="justify-self-center text-gray-800 font-sm">
-                  Rs.{roundToTwoDecimalPlaces(item.price).toFixed(2)}
+                  USD.{roundToTwoDecimalPlaces(item.price).toFixed(2)}
                 </div>
                 {/* Quantity controls */}
                 <div className="justify-self-center flex items-center space-x-2 text-gray-800">
@@ -149,14 +149,14 @@ function Cart() {
                 {/* Shipping cost */}
                 <div className="justify-self-center text-gray-800 font-kanit">
                   {item.shippingCost > 0
-                    ? `Rs. ${roundToTwoDecimalPlaces(item.shippingCost).toFixed(
-                        2
-                      )}`
-                    : 'Rs. 0.00'}
+                    ? `USD. ${roundToTwoDecimalPlaces(
+                        item.shippingCost
+                      ).toFixed(2)}`
+                    : 'USD. 0.00'}
                 </div>
                 {/* Total price for the item */}
                 <div className="justify-self-center text-gray-800 font-kanit">
-                  Rs.
+                  USD.
                   {roundToTwoDecimalPlaces(
                     item.price * item.quantity + (item.shippingCost || 0)
                   ).toFixed(2)}
@@ -186,7 +186,7 @@ function Cart() {
                   <tr className="mt-6 mb-6">
                     <td className="text-gray-600 text-base">Sub Total:</td>
                     <td className="text-center font-kanit text-base">
-                      Rs. {calculateSubtotal().toFixed(2)}
+                      USD. {calculateSubtotal().toFixed(2)}
                     </td>
                   </tr>
                   <HorizontalLine />
@@ -194,10 +194,10 @@ function Cart() {
                     <td className="text-gray-600 text-base">Shipping Cost:</td>
                     <td className="text-center font-kanit text-base ">
                       {hasShippingCost
-                        ? `Rs. ${roundToTwoDecimalPlaces(
+                        ? `USD. ${roundToTwoDecimalPlaces(
                             calculateShippingCost()
                           ).toFixed(2)}`
-                        : 'Rs. 0.00'}
+                        : 'USD. 0.00'}
                     </td>
                   </tr>
                   <HorizontalLine />
@@ -213,7 +213,8 @@ function Cart() {
                   <tr className="mt-6 mb-6">
                     <td className="text-gray-600 font-bold text-lg">Total:</td>
                     <td className="text-center font-kanit font-bold text-lg">
-                      Rs. {roundToTwoDecimalPlaces(calculateTotal()).toFixed(2)}
+                      USD.{' '}
+                      {roundToTwoDecimalPlaces(calculateTotal()).toFixed(2)}
                     </td>
                   </tr>
                   <HorizontalLine />

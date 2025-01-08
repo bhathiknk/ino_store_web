@@ -222,7 +222,7 @@ function ViewOrder() {
                     <span className="text-indigo-600">{order._id}</span>
                   </h3>
                   <p className="mb-4 text-lg">
-                    Total Amount: LKR {order.totalAmount}
+                    Total Amount: USD {order.totalAmount}
                   </p>
                   <p className="mb-4 text-lg">
                     Payment Method: {order.paymentMethod}

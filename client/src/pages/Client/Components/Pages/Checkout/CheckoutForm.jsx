@@ -262,7 +262,7 @@ function CheckoutForm() {
                       </p>
                     </div>
                     <p className="text-xl text-gray-900">
-                      Rs.{(item.price * item.quantity).toFixed(2)}
+                      USD.{(item.price * item.quantity).toFixed(2)}
                     </p>
                   </li>
                 ))}
@@ -272,7 +272,7 @@ function CheckoutForm() {
             <div className="flex justify-between items-center mt-12">
               <p className="text-2xl font-semibold text-gray-900">Total:</p>
               <p className="text-2xl font-bold text-gray-900">
-                Rs. {orderTotal}
+                USD. {orderTotal}
               </p>
             </div>
           </div>

@@ -69,7 +69,7 @@ function SalesSummary() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-blue-100 text-blue-900 p-4 rounded-lg text-center shadow-md">
               <h3 className="text-xl font-bold">Total Sales</h3>
-              <p className="text-2xl font-semibold">LKR {summary.totalSales}</p>
+              <p className="text-2xl font-semibold">USD {summary.totalSales}</p>
             </div>
             <div className="bg-green-100 text-green-900 p-4 rounded-lg text-center shadow-md">
               <h3 className="text-xl font-bold">Total Orders</h3>
@@ -78,7 +78,7 @@ function SalesSummary() {
             <div className="bg-yellow-100 text-yellow-900 p-4 rounded-lg text-center shadow-md">
               <h3 className="text-xl font-bold">Average Order Value</h3>
               <p className="text-2xl font-semibold">
-                LKR {summary.averageOrderValue}
+                USD {summary.averageOrderValue.toFixed(2)}
               </p>
             </div>
           </div>
@@ -95,7 +95,7 @@ function SalesSummary() {
                 labels: salesGrowthLabels,
                 datasets: [
                   {
-                    label: 'Sales Growth (LKR)',
+                    label: 'Sales Growth (USD)',
                     data: salesGrowthData,
                     backgroundColor: 'rgba(54, 162, 235, 0.6)',
                     borderColor: 'rgba(54, 162, 235, 1)',
@@ -132,7 +132,7 @@ function SalesSummary() {
                       label(context) {
                         const label = context.dataset.label || '';
                         const value = context.raw;
-                        return `${label}: LKR ${value}`;
+                        return `${label}: USD ${value}`;
                       },
                     },
                   },

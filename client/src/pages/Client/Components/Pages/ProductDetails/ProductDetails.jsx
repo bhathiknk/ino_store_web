@@ -144,7 +144,7 @@ function ProductDetails() {
                 <HorizontalLine />
                 <div>
                   <span className="font-semibold font-kanit text-slate-700 ">
-                    Price: Rs.
+                    Price: USD.
                     <span className="line-through text-red-700">
                       {roundToTwoDecimalPlaces(product.basePrice).toFixed(2)}
                     </span>
@@ -161,7 +161,7 @@ function ProductDetails() {
                     <span className="font-semibold font-kanit text-slate-700">
                       Shipping Cost:
                       <span className="ml-1 text-green-600">
-                        Rs.
+                        USD.
                         {roundToTwoDecimalPlaces(product.shippingCost).toFixed(
                           2
                         )}
@@ -174,7 +174,7 @@ function ProductDetails() {
                   <span className="font-semibold font-kanit text-slate-700">
                     {product.isDiscount ? 'With Discount:' : 'Price:'}
                     <span className="ml-2 text-slate-600 font-normal">
-                      Rs.
+                      USD.
                       {product.isDiscount
                         ? roundToTwoDecimalPlaces(
                             product.discountPrice
