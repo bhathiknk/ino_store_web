@@ -264,8 +264,60 @@ const CreateProduct = () => {
               </div>
             </div>
           </section>
+
+          {/* Price Details Section */}
+            <section id="price" ref={priceRef} className="bg-white p-4 rounded-lg shadow-md mb-4">
+              <h2 className="text-xl font-semibold mb-4">Price Details</h2>
+              <div className="mb-4">
+                <label htmlFor="basePrice" className="block text-sm font-medium text-gray-700">Base Price ($)</label>
+                <input type="number" id="basePrice" name="basePrice" value={formData.basePrice} onChange={handleInputChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+              </div>
+              <div className="mb-4 flex items-center">
+                <input type="checkbox" id="isDiscount" name="isDiscount" checked={isDiscount} onChange={() => setIsDiscount(!isDiscount)} className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                <label htmlFor="isDiscount" className="ml-2 block text-sm font-medium text-gray-700">Apply Discount</label>
+              </div>
+              {isDiscount && (
+                  <div className="mb-4">
+                    <label htmlFor="discountPrice" className="block text-sm font-medium text-gray-700">Discount Price ($)</label>
+                    <input type="number" id="discountPrice" name="discountPrice" value={formData.discountPrice} onChange={handleInputChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                  </div>
+              )}
+            </section>
+
+            {/* Shipping Information Section */}
+            <section id="shipping" ref={shippingRef} className="bg-white p-4 rounded-lg shadow-md mb-4">
+              <h2 className="text-xl font-semibold mb-4">Shipping Information</h2>
+              <div className="mb-4 flex items-center">
+                <input type="checkbox" id="isFreeShipping" name="isFreeShipping" checked={isFreeShipping} onChange={handleFreeShippingChange} className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                <label htmlFor="isFreeShipping" className="ml-2 block text-sm font-medium text-gray-700">Free Shipping</label>
+              </div>
+              {!isFreeShipping && (
+                  <div className="mb-4">
+                    <label htmlFor="shippingCost" className="block text-sm font-medium text-gray-700">Shipping Cost ($)</label>
+                    <input type="number" id="shippingCost" name="shippingCost" value={formData.shippingCost} onChange={handleInputChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+                  </div>
+              )}
+            </section>
+
+            {/* Stock Information Section */}
+            <section id="stock" ref={stockRef} className="bg-white p-4 rounded-lg shadow-md mb-4">
+              <h2 className="text-xl font-semibold mb-4">Stock Information</h2>
+              <div className="mb-4">
+                <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">Quantity</label>
+                <input type="number" id="quantity" name="quantity" value={formData.quantity} onChange={handleInputChange} className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+              </div>
+            </section>
+            <button
+                type="button"
+                onClick={handleNextClick}
+                className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow-md focus:outline-none hover:bg-blue-600"
+            >
+              Next
+            </button>
+          </div>
         </div>
-      </div>
-    </div>
+        </div>
+      
+  
   );      
 };
