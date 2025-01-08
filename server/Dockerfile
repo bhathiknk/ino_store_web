@@ -16,5 +16,8 @@ COPY . .
 # Expose the application port
 EXPOSE 5000
 
+# Set default environment variables
+ENV PAYPAL_MODE=sandbox
+
 # Start the server
 CMD ["node", "src/server.js"]
