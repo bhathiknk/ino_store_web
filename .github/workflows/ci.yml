@@ -46,28 +46,28 @@ jobs:
         run: |
           cd client
           npm install
-        working-directory: /client
+        working-directory: client
 
       # Lint Client code
       - name: Run ESLint in Client
         run: |
           cd client
           npm run lint
-        working-directory: /client
+        working-directory: client
 
       # Run Client tests
       - name: Run tests in Client
         run: |
           cd client
           npm test
-        working-directory: /client
+        working-directory: client
 
       # Install Server dependencies
       - name: Install dependencies in Server
         run: |
           cd server
           npm install
-        working-directory: /server
+        working-directory: server
 
       # Set environment variables for Server
       - name: Set environment variables for Server
@@ -79,14 +79,14 @@ jobs:
         run: |
           cd server
           chmod +x ./node_modules/.bin/jest
-        working-directory: /server
+        working-directory: server
 
       # Run Server tests
       - name: Run tests in Server
         run: |
           cd server
           npm test
-        working-directory: /server
+        working-directory: server
 
       # Install Docker Compose
       - name: Install Docker Compose
