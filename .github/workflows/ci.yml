@@ -22,76 +22,78 @@ jobs:
           --health-retries 5
 
     steps:
-      #  Checkout the code
+      # Checkout the code
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      #  Set up Node.js for Client
+      # Set up Node.js for Client
       - name: Set up Node.js for Client
         uses: actions/setup-node@v2
         with:
           node-version: '16.x'
           cache: 'npm'
+          cache-dependency-path: client/package-lock.json
 
-      #  Install dependencies in Client
+      # Install dependencies in Client
       - name: Install dependencies in Client
         run: |
           cd client
           npm install
 
-      #  Run ESLint in Client
+      # Run ESLint in Client
       - name: Run ESLint in Client
         run: |
           cd client
           npm run lint
 
-      #  Run tests in Client
+      # Run tests in Client
       - name: Run tests in Client
         run: |
           cd client
           npm test
 
-      #  Set up Node.js for Server
+      # Set up Node.js for Server
       - name: Set up Node.js for Server
         uses: actions/setup-node@v2
         with:
           node-version: '16.x'
           cache: 'npm'
+          cache-dependency-path: server/package-lock.json
 
-      #  Install dependencies in Server
+      # Install dependencies in Server
       - name: Install dependencies in Server
         run: |
           cd server
           npm install
 
-      #  Run tests in Server
+      # Run tests in Server
       - name: Run tests in Server
         run: |
           cd server
           npm test
 
-      #  Install Docker Compose
+      # Install Docker Compose
       - name: Install Docker Compose
         run: |
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose version
 
-      #  Build Docker Image for Client
+      # Build Docker Image for Client
       - name: Build Docker Image for Client
         run: docker build -t $DOCKER_USERNAME/inoweb-client:1.4 ./client
 
-      #  Build Docker Image for Server
+      # Build Docker Image for Server
       - name: Build Docker Image for Server
         run: docker build -t $DOCKER_USERNAME/inoweb-server:1.4 ./server
 
-      #  Push Docker Images to Docker Hub
+      # Push Docker Images to Docker Hub
       - name: Push Docker Images
         run: |
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
           docker push $DOCKER_USERNAME/inoweb-client:1.4
           docker push $DOCKER_USERNAME/inoweb-server:1.4
 
-      #  Validate Docker Compose
+      # Validate Docker Compose
       - name: Validate Docker Compose
         run: docker-compose -f docker-compose.yml config
