@@ -32,22 +32,24 @@ jobs:
         with:
           node-version: '16.x'
           cache: 'npm'
-        working-directory: ./client
 
       #  Install dependencies in Client
       - name: Install dependencies in Client
-        run: npm install
-        working-directory: ./client
+        run: |
+          cd client
+          npm install
 
       #  Run ESLint in Client
       - name: Run ESLint in Client
-        run: npm run lint
-        working-directory: ./client
+        run: |
+          cd client
+          npm run lint
 
       #  Run tests in Client
       - name: Run tests in Client
-        run: npm test
-        working-directory: ./client
+        run: |
+          cd client
+          npm test
 
       #  Set up Node.js for Server
       - name: Set up Node.js for Server
@@ -55,17 +57,18 @@ jobs:
         with:
           node-version: '16.x'
           cache: 'npm'
-        working-directory: ./server
 
       #  Install dependencies in Server
       - name: Install dependencies in Server
-        run: npm install
-        working-directory: ./server
+        run: |
+          cd server
+          npm install
 
       #  Run tests in Server
       - name: Run tests in Server
-        run: npm test
-        working-directory: ./server
+        run: |
+          cd server
+          npm test
 
       #  Install Docker Compose
       - name: Install Docker Compose
