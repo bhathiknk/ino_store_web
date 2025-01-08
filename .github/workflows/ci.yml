@@ -31,87 +31,62 @@ jobs:
           node-version: '16.x'
           cache: 'npm'
 
-      - name: Set environment variables from secrets
-        run: |
-          echo "PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }}" >> $GITHUB_ENV
-          echo "PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }}" >> $GITHUB_ENV
-          echo "PAYPAL_MODE=${{ secrets.PAYPAL_MODE }}" >> $GITHUB_ENV
-          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
-          echo "DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }}" >> $GITHUB_ENV
-          echo "MONGO_URI=mongodb://host.docker.internal:27017/inoweb" >> $GITHUB_ENV
-          echo "MONGO_URI_TEST=mongodb://host.docker.internal:27017/inoweb_test" >> $GITHUB_ENV
-
-      # Install Client dependencies
+      #  Install Client Dependencies
       - name: Install dependencies in Client
-        run: |
-          cd client
-          npm install
-        working-directory: client
+        run: npm install
+        working-directory: ./client
 
-      # Lint Client code
+      #  Lint Client Code
       - name: Run ESLint in Client
-        run: |
-          cd client
-          npm run lint
-        working-directory: client
+        run: npm run lint
+        working-directory: ./client
 
-      # Run Client tests
+      #  Run Client Tests
       - name: Run tests in Client
-        run: |
-          cd client
-          npm test
-        working-directory: client
+        run: npm test
+        working-directory: ./client
 
-      # Install Server dependencies
+      #  Install Server Dependencies
       - name: Install dependencies in Server
-        run: |
-          cd server
-          npm install
-        working-directory: server
+        run: npm install
+        working-directory: ./server
 
-      # Set environment variables for Server
+      #  Set environment variables for Server
       - name: Set environment variables for Server
-        run: |
-          echo "MONGO_URI_TEST=mongodb://localhost:27017/inoweb_test" >> $GITHUB_ENV
+        run: echo "MONGO_URI_TEST=mongodb://localhost:27017/inoweb_test" >> $GITHUB_ENV
 
-      # Fix permissions for Jest
+      #  Fix permissions for Jest in Server
       - name: Fix permissions for Jest
-        run: |
-          cd server
-          chmod +x ./node_modules/.bin/jest
-        working-directory: server
+        run: chmod +x ./node_modules/.bin/jest
+        working-directory: ./server
 
-      # Run Server tests
+      #  Run Server Tests
       - name: Run tests in Server
-        run: |
-          cd server
-          npm test
-        working-directory: server
+        run: npm test
+        working-directory: ./server
 
-      # Install Docker Compose
+      #  Install Docker Compose
       - name: Install Docker Compose
         run: |
           sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose version
 
-      # Build Docker images
+      #  Build Docker Image for Client
       - name: Build Docker Image for Client
-        run: |
-          docker build -t $DOCKER_USERNAME/inoweb-client:1.4 ./client
+        run: docker build -t $DOCKER_USERNAME/inoweb-client:1.4 ./client
 
+      #  Build Docker Image for Server
       - name: Build Docker Image for Server
-        run: |
-          docker build -t $DOCKER_USERNAME/inoweb-server:1.4 ./server
+        run: docker build -t $DOCKER_USERNAME/inoweb-server:1.4 ./server
 
-      # Push Docker images to Docker Hub
+      #  Push Docker Images to Docker Hub
       - name: Push Docker Images
         run: |
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
           docker push $DOCKER_USERNAME/inoweb-client:1.4
           docker push $DOCKER_USERNAME/inoweb-server:1.4
 
-      # Validate Docker Compose
+      #  Validate Docker Compose
       - name: Validate Docker Compose
-        run: |
-          docker-compose -f docker-compose.yml config
+        run: docker-compose -f docker-compose.yml config
