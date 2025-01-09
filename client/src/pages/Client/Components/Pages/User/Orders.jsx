@@ -90,7 +90,7 @@ export default function Orders() {
                       Order ID: {order._id}
                     </h3>
                     <p className="text-gray-800 mb-2">
-                      <span className="font-semibold">Total Amount:</span> LKR{' '}
+                      <span className="font-semibold">Total Amount:</span> USD{' '}
                       {order.totalAmount.toFixed(2)}
                     </p>
                     <p className="text-gray-800 mb-2">

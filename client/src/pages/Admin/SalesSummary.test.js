@@ -31,10 +31,8 @@ beforeAll(() => {
       (msg.includes('React Router Future Flag Warning') ||
         msg.includes('Relative route resolution within Splat routes'))
     ) {
-      // Ignore these specific warnings
       return;
     }
-    // Otherwise, call original console.warn
     console.warn(msg, ...args);
   });
 });
@@ -51,7 +49,6 @@ describe('SalesSummary Component', () => {
   });
 
   test('renders loading state', async () => {
-    // Simulate a pending promise to show the loading state
     let resolvePromise;
     axios.get.mockImplementationOnce(
       () =>
@@ -66,10 +63,8 @@ describe('SalesSummary Component', () => {
       </MemoryRouter>
     );
 
-    // Ensure the loading state is shown by checking for the loader
     expect(screen.getByTestId('loader')).toBeInTheDocument();
 
-    // Resolve the promise to move past loading
     await act(async () => {
       resolvePromise({
         data: {
@@ -85,7 +80,6 @@ describe('SalesSummary Component', () => {
       });
     });
 
-    // Wait for the loading to disappear
     await waitFor(() => {
       expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
     });
@@ -101,11 +95,8 @@ describe('SalesSummary Component', () => {
     );
 
     await waitFor(() => {
-      // Check for the presence of both "Error:" and "Failed to fetch sales summary"
       expect(screen.getByText('Error:')).toBeInTheDocument();
-      expect(
-        screen.getByText('Failed to fetch sales summary')
-      ).toBeInTheDocument();
+      expect(screen.getByText('Failed to fetch sales summary')).toBeInTheDocument();
     });
   });
 
@@ -129,23 +120,30 @@ describe('SalesSummary Component', () => {
       </MemoryRouter>
     );
 
-    // Wait for the data to load
     await waitFor(() => {
       expect(screen.getByText('Sales Summary')).toBeInTheDocument();
       expect(screen.getByText('Total Sales')).toBeInTheDocument();
-      expect(screen.getByText('LKR 5000')).toBeInTheDocument();
+
+      // Use regex to match text across multiple nodes (USD 5000)
+      expect(screen.getByText((content, element) => {
+        return element.textContent === 'USD 5000';
+      })).toBeInTheDocument();
+
       expect(screen.getByText('Total Orders')).toBeInTheDocument();
       expect(screen.getByText('20')).toBeInTheDocument();
       expect(screen.getByText('Average Order Value')).toBeInTheDocument();
-      expect(screen.getByText('LKR 250')).toBeInTheDocument();
+
+      // Use regex to match text across multiple nodes (USD 250.00)
+      expect(screen.getByText((content, element) => {
+        return element.textContent === 'USD 250.00';
+      })).toBeInTheDocument();
     });
 
-    // Verify chart data matches the component's configuration
     const expectedChartData = {
       labels: ['January', 'February', 'March'],
       datasets: [
         {
-          label: 'Sales Growth (LKR)',
+          label: 'Sales Growth (USD)',
           data: [1000, 1500, 2500],
           backgroundColor: 'rgba(54, 162, 235, 0.6)',
           borderColor: 'rgba(54, 162, 235, 1)',
