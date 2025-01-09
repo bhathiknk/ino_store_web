@@ -96,7 +96,9 @@ describe('SalesSummary Component', () => {
 
     await waitFor(() => {
       expect(screen.getByText('Error:')).toBeInTheDocument();
-      expect(screen.getByText('Failed to fetch sales summary')).toBeInTheDocument();
+      expect(
+        screen.getByText('Failed to fetch sales summary')
+      ).toBeInTheDocument();
     });
   });
 
@@ -125,18 +127,22 @@ describe('SalesSummary Component', () => {
       expect(screen.getByText('Total Sales')).toBeInTheDocument();
 
       // Use regex to match text across multiple nodes (USD 5000)
-      expect(screen.getByText((content, element) => {
-        return element.textContent === 'USD 5000';
-      })).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          (content, element) => element.textContent === 'USD 5000'
+        )
+      ).toBeInTheDocument();
 
       expect(screen.getByText('Total Orders')).toBeInTheDocument();
       expect(screen.getByText('20')).toBeInTheDocument();
       expect(screen.getByText('Average Order Value')).toBeInTheDocument();
 
       // Use regex to match text across multiple nodes (USD 250.00)
-      expect(screen.getByText((content, element) => {
-        return element.textContent === 'USD 250.00';
-      })).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          (content, element) => element.textContent === 'USD 250.00'
+        )
+      ).toBeInTheDocument();
     });
 
     const expectedChartData = {

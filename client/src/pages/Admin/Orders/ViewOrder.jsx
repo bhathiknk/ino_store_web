@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import 'tailwindcss/tailwind.css';
-import Modal from 'react-modal';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { io } from 'socket.io-client';
@@ -13,9 +12,6 @@ function ViewOrder() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredOrder, setFilteredOrder] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedStatuses, setSelectedStatuses] = useState({});
   const [selectedTab, setSelectedTab] = useState('Processing');
   const navigate = useNavigate();
 
@@ -70,54 +66,6 @@ function ViewOrder() {
 
   const statusOptions = ['Processing', 'Packed', 'Shipped'];
 
-  const handleStatusChange = async (orderId, newStatus) => {
-    try {
-      const token = localStorage.getItem('token');
-      const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-
-      await axios.put(
-        'http://localhost:5000/api/orders/update-status',
-        { orderId, status: newStatus },
-        config
-      );
-
-      setOrders(
-        orders.map((order) =>
-          order._id === orderId ? { ...order, orderStatus: newStatus } : order
-        )
-      );
-
-      toast.success('Order status updated successfully!');
-    } catch (error) {
-      setError(error.response?.data?.message || error.message);
-    }
-  };
-
-  const handleDropdownChange = (orderId, newStatus) => {
-    setSelectedStatuses({
-      ...selectedStatuses,
-      [orderId]: newStatus,
-    });
-  };
-
-  const handleSearch = () => {
-    const order = orders.find((order) => order._id === searchTerm);
-    if (order) {
-      setFilteredOrder(order);
-      setIsModalOpen(true);
-    } else {
-      setFilteredOrder(null);
-      setIsModalOpen(false);
-    }
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSearchTerm('');
-  };
-
   const filteredOrders = orders.filter(
     (order) => order.orderStatus === selectedTab
   );
@@ -128,6 +76,7 @@ function ViewOrder() {
         Loading...
       </div>
     );
+
   if (error)
     return (
       <div className="text-red-500 text-center mt-4 text-xl">
@@ -169,7 +118,11 @@ function ViewOrder() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <button
-              onClick={handleSearch}
+              onClick={() =>
+                toast.info(`Searching for order ID: ${searchTerm}`, {
+                  position: 'top-right',
+                })
+              }
               className="ml-4 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 text-lg font-bold"
             >
               Search
@@ -178,6 +131,7 @@ function ViewOrder() {
         </div>
 
         <div className="flex flex-col md:flex-row gap-8">
+          {/* Notifications Section */}
           <div className="bg-gray-200 shadow-md rounded-xl p-8 w-full md:w-1/3">
             <h2 className="text-2xl font-bold text-blue-700 mb-6">
               Notifications
@@ -194,6 +148,7 @@ function ViewOrder() {
             </ul>
           </div>
 
+          {/* Orders Section */}
           <div className="bg-gray-50 shadow-md rounded-xl p-8 w-full md:w-2/3">
             <div className="flex justify-center space-x-4 mb-8">
               {statusOptions.map((status) => (
@@ -228,31 +183,30 @@ function ViewOrder() {
                     Payment Method: {order.paymentMethod}
                   </p>
                   <p className="mb-6 text-lg">Status: {order.orderStatus}</p>
-                  <div className="flex items-center gap-6">
-                    <select
-                      value={selectedStatuses[order._id] || order.orderStatus}
-                      onChange={(e) =>
-                        handleDropdownChange(order._id, e.target.value)
-                      }
-                      className="p-4 border rounded-lg text-lg"
-                    >
-                      {statusOptions.map((status) => (
-                        <option key={status} value={status}>
-                          {status}
-                        </option>
+
+                  {/* Product Section */}
+                  <div className="bg-gray-100 p-6 rounded-lg shadow-inner">
+                    <h4 className="text-lg font-bold mb-4">Products:</h4>
+                    <ul>
+                      {order.products.map((product) => (
+                        <li
+                          key={product.product._id}
+                          className="flex items-center mb-4"
+                        >
+                          <img
+                            src={`http://localhost:5000${product.product.images[0]}`}
+                            alt={product.product.name}
+                            className="w-16 h-16 object-cover rounded-lg mr-4"
+                          />
+                          <div>
+                            <p className="font-semibold">
+                              {product.product.name}
+                            </p>
+                            <p>Quantity: {product.quantity}</p>
+                          </div>
+                        </li>
                       ))}
-                    </select>
-                    <button
-                      onClick={() =>
-                        handleStatusChange(
-                          order._id,
-                          selectedStatuses[order._id] || order.orderStatus
-                        )
-                      }
-                      className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 text-lg font-bold"
-                    >
-                      Update Status
-                    </button>
+                    </ul>
                   </div>
                 </li>
               ))}
@@ -260,33 +214,6 @@ function ViewOrder() {
           </div>
         </div>
       </div>
-
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="Order Details Modal"
-        className="bg-white p-10 rounded-lg shadow-xl max-w-md mx-auto"
-      >
-        {filteredOrder && (
-          <div>
-            <h2 className="text-2xl font-bold mb-6">
-              Order ID: {filteredOrder._id}
-            </h2>
-            <p className="mb-4 text-lg">
-              Total Amount: {filteredOrder.totalAmount}
-            </p>
-            <p className="mb-6 text-lg">
-              Payment Method: {filteredOrder.paymentMethod}
-            </p>
-            <button
-              onClick={closeModal}
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 text-lg font-bold"
-            >
-              Close
-            </button>
-          </div>
-        )}
-      </Modal>
     </div>
   );
 }

@@ -97,7 +97,7 @@ exports.createOrder = async (req, res) => {
 
 
 
-// Example getOrdersBySeller controller fix
+//  getOrdersBySeller controller fix
 exports.getOrdersBySeller = async (req, res) => {
     try {
         const adminId = req.admin?._id; // Safely check for admin._id
