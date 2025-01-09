@@ -2,9 +2,9 @@ name: Node.js CI/CD with Docker
 
 on:
   push:
-    branches: [ CI/CD ]
+    branches: [ DonFernando/CI-CD ]
   pull_request:
-    branches: [ CI/CD ]
+    branches: [ DonFernando/CI-CD ]
 
 jobs:
   build-and-deploy:
