@@ -335,6 +335,32 @@ const UpdateProduct = () => {
                             </div>
                         </div>
                     )}
+                    
+                    {/* Individual Description Selection Popup */}
+                    {individualPopupVisible && (
+                        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
+                            <div className="bg-white p-6 rounded-lg shadow-md w-11/12 max-w-3xl">
+                                <h2 className="text-lg font-semibold mb-4">Select Category Description</h2>
+                                <div className="grid grid-cols-2 gap-4">
+                                    {individualDescriptions.map((description) => (
+                                        <div
+                                            key={description}
+                                            className="p-4 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-100 transition"
+                                            onClick={() => handleDescriptionClick(description)}
+                                        >
+                                            <p>{description}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                                <button
+                                    className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md focus:outline-none"
+                                    onClick={() => setIndividualPopupVisible(false)}
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    )}
 
 
                 </div>
