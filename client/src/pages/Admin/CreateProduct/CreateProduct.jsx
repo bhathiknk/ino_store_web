@@ -316,8 +316,60 @@ const CreateProduct = () => {
             </button>
           </div>
         </div>
-        </div>
-      
-  
+
+        {/* Popup for Category Description */}
+        {popupVisible && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <div className="bg-white p-4 rounded-md shadow-lg max-w-md w-full">
+                <h2 className="text-xl font-semibold mb-4">Category Descriptions</h2>
+                {categories.map((category, index) => (
+                    <div key={index} className="mb-2">
+                      <button
+                          type="button"
+                          onClick={() => handleCategoryClick(category)}
+                          className="w-full text-left py-2 px-4 border rounded-md shadow-sm hover:bg-gray-100"
+                      >
+                        {category.name}
+                      </button>
+                    </div>
+                ))}
+                <button
+                    type="button"
+                    onClick={() => setPopupVisible(false)}
+                    className="mt-4 w-full bg-red-500 text-white py-2 px-4 rounded-md shadow-md focus:outline-none hover:bg-red-600"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+        )}
+
+        {/* Popup for Individual Category Descriptions */}
+        {individualPopupVisible && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <div className="bg-white p-4 rounded-md shadow-lg max-w-md w-full">
+                <h2 className="text-xl font-semibold mb-4">Select Description</h2>
+                {individualDescriptions.map((description, index) => (
+                    <div key={index} className="mb-2">
+                      <button
+                          type="button"
+                          onClick={() => handleDescriptionClick(description)}
+                          className="w-full text-left py-2 px-4 border rounded-md shadow-sm hover:bg-gray-100"
+                      >
+                        {description}
+                      </button>
+                    </div>
+                ))}
+                <button
+                    type="button"
+                    onClick={() => setIndividualPopupVisible(false)}
+                    className="mt-4 w-full bg-red-500 text-white py-2 px-4 rounded-md shadow-md focus:outline-none hover:bg-red-600"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+        )}
+      </div>
   );      
 };
