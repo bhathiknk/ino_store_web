@@ -361,11 +361,17 @@ const UpdateProduct = () => {
                             </div>
                         </div>
                     )}
-
-
+                    <button
+                        type="button"
+                        onClick={handleUpdateProduct}
+                        className="bg-blue-500 text-white py-3 px-6 rounded-md hover:bg-blue-600 transition focus:outline-none"
+                    >
+                        Update Product
+                    </button>
                 </div>
             </div>
+            <ToastContainer />
         </div>
-    );    
-                
+    );                  
 };
+export default UpdateProduct;
