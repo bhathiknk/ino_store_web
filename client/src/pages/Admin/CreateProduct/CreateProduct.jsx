@@ -370,6 +370,59 @@ const CreateProduct = () => {
               </div>
             </div>
         )}
+
+        {/* Confirmation Popup */}
+        {confirmationPopupVisible && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+              <div className="bg-white p-4 rounded-md shadow-lg max-w-md w-full">
+                <h2 className="text-xl font-semibold mb-4">Confirm Save</h2>
+                <div className="mb-4">
+                  <p><strong>Product Title:</strong> {formData.title}</p>
+                  <p><strong>Category Description:</strong> {formData.categoryDescription}</p>
+                  <p><strong>Product Description:</strong> {formData.description}</p>
+                  <p><strong>Base Price:</strong> ${formData.basePrice}</p>
+                  {isDiscount && <p><strong>Discount Price:</strong> ${formData.discountPrice}</p>}
+                  <p><strong>Free Shipping:</strong> {isFreeShipping ? 'Yes' : 'No'}</p>
+                  {!isFreeShipping && <p><strong>Shipping Cost:</strong> ${formData.shippingCost}</p>}
+                  <p><strong>Quantity:</strong> {formData.quantity}</p>
+                  <div>
+                    <strong>Images:</strong>
+                    <div className="mt-2 flex flex-wrap">
+                      {images.map((image, index) => (
+                          <img
+                              key={index}
+                              src={URL.createObjectURL(image)}
+                              alt={`Product ${index + 1}`}
+                              className="w-20 h-20 object-cover rounded-md m-1"
+                          />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 flex justify-between">
+                  <button
+                      type="button"
+                      onClick={handleSaveProduct}
+                      className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-md focus:outline-none hover:bg-blue-600"
+                  >
+                    Save
+                  </button>
+                  <button
+                      type="button"
+                      onClick={() => setConfirmationPopupVisible(false)}
+                      className="bg-red-500 text-white py-2 px-4 rounded-md shadow-md focus:outline-none hover:bg-red-600"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+        )}
+
+
+        <ToastContainer />
       </div>
   );      
 };
+
+export default CreateProduct;
