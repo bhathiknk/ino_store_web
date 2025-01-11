@@ -13,7 +13,10 @@ function ViewOrder() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTab, setSelectedTab] = useState('Processing');
+  const [selectedStatuses, setSelectedStatuses] = useState({});
   const navigate = useNavigate();
+
+  const statusOptions = ['Processing', 'Packed', 'Shipped'];
 
   useEffect(() => {
     const fetchOrdersAndNotifications = async () => {
@@ -64,7 +67,43 @@ function ViewOrder() {
     };
   }, []);
 
-  const statusOptions = ['Processing', 'Packed', 'Shipped'];
+  const handleDropdownChange = (orderId, newStatus) => {
+    setSelectedStatuses((prevStatuses) => ({
+      ...prevStatuses,
+      [orderId]: newStatus,
+    }));
+  };
+
+  const handleStatusChange = async (orderId) => {
+    const newStatus = selectedStatuses[orderId];
+    if (!newStatus) {
+      toast.error('Please select a new status before updating.');
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('token');
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      await axios.put(
+        'http://localhost:5000/api/orders/update-status',
+        { orderId, status: newStatus },
+        config
+      );
+
+      setOrders(
+        orders.map((order) =>
+          order._id === orderId ? { ...order, orderStatus: newStatus } : order
+        )
+      );
+
+      toast.success('Order status updated successfully!');
+    } catch (error) {
+      setError(error.response?.data?.message || error.message);
+    }
+  };
 
   const filteredOrders = orders.filter(
     (order) => order.orderStatus === selectedTab
@@ -185,7 +224,7 @@ function ViewOrder() {
                   <p className="mb-6 text-lg">Status: {order.orderStatus}</p>
 
                   {/* Product Section */}
-                  <div className="bg-gray-100 p-6 rounded-lg shadow-inner">
+                  <div className="bg-gray-100 p-6 rounded-lg shadow-inner mb-4">
                     <h4 className="text-lg font-bold mb-4">Products:</h4>
                     <ul>
                       {order.products.map((product) => (
@@ -207,6 +246,29 @@ function ViewOrder() {
                         </li>
                       ))}
                     </ul>
+                  </div>
+
+                  {/* Dropdown for Status Change */}
+                  <div className="flex items-center gap-6">
+                    <select
+                      value={selectedStatuses[order._id] || order.orderStatus}
+                      onChange={(e) =>
+                        handleDropdownChange(order._id, e.target.value)
+                      }
+                      className="p-4 border rounded-lg text-lg"
+                    >
+                      {statusOptions.map((status) => (
+                        <option key={status} value={status}>
+                          {status}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      onClick={() => handleStatusChange(order._id)}
+                      className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 text-lg font-bold"
+                    >
+                      Update Status
+                    </button>
                   </div>
                 </li>
               ))}
