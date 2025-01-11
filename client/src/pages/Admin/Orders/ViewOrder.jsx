@@ -18,6 +18,7 @@ function ViewOrder() {
 
   const statusOptions = ['Processing', 'Packed', 'Shipped'];
 
+  // Fetch Orders and Notifications
   useEffect(() => {
     const fetchOrdersAndNotifications = async () => {
       try {
@@ -67,6 +68,7 @@ function ViewOrder() {
     };
   }, []);
 
+  // Handle Dropdown Status Change
   const handleDropdownChange = (orderId, newStatus) => {
     setSelectedStatuses((prevStatuses) => ({
       ...prevStatuses,
@@ -74,6 +76,7 @@ function ViewOrder() {
     }));
   };
 
+  // Handle Status Update
   const handleStatusChange = async (orderId) => {
     const newStatus = selectedStatuses[orderId];
     if (!newStatus) {
@@ -105,6 +108,7 @@ function ViewOrder() {
     }
   };
 
+  // Filter Orders by Selected Tab
   const filteredOrders = orders.filter(
     (order) => order.orderStatus === selectedTab
   );
@@ -222,6 +226,28 @@ function ViewOrder() {
                     Payment Method: {order.paymentMethod}
                   </p>
                   <p className="mb-6 text-lg">Status: {order.orderStatus}</p>
+
+                  {/* Shipping Address Section */}
+                  <div className="bg-gray-100 p-6 rounded-lg shadow-inner mb-4">
+                    <h4 className="text-lg font-bold mb-4">
+                      Shipping Address:
+                    </h4>
+                    <p className="text-gray-800">
+                      <strong>Address:</strong> {order.shippingDetails?.address}
+                    </p>
+                    <p className="text-gray-800">
+                      <strong>Province:</strong>{' '}
+                      {order.shippingDetails?.province}
+                    </p>
+                    <p className="text-gray-800">
+                      <strong>ZIP Code:</strong>{' '}
+                      {order.shippingDetails?.zipcode}
+                    </p>
+                    <p className="text-gray-800">
+                      <strong>Contact Number:</strong>{' '}
+                      {order.shippingDetails?.contactNumber}
+                    </p>
+                  </div>
 
                   {/* Product Section */}
                   <div className="bg-gray-100 p-6 rounded-lg shadow-inner mb-4">
