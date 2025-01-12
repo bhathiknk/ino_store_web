@@ -63,7 +63,7 @@ function ProductPage() {
       <Navbar />
       <div className="container mx-auto px-4 py-12">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800">Your Product</h1>
+          <h1 className="text-4xl font-bold text-gray-800">Your Products</h1>
           <Link
             to="/Admin/create-product"
             className="bg-blue-500 text-white py-3 px-6 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
